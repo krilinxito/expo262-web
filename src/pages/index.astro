@@ -4,7 +4,7 @@ const projects = [
     id: 3,
     title: "Redes de computadoras: modelado de tráfico y solicitudes",
     summary:
-      "Flujo de paquetes, colas M/M/1 y procesos de Poisson para anticipar la demanda en red.",
+      "Fljo de paquetes, colas M/M/1 y procesos de Poisson para anticipar la demanda en red.",
     href: "/proyecto/3",
     img:
       "https://miro.medium.com/v2/resize:fit:1400/1*sQ9FI1LOgPMm7YJhvXPelg.png",
@@ -141,11 +141,8 @@ const team = [
             <div>
               <p class="eyebrow">Ruta de navegación</p>
               <h2>Los tres proyectos asignados</h2>
-              <p class="section__lede">
-                Enlaces preparados para cada tema.
-              </p>
+              <p class="section__lede">Enlaces preparados para cada tema.</p>
             </div>
-
           </div>
 
           <div class="cards">
@@ -200,95 +197,93 @@ const team = [
       </footer>
     </div>
 
-    <!-- PARTICLES CONTAINER -->
+    <!-- FONDO DE PARTÍCULAS -->
     <div id="tsparticles"></div>
   </body>
 
-  <!-- CDN CORRECTO (versión 2 con API global) -->
+  <!-- CDN -->
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
 
-  <!-- CONFIGURACIÓN SUAVE -->
+  <!-- FIX + CONFIG SUAVE -->
   <script>
-    declare global {
-      interface Window {
-        tsParticles: any;
-      }
-    }
     const accent =
       getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() ||
       "#8ad6ff";
+
     const accent2 =
       getComputedStyle(document.documentElement).getPropertyValue("--accent-2").trim() ||
       "#72f0d5";
 
-    window.addEventListener("load", () => {
-      const container = document.getElementById("tsparticles");
-      if (!container || !window.tsParticles) return;
+    function loadParticlesWhenReady() {
+      if (!(window as any).tsParticles) {
+        requestAnimationFrame(loadParticlesWhenReady);
+        return;
+      }
 
-      window.tsParticles
-        .load("tsparticles", {
-          fpsLimit: 60,
-          background: { color: "transparent" },
-          fullScreen: { enable: false },
+      (window as any).tsParticles.load("tsparticles", {
+        fpsLimit: 60,
+        background: { color: "transparent" },
+        fullScreen: { enable: false },
 
-          particles: {
-            number: { value: 70, density: { enable: true, area: 900 } },
-            color: { value: [accent, accent2] },
+        particles: {
+          number: { value: 70, density: { enable: true, area: 900 } },
+          color: { value: [accent, accent2] },
 
-            opacity: {
-              value: 0.15,
-              random: { enable: true, minimumValue: 0.05 },
-              animation: {
-                enable: true,
-                speed: 0.4,
-                minimumValue: 0.05,
-                sync: false,
-              },
-            },
-
-            size: {
-              value: { min: 1.2, max: 2.8 },
-              animation: {
-                enable: true,
-                speed: 1,
-                minimumValue: 0.2,
-                sync: false,
-              },
-            },
-
-            links: {
+          opacity: {
+            value: 0.15,
+            random: { enable: true, minimumValue: 0.05 },
+            animation: {
               enable: true,
-              distance: 160,
-              color: accent,
-              opacity: 0.18,
-              width: 0.7,
-            },
-
-            move: {
-              enable: true,
-              speed: 0.45,
-              direction: "none",
-              outModes: "out",
+              speed: 0.4,
+              minimumValue: 0.05,
+              sync: false,
             },
           },
 
-          interactivity: {
-            events: {
-              onHover: { enable: true, mode: "grab" },
-              resize: true,
-            },
-            modes: {
-              grab: { distance: 180, links: { opacity: 0.3 } },
+          size: {
+            value: { min: 1.2, max: 2.8 },
+            animation: {
+              enable: true,
+              speed: 1,
+              minimumValue: 0.2,
+              sync: false,
             },
           },
 
-          detectRetina: true,
-        })
-        .then(() => {
-          const canvas = container.querySelector("canvas");
-          if (canvas) canvas.style.pointerEvents = "none";
-        });
-    });
+          links: {
+            enable: true,
+            distance: 160,
+            color: accent,
+            opacity: 0.18,
+            width: 0.7,
+          },
+
+          move: {
+            enable: true,
+            speed: 0.45,
+            direction: "none",
+            outModes: "out",
+          },
+        },
+
+        interactivity: {
+          events: {
+            onHover: { enable: true, mode: "grab" },
+            resize: true,
+          },
+          modes: {
+            grab: { distance: 180, links: { opacity: 0.3 } },
+          },
+        },
+
+        detectRetina: true,
+      }).then(() => {
+        const canvas = document.querySelector("#tsparticles canvas") as HTMLCanvasElement;
+        if (canvas) canvas.style.pointerEvents = "none";
+      });
+    }
+
+    loadParticlesWhenReady();
   </script>
 
   <!-- ESTILOS -->
@@ -357,7 +352,7 @@ const team = [
       z-index: 1;
     }
 
-    /* === HEADER === */
+    /* HEADER */
     .topbar {
       display: flex;
       align-items: center;
@@ -399,7 +394,7 @@ const team = [
     nav a {
       padding: 8px 12px;
       border-radius: 999px;
-      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      transition: 0.2s;
     }
 
     nav a:hover {
@@ -408,7 +403,7 @@ const team = [
       background: rgba(255, 255, 255, 0.02);
     }
 
-    /* === HERO === */
+    /* HERO */
     .hero {
       margin-top: 40px;
       padding: clamp(28px, 5vw, 48px);
@@ -466,7 +461,7 @@ const team = [
       background: linear-gradient(120deg, var(--accent), var(--accent-2));
       color: #051019;
       box-shadow: 0 12px 34px rgba(114, 240, 213, 0.25);
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: 0.2s;
     }
 
     .primary:hover {
@@ -522,7 +517,7 @@ const team = [
       display: block;
     }
 
-    /* === PROJECTS === */
+    /* PROJECTS */
     .projects {
       margin-top: 56px;
     }
@@ -553,7 +548,7 @@ const team = [
       background: rgba(255, 255, 255, 0.02);
       display: grid;
       gap: 0;
-      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+      transition: 0.2s;
       overflow: hidden;
     }
 
@@ -639,7 +634,7 @@ const team = [
       font-weight: 600;
     }
 
-    /* === TEAM === */
+    /* TEAM */
     .team {
       margin-top: 48px;
       text-align: center;
@@ -695,7 +690,7 @@ const team = [
       font-size: 14px;
     }
 
-    /* === FOOTER === */
+    /* FOOTER */
     .footer {
       margin-top: 40px;
       display: flex;
