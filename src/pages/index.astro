@@ -209,6 +209,11 @@ const team = [
 
   <!-- CONFIGURACIÓN SUAVE -->
   <script>
+    declare global {
+      interface Window {
+        tsParticles: any;
+      }
+    }
     const accent =
       getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() ||
       "#8ad6ff";
