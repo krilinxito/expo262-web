@@ -1,0 +1,811 @@
+Propuestas de Proyectos de Investigación – Procesos Estocásticos
+Este documento presenta una serie de propuestas de proyectos de investigación
+orientadas a la aplicación de los procesos estocásticos en diferentes ámbitos de la
+informática. Los temas integran aplicaciones reales en monitorización, redes,
+seguridad informática, bases de datos y sistemas distribuidos, junto con otros
+enfoques clásicos de modelado estocástico. Cada tema está diseñado para fomentar
+la integración de la teoría probabilística, el análisis matemático, la simulación
+computacional y la interpretación de fenómenos aleatorios mediante herramientas
+tecnológicas como Python y R (Opcional).
+N
+º
+1
+
+Tema del
+Proyecto
+Monitorizació
+n estocástica
+de sistemas
+informáticos
+
+2
+
+Seguridad
+informática:
+detección
+estocástica de
+ataques e
+intrusiones
+
+3
+
+Redes de
+computadoras
+: modelado de
+tráfico y
+solicitudes
+
+4
+
+Análisis
+estocástico de
+transacciones
+en bases de
+datos
+
+Objetivo General
+
+Metodología
+
+Herramientas
+Sugeridas
+Python
+(pandas,
+scipy.stats), R
+
+Tipo de Dato /
+Aplicación
+Logs de
+sistemas
+
+Analizar
+patrones de
+fallos, errores y
+reinicios en
+sistemas de
+cómputo
+mediante
+modelos de
+Poisson y
+Markov.
+Modelar la
+ocurrencia de
+ataques o
+intentos de
+acceso mediante
+tema
+realacionados y
+procesos de
+Poisson no
+homogéneos.
+Estudiar el flujo
+de paquetes y
+conexiones en
+redes usando
+modelos de colas
+M/M/1 y
+procesos de
+Poisson.
+Modelar la
+llegada de
+transacciones,
+consultas y
+bloqueos para
+
+Recolección de
+logs, modelado
+probabilístico y
+simulación
+
+Análisis de logs
+y simulación de
+tasas de
+ocurrencia
+
+Python (scipy,
+matplotlib)
+
+Datos de
+cibersegurida
+d
+
+Captura de
+datos,
+modelado de
+colas y
+simulación
+
+SimPy,
+Wireshark,
+Python
+
+Datos de red
+
+Simulación
+discreta de
+procesos de
+llegada y
+espera
+
+Python
+(SimPy), R
+(queueing)
+
+Datos de
+bases de
+datos
+
+5
+
+Sistemas
+distribuidos:
+sincronización
+y replicación
+aleatoria
+
+6
+
+Procesamient
+o por lotes
+programado:
+optimización
+estocástica de
+tiempos de
+ejecución
+Carga y fallos
+de servidores
+en horarios
+laborales
+
+7
+
+8
+
+Tráfico web
+con patrones
+diarios y
+semanales
+
+Modelos de
+Markov
+ocultos
+aplicados al
+reconocimient
+o de voz o
+texto
+10 Modelado de
+series
+temporales
+estocásticas
+para
+predicción de
+demanda
+11 Simulación
+estocástica en
+9
+
+optimizar el
+rendimiento.
+Simular el
+comportamiento
+de mensajes y
+replicaciones en
+sistemas
+distribuidos con
+retardos
+estocásticos.
+Modelar y
+simular la
+ejecución de
+tareas por lotes
+considerando
+incertidumbre
+en la duración.
+Analizar
+variaciones
+diarias en la
+carga del
+servidor y su
+relación con
+fallos mediante
+procesos no
+homogéneos.
+Modelar el
+tráfico de
+usuarios web
+considerando
+periodicidad y
+aleatoriedad en
+la demanda.
+Implementar un
+modelo HMM
+para identificar
+patrones
+lingüísticos o
+fonéticos.
+
+Simulación de
+procesos y
+análisis
+probabilístico
+
+Python (SimPy,
+multiprocessin
+g)
+
+Datos de
+sistemas
+distribuidos
+
+Análisis de
+rendimiento y
+simulación
+Monte Carlo
+
+Python
+(numpy,
+matplotlib)
+
+Datos de
+tareas
+programadas
+
+Modelado
+temporal y
+simulación
+estocástica
+
+Python
+(pandas,
+statsmodels)
+
+Datos de
+rendimiento
+de servidores
+
+Series
+temporales
+estocásticas y
+simulación
+
+Python
+(statsmodels),
+R (forecast)
+
+Logs de
+tráfico web
+
+Simulación y
+entrenamiento
+de modelos
+ocultos
+
+Python
+(hmmlearn), R
+
+Datos
+textuales o de
+audio
+
+Aplicar modelos
+ARIMA o
+Poisson para
+predecir tráfico
+o consumo.
+
+Modelado
+estadístico y
+validación
+
+Python
+(statsmodels),
+R
+
+Series
+temporales
+
+Analizar la
+incertidumbre
+
+Experimentació
+n con
+
+Python
+(PyMC3,
+
+Datos de
+predicción
+
+redes
+neuronales
+bayesianas
+12 Análisis
+estocástico de
+fluctuaciones
+en
+criptomoneda
+s
+13 Modelos de
+colas en
+servicios en la
+nube
+14 Procesos de
+nacimiento y
+muerte en
+gestión de
+errores de
+software
+15 Simulación
+estocástica del
+flujo de
+estudiantes en
+plataformas elearning
+16 Difusión de
+información
+en redes
+sociales con
+modelos de
+Poisson
+17 Desarrollo de
+un simulador
+interactivo de
+procesos
+estocásticos
+18 Predicción de
+secuencias
+con cadenas
+de Markov en
+usuarios web
+19 Modelos de
+colas M/M/1
+para
+optimización
+
+en modelos de
+aprendizaje
+automático.
+Simular precios
+y volatilidad con
+procesos de
+Wiener.
+
+variabilidad
+aleatoria
+
+TensorFlow
+Probability)
+
+Simulación
+Monte Carlo y
+análisis de
+series
+
+Python
+(NumPy,
+matplotlib)
+
+Datos
+financieros
+
+Evaluar
+rendimiento y
+asignación de
+recursos en
+sistemas de
+colas M/M/c.
+Modelar la
+evolución de
+bugs y
+correcciones en
+sistemas de
+software.
+Analizar el
+comportamiento
+de acceso y
+permanencia.
+
+Simulación
+discreta y
+modelado
+
+SimPy, R
+(queueing)
+
+Datos de
+servidores
+
+Análisis
+temporal de
+incidencias y
+defectos en
+repositorios
+
+Python
+(matplotlib,
+seaborn)
+
+Simulación y
+análisis de
+datos
+educativos
+
+Python
+(pandas,
+matplotlib)
+
+Datos de
+desarrollo.
+Datos de
+software
+(GitHub,
+GitLab)
+Datos
+educativos
+
+Estudiar la
+propagación de
+mensajes o fake
+news.
+
+Modelado
+estocástico y
+visualización de
+redes
+
+Python
+(networkx,
+seaborn)
+
+Datos de
+redes sociales
+
+Crear un
+software
+educativo para
+visualizar
+Poisson, Markov
+y colas.
+Modelar la
+navegación de
+usuarios para
+anticipar
+comportamiento
+s.
+Evaluar el
+rendimiento de
+sistemas bajo
+diferentes
+
+Diseño de
+software y
+simulación
+numérica
+
+Python
+(tkinter,
+matplotlib)
+
+Simulación
+educativa
+
+Análisis de
+datos reales y
+simulación de
+transiciones
+
+Python
+(Markovify,
+pandas)
+
+Logs de
+navegación
+web
+
+Diseño
+experimental y
+simulación
+discreta
+
+SimPy
+(Python),
+MATLAB
+
+Datos de red
+
+20
+
+21
+
+22
+
+23
+
+24
+
+25
+
+26
+
+27
+
+28
+
+29
+
+de tráfico de
+red
+Procesos de
+Poisson en
+detección de
+ataques
+cibernéticos
+Movimiento
+Browniano en
+predicción de
+precios
+financieros
+Simulación de
+cargas de
+trabajo en
+entornos
+distribuidos
+Modelos de
+Markov en
+secuencias
+genéticas
+Predicción
+estocástica de
+fallos en
+hardware
+Procesos de
+Poisson para
+mutaciones
+genéticas
+Desarrollo de
+un simulador
+en Python de
+procesos de
+Poisson y
+Markov
+Procesos de
+Wiener
+aplicados al
+modelado de
+temperatura
+ambiental
+Procesos
+estocásticos
+aplicados a
+sistemas
+inteligentes
+de transporte
+Comparación
+entre modelos
+
+cargas.
+Analizar
+patrones de
+ocurrencia de
+intentos de
+intrusión.
+Simular
+trayectorias
+aleatorias de
+precios de
+activos.
+Evaluar
+desempeño bajo
+condiciones
+aleatorias de
+llegada.
+Analizar
+transiciones
+entre bases de
+ADN.
+Estimar
+probabilidad de
+fallos bajo carga
+continua.
+Modelar
+ocurrencia de
+mutaciones en
+poblaciones.
+Crear una
+herramienta
+educativa
+interactiva.
+
+Análisis
+probabilístico y
+simulación
+
+Python
+(scipy.stats,
+pandas)
+
+Logs de
+seguridad
+
+Modelado
+estocástico y
+simulación
+Monte Carlo
+
+Python
+(NumPy,
+pandas)
+
+Datos
+financieros
+
+Modelos de
+colas y
+simulación
+
+SimPy,
+AnyLogic
+
+Datos de
+rendimiento
+
+Modelado
+probabilístico y
+simulación
+
+Python
+(BioPython,
+NumPy)
+
+Datos
+biológicos
+
+Modelado de
+supervivencia y
+simulación
+
+Python
+(lifelines), R
+
+Datos de
+mantenimient
+o
+
+Modelado
+matemático y
+validación
+computacional
+Diseño de
+software y
+simulación
+numérica
+
+Python/R
+
+Datos
+genéticos
+
+Python
+(tkinter,
+matplotlib)
+
+Simulación
+educativa
+
+Analizar
+fluctuaciones de
+temperatura a
+través del
+tiempo.
+
+Modelado de
+series
+temporales y
+simulación
+
+R, Python
+
+Datos
+meteorológico
+s
+
+Simular llegadas
+y esperas en
+sistemas de
+transporte
+urbano.
+
+Modelos de
+colas y análisis
+probabilístico
+
+Python,
+MATLAB
+
+Datos de
+movilidad
+
+Evaluar ventajas
+del enfoque
+
+Análisis
+comparativo y
+
+R, Python
+
+Datos
+simulados
+
+deterministas
+y estocásticos
+en predicción
+de datos
+
+probabilístico.
+
+simulación
+
+Estructura del documento a presentar
+
+
+
+
+
+
+
+
+
+
+Introducción
+Planteamiento del problema
+Objetivo general y específicos
+Justificación
+Marco Teórico (conceptos teóricos sobre el tema de procesos estocásticos
+respecto al caso)
+Diseño metodológico (Definir el tipo de estudio (simulación, modelado,
+análisis de datos, herramientas empleadas y descripción del conjunto de
+datos en los escenarios simulados)
+Resultados esperados
+Bibliografía
+
+Presentación Oral o Exposición
+Debe incluir los siguientes elementos:
+
+
+
+
+
+
+
+
+Introducción clara del problema y su contexto real.
+Fundamento teórico: tipo de proceso estocástico aplicado (Markov, Poisson,
+etc.).
+Modelo propuesto: diagrama, ecuación o simulación representativa.
+Demostración computacional: ejecución de un script o análisis de resultados.
+Resultados esperados o preliminares con interpretación.
+Conclusiones y posibles aplicaciones prácticas.
+Respuestas a preguntas del docente o compañeros.
+
+Criterios de Evaluación
+
+
+
+
+
+Claridad del problema y objetivos (Relevancia y coherencia entre el problema
+planteado y los objetivos formulados)
+Fundamento teórico y rigor científico (Dominio conceptual, uso de bibliografía
+actual y precisión en la exposición)
+Diseño metodológico (Correcta aplicación del modelo estocástico y justificación de
+herramientas)
+Creatividad y aplicación informática (Innovación en el uso de simulación,
+visualización o desarrollo de software)
+
+
+
+
+Presentación escrita y oral (Claridad, estructura y calidad del lenguaje técnico)
+Análisis crítico y argumentación (Capacidad de reflexión y solidez en la defensa del
+proyecto).
+
+
