@@ -1,0 +1,2066 @@
+---
+const informeSlides = [
+  {
+    section: "Portada",
+    title: "Modelos de Colas M/M/c en la Nube",
+    subtitle: "Evaluación de Rendimiento y Asignación de Recursos",
+    bullets: [
+      "Grupo G42 · Noviembre 2025",
+      "Procesos Estocásticos y Series de Tiempo",
+      "Universidad Mayor de San Andrés"
+    ],
+    image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&q=80"
+  },
+  {
+    section: "Resumen",
+    title: "Resumen Ejecutivo",
+    bullets: [
+      "Análisis de simulación de modelos de colas M/M/c aplicados a servicios cloud",
+      "Evaluación de rendimiento y asignación óptima de recursos",
+      "Simulación discreta en Python con interfaz web interactiva en Streamlit",
+      "Comparación de resultados teóricos vs simulados con visualizaciones"
+    ],
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
+  },
+  {
+    section: "Introducción",
+    title: "Contexto del Problema",
+    bullets: [
+      "AWS, Azure y Google Cloud han transformado la gestión de infraestructuras",
+      "Durante eventos como Black Friday, las peticiones aumentan exponencialmente",
+      "Colas largas causan tiempos de respuesta lentos y abandono de carritos",
+      "Pérdidas económicas estimadas en miles de millones de dólares anuales"
+    ],
+    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80"
+  },
+  {
+    section: "Introducción",
+    title: "Teoría de Colas en Cloud",
+    bullets: [
+      "Modela sistemas donde entidades llegan aleatoriamente y son procesadas",
+      "Aplicaciones: microservicios en Kubernetes, funciones serverless en AWS Lambda",
+      "Mal dimensionamiento → sobreprovisionamiento (costos) o subprovisionamiento (degradación)",
+      "M/M/c simula escenarios para evaluar trade-offs costo vs eficiencia"
+    ],
+    image: "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=800&q=80"
+  },
+  {
+    section: "Problema",
+    title: "Planteamiento del Problema",
+    bullets: [
+      "Incertidumbre: llegadas siguen patrones estocásticos (horarios pico, campañas)",
+      "Con c servidores (tasa μ) y tasa llegada λ: utilización ρ = λ/(cμ) debe ser < 1",
+      "Variaciones en λ (100 a 500 req/s) requieren autoscaling dinámico",
+      "Escenarios reales: Netflix en estrenos, Uber Eats en horas pico"
+    ],
+    image: "https://images.unsplash.com/photo-1573164713988-8665fc963095?w=800&q=80"
+  },
+  {
+    section: "Problema",
+    title: "Pregunta de Investigación",
+    bullets: [
+      "¿Cómo determinar el número óptimo de instancias virtuales (servidores)?",
+      "Minimizar tiempo en cola Wq y longitud de cola Lq",
+      "Controlar costo operativo simultáneamente",
+      "Considerando distribuciones Poisson para llegadas y Exponenciales para servicios"
+    ],
+    highlight: true,
+    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80"
+  },
+  {
+    section: "Objetivos",
+    title: "Objetivo General",
+    bullets: [
+      "Evaluar el rendimiento y asignación de recursos en sistemas M/M/c",
+      "Aplicado a servicios en la nube",
+      "Mediante simulación discreta y modelado interactivo",
+      "Con análisis visual de resultados"
+    ],
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80"
+  },
+  {
+    section: "Objetivos",
+    title: "Objetivos Específicos",
+    bullets: [
+      "Desarrollar simulador interactivo en Python con interfaz web Streamlit",
+      "Analizar métricas: Wq, Lq, ρ y probabilidad de espera",
+      "Identificar trade-offs costo-rendimiento mediante curvas de sensibilidad",
+      "Comparar resultados simulados vs teóricos para validar el modelo"
+    ],
+    image: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800&q=80"
+  },
+  {
+    section: "Justificación",
+    title: "Justificación Práctica",
+    bullets: [
+      "Gasto en cloud: $591 mil millones en 2023 (Gartner)",
+      "Desperdicio estimado: 30-35% por ineficiencias en asignación de recursos",
+      "Modelos M/M/c permiten optimizar sin interrupciones en producción",
+      "Mejora experiencia del usuario (SLA 99.9% uptime)"
+    ],
+    image: "https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=800&q=80"
+  },
+  {
+    section: "Justificación",
+    title: "Justificación Académica",
+    bullets: [
+      "Herramientas interactivas promueven aprendizaje activo",
+      "Experimentación con parámetros reales de procesos estocásticos",
+      "Aplicaciones en fintech, healthcare donde colas impactan tiempos críticos",
+      "Prevención de fallos costosos en sistemas de misión crítica"
+    ],
+    image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=80"
+  },
+  {
+    section: "Marco Teórico",
+    title: "Proceso de Poisson",
+    bullets: [
+      "Proceso de conteo {N(t), t ≥ 0} donde N(t) = número de eventos hasta t",
+      "Propiedades: incrementos independientes, estacionarios, sin memoria",
+      "Inter-llegada exponencial con parámetro λ",
+      "Aplicación: modela peticiones HTTP asumiendo independencia"
+    ],
+    image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&q=80"
+  },
+  {
+    section: "Marco Teórico",
+    title: "Distribución Exponencial",
+    bullets: [
+      'Tiempo entre eventos <span class="katex-formula" data-formula="T \\sim \\text{Exp}(\\mu)"></span>, densidad <span class="katex-formula" data-formula="f(t) = \\mu e^{-\\mu t}"></span>',
+      'Propiedad sin memoria: <span class="katex-formula" data-formula="P(T > t+s \\mid T > s) = P(T > t)"></span>',
+      "En colas: representa tiempos de servicio variables pero predecibles",
+      "Fundamental para modelar servicios en sistemas de colas"
+    ],
+    image: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800&q=80"
+  },
+  {
+    section: "Marco Teórico",
+    title: "Cadenas de Markov",
+    bullets: [
+      'Estado <span class="katex-formula" data-formula="S(t)"></span> = número de peticiones en el sistema',
+      'Matriz de tasas <span class="katex-formula" data-formula="Q"></span>: <span class="katex-formula" data-formula="q_{n,n+1} = \\lambda"></span>, <span class="katex-formula" data-formula="q_{n,n-1} = \\min(n,c) \\cdot \\mu"></span>',
+      'En equilibrio: <span class="katex-formula" data-formula="\\pi Q = 0"></span> con <span class="katex-formula" data-formula="\\sum \\pi_i = 1"></span>',
+      "Base matemática para el análisis del modelo M/M/c"
+    ],
+    image: "https://images.unsplash.com/photo-1527474305487-b87b222841cc?w=800&q=80"
+  },
+  {
+    section: "Marco Teórico",
+    title: "Modelo M/M/c · Fórmulas Principales",
+    highlight: true,
+    isFormula: true,
+    bullets: [
+      '<span class="katex-formula" data-formula="\\rho = \\dfrac{\\lambda}{c\\mu} < 1"></span> → condición de estabilidad',
+      '<span class="katex-formula" data-formula="P_0 = \\left[ \\sum_{k=0}^{c-1} \\dfrac{r^k}{k!} + \\dfrac{r^c}{c!(1-\\rho)} \\right]^{-1}"></span>, donde <span class="katex-formula" data-formula="r = \\dfrac{\\lambda}{\\mu}"></span>',
+      '<span class="katex-formula" data-formula="L_q = \\dfrac{P_0 \\cdot r^c \\cdot \\rho}{c!(1-\\rho)^2}"></span> → longitud de cola',
+      '<span class="katex-formula" data-formula="W_q = \\dfrac{L_q}{\\lambda}"></span> ; <span class="katex-formula" data-formula="W = W_q + \\dfrac{1}{\\mu}"></span> ; <span class="katex-formula" data-formula="L = \\lambda W"></span>'
+    ],
+    image: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=800&q=80"
+  },
+  {
+    section: "Marco Teórico",
+    title: "Ejemplo Numérico",
+    bullets: [
+      'Parámetros: <span class="katex-formula" data-formula="\\lambda = 100"></span>, <span class="katex-formula" data-formula="\\mu = 20"></span>, <span class="katex-formula" data-formula="c = 6"></span> servidores',
+      'Utilización: <span class="katex-formula" data-formula="\\rho = \\dfrac{100}{6 \\times 20} = 0.833"></span> (sistema estable)',
+      'Longitud de cola: <span class="katex-formula" data-formula="L_q \\approx 2.5"></span> peticiones esperando',
+      "Múltiples servidores mitigan significativamente las colas"
+    ],
+    image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80"
+  },
+  {
+    section: "Metodología",
+    title: "Diseño Metodológico",
+    bullets: [
+      "Tipo: Simulación discreta de eventos + cálculos analíticos",
+      "Python 3.12 con SimPy para simulación de eventos",
+      "Streamlit para interfaz web interactiva",
+      "NumPy/Pandas para datos, Plotly para visualizaciones"
+    ],
+    image: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=800&q=80"
+  },
+  {
+    section: "Metodología",
+    title: "Escenarios de Simulación",
+    bullets: [
+      "Base: λ=120, μ=30, c=1..20, tiempo=600s, semilla fija",
+      "Pico: λ aumenta ×3 para simular sobrecargas",
+      "Sensibilidad: variar λ (50-300), μ (10-50), costos ($100-500/servidor)",
+      "1000+ corridas por escenario para promedios estables"
+    ],
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
+  },
+  {
+    section: "Metodología",
+    title: "Modelo de Simulación",
+    bullets: [
+      "<code>env = Environment()</code> → entorno SimPy",
+      "<code>servidores = Resource(env, capacity=c)</code> → pool de servidores",
+      "<code>generar_llegadas(env, servidores, λ)</code> → proceso de llegadas Poisson",
+      "<code>env.run(until=tiempo)</code> → ejecutar simulación"
+    ],
+    code: true,
+    image: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=800&q=80"
+  },
+  {
+    section: "Resultados",
+    title: "Resultados Preliminares",
+    bullets: [
+      '<span class="katex-formula" data-formula="c=4"></span>: <span class="katex-formula" data-formula="\\rho=1.00"></span> (inestable), <span class="katex-formula" data-formula="L_q \\to \\infty"></span>, cola creciente',
+      '<span class="katex-formula" data-formula="c=6"></span>: <span class="katex-formula" data-formula="\\rho=0.67"></span>, <span class="katex-formula" data-formula="L_q \\approx 0.15"></span>, <span class="katex-formula" data-formula="W_q \\approx 0.001"></span>s → estable',
+      '<span class="katex-formula" data-formula="c=8"></span>: <span class="katex-formula" data-formula="\\rho=0.50"></span>, <span class="katex-formula" data-formula="L_q \\approx 0.003"></span>, <span class="katex-formula" data-formula="W_q \\approx 0.00003"></span>s → muy holgado',
+      'Punto óptimo: <span class="katex-formula" data-formula="c=7\\text{-}8"></span> donde <span class="katex-formula" data-formula="W_q < 0.01"></span>s con costo razonable'
+    ],
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
+  },
+  {
+    section: "Resultados",
+    title: "Análisis de Sensibilidad",
+    bullets: [
+      'Para <span class="katex-formula" data-formula="c < 5"></span>: sistema inestable (<span class="katex-formula" data-formula="\\rho \\geq 1"></span>), colas crecientes',
+      "Simulación aproxima bien la teoría en sistemas estables",
+      "Discrepancias mínimas por varianza finita de la simulación",
+      'En picos, aumentar <span class="katex-formula" data-formula="c"></span> dinámicamente reduce <span class="katex-formula" data-formula="L_q"></span> en 85%'
+    ],
+    image: "https://images.unsplash.com/photo-1543286386-713bdd548da4?w=800&q=80"
+  },
+  {
+    section: "Conclusiones",
+    title: "Conclusiones",
+    bullets: [
+      "M/M/c es robusto para optimizar recursos cloud",
+      'Mantener <span class="katex-formula" data-formula="\\rho < 0.8"></span> para resiliencia ante picos',
+      "Visualizaciones interactivas mejoran comprensión",
+      'Trade-off costo-rendimiento muestra diminishing returns más allá de cierto <span class="katex-formula" data-formula="c"></span>'
+    ],
+    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80"
+  },
+  {
+    section: "Aplicaciones",
+    title: "Aplicaciones Prácticas",
+    bullets: [
+      "AWS CloudWatch para autoscaling predictivo",
+      "Laboratorios educativos de procesos estocásticos",
+      "E-commerce: modelar tráfico estacional (Black Friday)",
+      "IoT: manejar colas de sensores en tiempo real"
+    ],
+    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80"
+  },
+  {
+    section: "Futuro",
+    title: "Extensiones Futuras",
+    bullets: [
+      "Colas finitas: modelo M/M/c/K",
+      "Sistemas con prioridades (urgencia diferenciada)",
+      "Integración con métricas reales de producción",
+      "Machine Learning para predicción de λ dinámico"
+    ],
+    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80"
+  },
+  {
+    section: "Bibliografía",
+    title: "Referencias",
+    bullets: [
+      "Kleinrock, L. (1975). Queueing Systems: Volume 1 - Theory. Wiley.",
+      "Gross, D. et al. (2008). Fundamentals of Queueing Theory. Wiley.",
+      "Hillier, F. & Lieberman, G. (2010). Intro to Operations Research. McGraw-Hill.",
+      "Gartner (2023). Cloud Computing Trends Report."
+    ],
+    image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&q=80"
+  }
+];
+---
+
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Proyecto 13 · Modelos de colas en servicios en la nube (M/M/c)</title>
+    <meta
+      name="description"
+      content="Proyecto 13: Modelos de colas M/M/c aplicados a servicios en la nube. Teoría, simulación y slides del informe."
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <!-- KaTeX para fórmulas matemáticas -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <div class="brand">
+          <div class="dot" />
+          <span>Proyecto 13 · M/M/c</span>
+        </div>
+        <nav>
+          <a href="/">Home</a>
+          <a href="#informe">Informe</a>
+          <a href="#sim">Simulador</a>
+          <a href="#codigo">Código Python</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div class="hero__copy">
+            <p class="eyebrow">Tema 13</p>
+            <h1>Modelos de colas en servicios en la nube (M/M/c)</h1>
+            <p class="lede">
+              Evaluación de rendimiento y asignación de recursos con llegadas Poisson, servicios
+              exponenciales y múltiples servidores. Integra teoría, simulación y visualizaciones interactivas.
+            </p>
+            <div class="tags">
+              <span>λ/μ · Erlang-C</span>
+              <span>SimPy + Streamlit</span>
+              <span>Cloud scaling</span>
+            </div>
+            <div class="cta">
+              <a class="primary" href="#sim">Simulador M/M/c</a>
+              <a class="ghost" href="#informe">Ver presentación</a>
+            </div>
+          </div>
+          <div class="hero__panel">
+            <div class="panel__header">
+              <span class="chip">Estado</span>
+              <span class="status">Preparado</span>
+            </div>
+            <div class="panel__list">
+              <div class="panel__item">
+                <span class="label">Asignatura</span>
+                <p>Procesos Estocásticos y Series de Tiempo</p>
+              </div>
+              <div class="panel__item">
+                <span class="label">Modelo</span>
+                <p>M/M/c · Poisson(λ), Exp(μ), c servidores</p>
+              </div>
+              <div class="panel__item">
+                <span class="label">Herramientas</span>
+                <p>SimPy · Streamlit · Plotly · NumPy/Pandas</p>
+              </div>
+            </div>
+            <div class="panel__footer">
+              <span class="bubble ghost">Grupo 42</span>
+              <span class="bubble">Colas · Cloud</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- INFORME EN CARRUSEL -->
+        <section class="informe-carousel" id="informe">
+          <div class="section__head">
+            <div>
+              <p class="eyebrow">Informe</p>
+              <h2>Informe del Proyecto · Presentación</h2>
+              <p class="section__lede">
+                Navegá a través de las slides del informe completo. Ideal para exposición formal.
+              </p>
+            </div>
+            <div class="slide-nav-info">
+              <span id="informe-progress">1 / {informeSlides.length}</span>
+              <span id="informe-section" class="current-section">{informeSlides[0].section}</span>
+            </div>
+          </div>
+
+          <div class="informe-slider">
+            <div class="informe-slide" id="informe-slide">
+              <div class="slide-content">
+                <div class="slide-text">
+                  <p class="slide-section" id="informe-section-label">{informeSlides[0].section}</p>
+                  <h3 id="informe-title">{informeSlides[0].title}</h3>
+                  {informeSlides[0].subtitle && <p class="slide-subtitle" id="informe-subtitle">{informeSlides[0].subtitle}</p>}
+                  <ul id="informe-bullets">
+                    {informeSlides[0].bullets.map((b) => <li set:html={b}></li>)}
+                  </ul>
+                </div>
+                <div class="slide-image" id="slide-image-container">
+                  {informeSlides[0].image && <img src={informeSlides[0].image} alt="" id="slide-image" />}
+                </div>
+              </div>
+            </div>
+
+            <div class="informe-controls">
+              <button id="informe-prev" class="nav-btn">
+                <span class="nav-icon">←</span>
+                <span class="nav-text">Anterior</span>
+              </button>
+              <div class="slide-dots" id="informe-dots">
+                {informeSlides.map((_, i) => (
+                  <button class={`dot ${i === 0 ? 'active' : ''}`} data-index={i}></button>
+                ))}
+              </div>
+              <button id="informe-next" class="nav-btn">
+                <span class="nav-text">Siguiente</span>
+                <span class="nav-icon">→</span>
+              </button>
+            </div>
+
+            <div class="keyboard-hint">
+              <kbd>←</kbd> <kbd>→</kbd> para navegar · <kbd>Home</kbd> inicio · <kbd>End</kbd> final
+            </div>
+          </div>
+        </section>
+
+        <!-- SIMULADOR M/M/c -->
+        <section class="sim" id="sim">
+          <div class="section__head">
+            <div>
+              <p class="eyebrow">Interactivo</p>
+              <h2>Simulador M/M/c con JavaScript</h2>
+              <p class="section__lede">Ajusta parámetros, ejecuta la simulación real en el navegador y analiza escalabilidad y costo.</p>
+            </div>
+          </div>
+
+          <div class="sim-grid">
+            <div class="controls">
+              <label>
+                λ&nbsp;(llegadas/s)
+                <input type="range" id="lambda" min="10" max="400" step="10" value="120" />
+                <span class="value" id="lambda-value">120</span>
+              </label>
+              <label>
+                μ&nbsp;(servicio por servidor)
+                <input type="range" id="mu" min="5" max="120" step="5" value="30" />
+                <span class="value" id="mu-value">30</span>
+              </label>
+              <label>
+                c&nbsp;(servidores)
+                <input type="range" id="servers" min="1" max="40" step="1" value="6" />
+                <span class="value" id="servers-value">6</span>
+              </label>
+              <label>
+                Tiempo de simulación&nbsp;(s)
+                <input type="range" id="time" min="100" max="2000" step="50" value="600" />
+                <span class="value" id="time-value">600</span>
+              </label>
+              <label>
+                Costo/servidor&nbsp;(USD/mes)
+                <input type="range" id="cost" min="50" max="1500" value="300" />
+                <span class="value" id="cost-value">300</span>
+              </label>
+            </div>
+
+            <div class="metrics">
+              <div class="metric">
+                <p>Utilización&nbsp;ρ</p>
+                <h3 id="rho-out">0.00</h3>
+                <small id="stable-out">—</small>
+              </div>
+              <div class="metric">
+                <p>Wq&nbsp;(s) · Tiempo en cola</p>
+                <h3 id="wq-out">0.00</h3>
+                <small></small>
+              </div>
+              <div class="metric">
+                <p>Lq · Cola promedio</p>
+                <h3 id="lq-out">0.00</h3>
+                <small></small>
+              </div>
+              <div class="metric">
+                <p>Costo mensual&nbsp;(USD)</p>
+                <h3 id="cost-out">0</h3>
+                <small></small>
+              </div>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="actions">
+              <button id="run-sim" class="primary">Ejecutar simulación</button>
+              <button id="analyze" class="ghost">Analizar escalabilidad</button>
+            </div>
+
+            <!-- Contenedores de gráficos y resultados -->
+            <div class="charts">
+              <div id="queue-chart" style="width:100%;height:400px;"></div>
+              <div id="scalability-chart" style="width:100%;height:400px;margin-top:24px;"></div>
+              <div id="tradeoff-chart" style="width:100%;height:400px;margin-top:24px;"></div>
+              <div id="analysis-table" class="analysis-table" style="overflow-x:auto;margin-top:24px;"></div>
+              <div id="analysis-optimum" class="analysis-optimum" style="margin-top:12px;font-size:14px;color:var(--accent);"></div>
+            </div>
+
+            <div class="formula">
+              <p class="eyebrow">Fórmulas clave</p>
+              <div class="formula-list">
+                <div class="formula-item">
+                  <span class="formula-label">Utilización:</span>
+                  <span class="formula-math" id="f1"></span>
+                </div>
+                <div class="formula-item">
+                  <span class="formula-label">Probabilidad sistema vacío:</span>
+                  <span class="formula-math" id="f2"></span>
+                </div>
+                <div class="formula-item">
+                  <span class="formula-label">Longitud de cola:</span>
+                  <span class="formula-math" id="f3"></span>
+                </div>
+                <div class="formula-item">
+                  <span class="formula-label">Tiempos y relaciones:</span>
+                  <span class="formula-math" id="f4"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- CÓDIGO PYTHON -->
+        <section class="code" id="codigo">
+          <div class="section__head">
+            <div>
+              <p class="eyebrow">Código Fuente</p>
+              <h2>Simulador Python · Streamlit + SimPy</h2>
+              <p class="section__lede">
+                El simulador interactivo de arriba es una <strong>réplica en JavaScript</strong> del código Python original. 
+                Aquí está el código fuente completo para ejecutar la versión con Streamlit.
+              </p>
+            </div>
+          </div>
+
+          <div class="code-notice">
+            <div class="notice-icon">💡</div>
+            <div class="notice-content">
+              <strong>Nota:</strong> El simulador M/M/c que ves arriba en esta página está implementado en JavaScript puro, 
+              replicando la lógica del código Python. Ambas versiones usan las mismas fórmulas de Erlang-C y simulación 
+              de eventos discretos.
+            </div>
+          </div>
+
+          <div class="code-section">
+            <div class="code-header">
+              <span class="code-filename">simulator.py</span>
+              <span class="code-desc">Motor de simulación M/M/c con SimPy</span>
+            </div>
+            <pre class="code-block" id="code-simulator"></pre>
+          </div>
+
+          <div class="code-section">
+            <div class="code-header">
+              <span class="code-filename">app.py</span>
+              <span class="code-desc">Interfaz web con Streamlit y Plotly</span>
+            </div>
+            <pre class="code-block" id="code-app"></pre>
+          </div>
+
+          <div class="code-run">
+            <div class="run-header">
+              <span class="run-icon">▶</span>
+              <span>Ejecutar localmente</span>
+            </div>
+            <pre class="run-commands"><code># Instalar dependencias
+pip install streamlit simpy numpy pandas plotly
+
+# Ejecutar la app
+cd "proy 13 (python)"
+streamlit run app.py</code></pre>
+            <p class="run-note">Se abrirá en <code>http://localhost:8501</code> con la interfaz completa de Streamlit.</p>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <span>Universidad Mayor de San Andrés · 2025</span>
+        <span>Proyecto 13 · Modelos de colas M/M/c</span>
+      </footer>
+    </div>
+
+    <!-- PARTICLES -->
+    <div id="tsparticles"></div>
+  </body>
+
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+    <!-- Plotly.js para gráficos -->
+    <script src="https://cdn.plot.ly/plotly-2.25.2.min.js"></script>
+    <!-- Serializar datos de slides del informe -->
+    <script define:vars={{ informeSlides }}>
+      window.informeSlides = informeSlides;
+    </script>
+  <script is:inline>
+    // Partículas
+    const accent =
+      getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() ||
+      "#8ad6ff";
+    const accent2 =
+      getComputedStyle(document.documentElement).getPropertyValue("--accent-2").trim() ||
+      "#72f0d5";
+
+    window.addEventListener("load", () => {
+      if (window.tsParticles) {
+        window.tsParticles.load("tsparticles", {
+          fpsLimit: 60,
+          fullScreen: { enable: false },
+          particles: {
+            number: { value: 80, density: { enable: true, area: 900 } },
+            color: { value: [accent, accent2] },
+            links: { enable: true, distance: 140, color: accent, opacity: 0.35, width: 1 },
+            move: { enable: true, speed: 1.6, outModes: "out" },
+            opacity: { value: { min: 0.25, max: 0.7 } },
+            size: { value: { min: 1.5, max: 3.5 } },
+          },
+          interactivity: { events: { onHover: { enable: true, mode: "grab" } }, modes: { grab: { distance: 180, links: { opacity: 0.6 } } } },
+          detectRetina: true,
+        });
+        const canvas = document.querySelector("#tsparticles canvas");
+        if (canvas) canvas.style.pointerEvents = "none";
+      }
+    });
+  </script>
+
+  <script is:inline>
+    // Datos del informe en slides
+    const informeSlidesData = window.informeSlides;
+
+    // Elementos del carrusel de informe
+    const informeSlideEl = document.getElementById("informe-slide");
+    const informeTitleEl = document.getElementById("informe-title");
+    const informeBulletsEl = document.getElementById("informe-bullets");
+    const informeProgressEl = document.getElementById("informe-progress");
+    const informeSectionEl = document.getElementById("informe-section");
+    const informeSectionLabel = document.getElementById("informe-section-label");
+    const informeDotsContainer = document.getElementById("informe-dots");
+    
+    let informeIdx = 0;
+
+    function renderInformeSlide() {
+      const s = informeSlidesData[informeIdx];
+      if (!s) return;
+      
+      // Añadir animación
+      informeSlideEl.classList.add("slide-transition");
+      
+      setTimeout(() => {
+        informeTitleEl.textContent = s.title;
+        informeBulletsEl.innerHTML = s.bullets.map((b) => `<li>${b}</li>`).join("");
+        informeProgressEl.textContent = `${informeIdx + 1} / ${informeSlidesData.length}`;
+        informeSectionEl.textContent = s.section;
+        informeSectionLabel.textContent = s.section;
+        
+        // Manejar subtitle (solo en algunas slides)
+        const subtitleEl = document.getElementById("informe-subtitle");
+        if (subtitleEl) {
+          if (s.subtitle) {
+            subtitleEl.textContent = s.subtitle;
+            subtitleEl.style.display = "block";
+          } else {
+            subtitleEl.style.display = "none";
+          }
+        }
+        
+        // Manejar imagen
+        const imageContainer = document.getElementById("slide-image-container");
+        if (imageContainer) {
+          if (s.image) {
+            imageContainer.innerHTML = '<img src="' + s.image + '" alt="" id="slide-image" />';
+            imageContainer.style.display = "block";
+          } else {
+            imageContainer.innerHTML = '';
+            imageContainer.style.display = "none";
+          }
+        }
+        
+        // Actualizar clase de highlight
+        informeSlideEl.classList.toggle("highlight", s.highlight === true);
+        informeSlideEl.classList.toggle("code-slide", s.code === true);
+        informeSlideEl.classList.toggle("formula-slide", s.isFormula === true);
+        
+        // Actualizar dots
+        const dots = informeDotsContainer.querySelectorAll(".dot");
+        dots.forEach((dot, i) => {
+          dot.classList.toggle("active", i === informeIdx);
+        });
+        
+        // Renderizar fórmulas KaTeX en la slide
+        if (typeof katex !== 'undefined') {
+          informeBulletsEl.querySelectorAll('.katex-formula').forEach(function(el) {
+            var formula = el.getAttribute('data-formula');
+            if (formula) {
+              katex.render(formula, el, { displayMode: false, throwOnError: false });
+            }
+          });
+        }
+        
+        informeSlideEl.classList.remove("slide-transition");
+      }, 150);
+    }
+
+    // Navegación con botones
+    document.getElementById("informe-prev").addEventListener("click", () => {
+      informeIdx = (informeIdx - 1 + informeSlidesData.length) % informeSlidesData.length;
+      renderInformeSlide();
+    });
+    
+    document.getElementById("informe-next").addEventListener("click", () => {
+      informeIdx = (informeIdx + 1) % informeSlidesData.length;
+      renderInformeSlide();
+    });
+
+    // Navegación con dots
+    informeDotsContainer.querySelectorAll(".dot").forEach((dot) => {
+      dot.addEventListener("click", (e) => {
+        informeIdx = parseInt(e.target.dataset.index);
+        renderInformeSlide();
+      });
+    });
+
+    // Navegación con teclado
+    document.addEventListener("keydown", (e) => {
+      // Solo si el carrusel está visible en viewport
+      const rect = document.getElementById("informe").getBoundingClientRect();
+      const inView = rect.top < window.innerHeight && rect.bottom > 0;
+      
+      if (!inView) return;
+      
+      if (e.key === "ArrowLeft") {
+        informeIdx = (informeIdx - 1 + informeSlidesData.length) % informeSlidesData.length;
+        renderInformeSlide();
+      } else if (e.key === "ArrowRight") {
+        informeIdx = (informeIdx + 1) % informeSlidesData.length;
+        renderInformeSlide();
+      } else if (e.key === "Home") {
+        informeIdx = 0;
+        renderInformeSlide();
+      } else if (e.key === "End") {
+        informeIdx = informeSlidesData.length - 1;
+        renderInformeSlide();
+      }
+    });
+
+    // Renderizar slide inicial
+    renderInformeSlide();
+
+    // === Simulador M/M/c en JavaScript ===
+    // Utilidades generales
+    function factorial(n) {
+      let r = 1;
+      for (let i = 2; i <= n; i++) r *= i;
+      return r;
+    }
+    // Genera un valor exponencial dado un rate
+    function randExp(rate) {
+      return -Math.log(1 - Math.random()) / rate;
+    }
+    // Simulación de cola M/M/c por eventos discretos
+    function simulate(lambda, mu, c, simTime) {
+      let t = 0;
+      // próxima llegada
+      let nextArrival = randExp(lambda);
+      // tiempos de finalización de servicio en cada servidor
+      let serviceEndTimes = [];
+      // cola de tiempos de llegada de clientes en espera
+      let queue = [];
+      // tiempos de espera observados
+      let waitTimes = [];
+      // registros de longitud de cola (tiempo, longitud)
+      let timeline = [[0, 0]];
+      while (true) {
+        const nextService = serviceEndTimes.length > 0 ? serviceEndTimes[0] : Infinity;
+        // Evento de llegada
+        if (nextArrival <= nextService && nextArrival <= simTime) {
+          t = nextArrival;
+          if (serviceEndTimes.length < c) {
+            // Se inicia servicio inmediatamente
+            const s = randExp(mu);
+            // agregar tiempo de fin al array y ordenarlo
+            serviceEndTimes.push(t + s);
+            serviceEndTimes.sort((a, b) => a - b);
+            waitTimes.push(0);
+          } else {
+            // se encola
+            queue.push(t);
+          }
+          // programar siguiente llegada
+          nextArrival += randExp(lambda);
+          // registrar longitud de cola tras la llegada
+          timeline.push([t, queue.length]);
+        }
+        // Evento de finalización de servicio
+        else if (nextService < nextArrival && nextService <= simTime) {
+          t = nextService;
+          // quitar el servidor que termina
+          serviceEndTimes.shift();
+          if (queue.length > 0) {
+            const arrivalTime = queue.shift();
+            const wait = t - arrivalTime;
+            waitTimes.push(wait);
+            const s = randExp(mu);
+            serviceEndTimes.push(t + s);
+            serviceEndTimes.sort((a, b) => a - b);
+          }
+          // registrar longitud de cola tras la salida
+          timeline.push([t, queue.length]);
+        } else {
+          break;
+        }
+        // por si acaso se excede el tiempo
+        if (t > simTime) break;
+      }
+      // completar hasta el final del tiempo de simulación
+      const last = timeline[timeline.length - 1];
+      if (last[0] < simTime) {
+        timeline.push([simTime, last[1]]);
+      }
+      // cálculo de métricas simuladas
+      let area = 0;
+      for (let i = 0; i < timeline.length - 1; i++) {
+        const dt = timeline[i + 1][0] - timeline[i][0];
+        area += timeline[i][1] * dt;
+      }
+      const Lq_sim = area / simTime;
+      const Wq_sim = waitTimes.length > 0 ? waitTimes.reduce((a, b) => a + b, 0) / waitTimes.length : 0;
+      // métricas teóricas (Erlang-C)
+      const rho = lambda / (c * mu);
+      const stable = rho < 1;
+      const r = lambda / mu;
+      let Lq_theory = NaN;
+      let Wq_theory = NaN;
+      let L_theory = NaN;
+      let W_theory = NaN;
+      if (stable && lambda > 0 && mu > 0) {
+        let sumTerm = 0;
+        for (let k = 0; k < c; k++) {
+          sumTerm += Math.pow(r, k) / factorial(k);
+        }
+        const lastTerm = Math.pow(r, c) / (factorial(c) * (1 - rho));
+        const P0 = 1 / (sumTerm + lastTerm);
+        Lq_theory = P0 * Math.pow(r, c) * rho / (factorial(c) * Math.pow(1 - rho, 2));
+        Wq_theory = Lq_theory / lambda;
+        W_theory = Wq_theory + 1 / mu;
+        L_theory = lambda * W_theory;
+      }
+      return {
+        timeline,
+        waitTimes,
+        Lq_sim,
+        Wq_sim,
+        rho,
+        stable,
+        Lq_theory,
+        Wq_theory,
+        L_theory,
+        W_theory,
+      };
+    }
+    // Actualiza las etiquetas que muestran el valor actual de cada control
+    function bindSliders() {
+      const ids = ["lambda", "mu", "servers", "time", "cost"];
+      ids.forEach((id) => {
+        const input = document.getElementById(id);
+        const valueEl = document.getElementById(`${id}-value`);
+        function update() {
+          valueEl.textContent = input.value;
+        }
+        input.addEventListener("input", update);
+        update();
+      });
+    }
+    // Ejecuta una simulación y actualiza métricas y gráfico
+    async function runSimulation() {
+      const lambda = Number(document.getElementById("lambda").value);
+      const mu = Number(document.getElementById("mu").value);
+      const servers = Number(document.getElementById("servers").value);
+      const simTime = Number(document.getElementById("time").value);
+      const cost = Number(document.getElementById("cost").value);
+      const res = simulate(lambda, mu, servers, simTime);
+      // Actualizar métricas
+      document.getElementById("rho-out").textContent = res.rho.toFixed(3);
+      document.getElementById("stable-out").textContent = res.stable
+        ? "Estable (ρ < 1)"
+        : "Inestable (cola infinita)";
+      document.getElementById("wq-out").textContent = res.Wq_sim.toFixed(3);
+      document.getElementById("lq-out").textContent = res.Lq_sim.toFixed(3);
+      document.getElementById("cost-out").textContent = (servers * cost).toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      });
+      // Dibujar gráfica de cola
+      const times = res.timeline.map((p) => p[0]);
+      const queues = res.timeline.map((p) => p[1]);
+      const trace = {
+        x: times,
+        y: queues,
+        type: "scatter",
+        mode: "lines",
+        fill: "tozeroy",
+        name: "Longitud de cola",
+      };
+      const layout = {
+        title: `Evolución de la cola – M/M/${servers} (λ=${lambda}, μ=${mu})`,
+        xaxis: { title: "Tiempo (s)" },
+        yaxis: { title: "Longitud de cola" },
+        margin: { t: 40, l: 50, r: 10, b: 40 },
+      };
+      Plotly.newPlot("queue-chart", [trace], layout);
+    }
+    // Analiza escalabilidad y costo para distintos valores de c
+    async function analyze() {
+      const lambda = Number(document.getElementById("lambda").value);
+      const mu = Number(document.getElementById("mu").value);
+      const serversCurrent = Number(document.getElementById("servers").value);
+      const costPerServer = Number(document.getElementById("cost").value);
+      const simTime = Math.min(Number(document.getElementById("time").value), 400);
+      const minServers = Math.max(1, Math.floor(lambda / mu) - 2);
+      const maxServers = serversCurrent + 15;
+      const results = [];
+      for (let c = minServers; c <= maxServers; c++) {
+        const res = simulate(lambda, mu, c, simTime);
+        results.push({
+          servers: c,
+          Wq: res.Wq_sim,
+          Lq: res.Lq_sim,
+          rho: res.rho,
+          cost: c * costPerServer,
+        });
+      }
+      // Graficar impacto de c en Wq y costo
+      const traceWq = {
+        x: results.map((d) => d.servers),
+        y: results.map((d) => d.Wq),
+        type: "scatter",
+        mode: "lines+markers",
+        name: "Tiempo en cola (s)",
+        line: { width: 3 },
+      };
+      const traceCost = {
+        x: results.map((d) => d.servers),
+        y: results.map((d) => d.cost),
+        type: "scatter",
+        mode: "lines+markers",
+        name: "Costo mensual ($)",
+        yaxis: "y2",
+        line: { width: 3 },
+      };
+      const layout1 = {
+        title: "Impacto del número de servidores",
+        xaxis: { title: "Número de servidores (c)" },
+        yaxis: { title: "Tiempo en cola (s)" },
+        yaxis2: {
+          title: "Costo mensual ($)",
+          overlaying: "y",
+          side: "right",
+        },
+        margin: { t: 40, l: 50, r: 50, b: 50 },
+      };
+      Plotly.newPlot("scalability-chart", [traceWq, traceCost], layout1);
+      // Graficar trade-off costo vs tiempo
+      const traceTradeoff = {
+        x: results.map((d) => d.cost),
+        y: results.map((d) => d.Wq),
+        type: "scatter",
+        mode: "lines+markers",
+        name: "Frontera eficiente",
+        line: { width: 4 },
+      };
+      const layout2 = {
+        title: "Costo mensual vs Tiempo en cola",
+        xaxis: { title: "Costo mensual ($)" },
+        yaxis: { title: "Tiempo en cola (s)" },
+        margin: { t: 40, l: 50, r: 10, b: 50 },
+        shapes: [
+          {
+            type: "line",
+            x0: serversCurrent * costPerServer,
+            x1: serversCurrent * costPerServer,
+            y0: 0,
+            y1: Math.max(...results.map((d) => d.Wq)),
+            line: {
+              dash: "dash",
+              width: 2,
+              color: "#888",
+            },
+          },
+        ],
+        annotations: [
+          {
+            x: serversCurrent * costPerServer,
+            y: Math.max(...results.map((d) => d.Wq)),
+            xref: "x",
+            yref: "y",
+            text: `Configuración actual (${serversCurrent} serv.)`,
+            showarrow: true,
+            arrowhead: 7,
+            ay: -40,
+          },
+        ],
+      };
+      Plotly.newPlot("tradeoff-chart", [traceTradeoff], layout2);
+      // Tabla con resultados
+      const table = document.getElementById("analysis-table");
+      let html = "<table><thead><tr><th>Servidores</th><th>Tiempo en cola (s)</th><th>Cola promedio</th><th>Utilización ρ</th><th>Costo ($)</th></tr></thead><tbody>";
+      results.forEach((row) => {
+        html += `<tr><td>${row.servers}</td><td>${row.Wq.toFixed(3)}</td><td>${row.Lq.toFixed(3)}</td><td>${row.rho.toFixed(3)}</td><td>${row.cost.toLocaleString()}</td></tr>`;
+      });
+      html += "</tbody></table>";
+      table.innerHTML = html;
+      // Calcular y mostrar punto óptimo (menor costo con Wq < 0.5s)
+      const candidates = results.filter((r) => r.Wq < 0.5);
+      const optimum = candidates.length > 0 ? candidates.reduce((min, cur) => (cur.cost < min.cost ? cur : min)) : null;
+      const optDiv = document.getElementById("analysis-optimum");
+      if (optimum) {
+        optDiv.innerHTML = `Punto óptimo sugerido: <strong>${optimum.servers} servidores</strong> → Tiempo en cola ≈ ${optimum.Wq.toFixed(3)}s → Costo = $${optimum.cost.toLocaleString()}`;
+      } else {
+        optDiv.innerHTML = "No se encontró un punto con Tiempo en cola &lt; 0.5s en el rango analizado.";
+      }
+    }
+    // Vincular eventos a botones
+    function initSim() {
+      bindSliders();
+      document.getElementById("run-sim").addEventListener("click", runSimulation);
+      document.getElementById("analyze").addEventListener("click", analyze);
+      // Ejecutar una simulación inicial
+      runSimulation();
+    }
+    // Ejecutar al cargar
+    window.addEventListener("load", initSim);
+  </script>
+
+  <style>
+    #tsparticles {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    :global(:root) {
+      --bg: #0f1117;
+      --surface: #131924;
+      --surface-2: #0b0e14;
+      --ink: #e8ecf5;
+      --muted: #9aa4b7;
+      --accent: #8ad6ff;
+      --accent-2: #72f0d5;
+      --border: rgba(255, 255, 255, 0.06);
+      --shadow: 0 20px 80px rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Manrope", system-ui, -apple-system, sans-serif;
+      background: radial-gradient(900px at 10% 10%, rgba(138, 214, 255, 0.08), transparent),
+        radial-gradient(700px at 80% 0%, rgba(114, 240, 213, 0.08), transparent),
+        var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+      line-height: 1.6;
+      padding: 24px clamp(24px, 4vw, 48px) 48px;
+    }
+
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: "Space Grotesk", "Manrope", system-ui, sans-serif;
+      margin: 0;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+
+    p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 14px 20px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
+      backdrop-filter: blur(16px);
+      position: sticky;
+      top: 12px;
+      z-index: 10;
+    }
+
+    nav {
+      display: flex;
+      gap: 14px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    nav a {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--ink);
+      border-color: var(--border);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      box-shadow: 0 0 0 8px rgba(114, 240, 213, 0.12);
+    }
+
+    .hero {
+      margin-top: 40px;
+      padding: clamp(28px, 5vw, 48px);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: clamp(20px, 4vw, 32px);
+      box-shadow: var(--shadow);
+    }
+
+    .hero__copy h1 {
+      font-size: clamp(32px, 5vw, 48px);
+      margin-top: 8px;
+    }
+
+    .hero__copy .lede {
+      margin: 12px 0 18px;
+      max-width: 640px;
+    }
+
+    .eyebrow {
+      font-size: 13px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 12px 0 18px;
+    }
+
+    .tags span {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .cta {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .primary,
+    .ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .primary {
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      color: #051019;
+      box-shadow: 0 12px 34px rgba(114, 240, 213, 0.25);
+    }
+
+    .primary:hover,
+    .ghost:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.26);
+    }
+
+    .ghost {
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--muted);
+    }
+
+    .hero__panel {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: linear-gradient(160deg, var(--surface), var(--surface-2));
+      padding: 18px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .panel__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chip,
+    .bubble {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      border-radius: 10px;
+      background: rgba(138, 214, 255, 0.08);
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.01em;
+    }
+
+    .bubble.ghost {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    .status {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .panel__list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .panel__item {
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .panel__item .label {
+      color: var(--muted);
+      font-size: 13px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .panel__footer {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .section__head {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 22px;
+      margin-top: 40px;
+    }
+
+    .section__lede {
+      margin-top: 8px;
+      max-width: 680px;
+    }
+
+    /* SIMULADOR */
+    .sim {
+      margin-top: 40px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.02);
+      box-shadow: var(--shadow);
+    }
+
+    .sim-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      font-size: 14px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      padding: 12px;
+      border-radius: 12px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+    }
+
+    .value {
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+
+    .metric {
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.02);
+      text-align: left;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+    }
+
+    .metric h3 {
+      margin: 6px 0 2px;
+      font-size: 22px;
+    }
+
+    .metric p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .formula {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      background: linear-gradient(135deg, rgba(138, 214, 255, 0.03), rgba(114, 240, 213, 0.02));
+    }
+
+    .formula-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .formula-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 14px 16px;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .formula-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .formula-math {
+      font-size: 16px;
+      color: var(--ink);
+      line-height: 1.8;
+    }
+
+    .formula-math .katex {
+      font-size: 1.1em;
+      color: var(--ink);
+    }
+
+    .formula-slide .informe-slide li {
+      font-size: 15px;
+      line-height: 2;
+    }
+
+    /* Código inline en slides */
+    .informe-slide li code {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-family: "SF Mono", "Fira Code", "Consolas", monospace;
+      font-size: 13px;
+      color: var(--accent-2);
+      border: 1px solid var(--border);
+    }
+
+    /* Estilo especial para slides de código */
+    .informe-slide.code-slide li {
+      background: rgba(0, 0, 0, 0.3);
+      font-family: "SF Mono", "Fira Code", "Consolas", monospace;
+      font-size: 14px;
+    }
+
+    /* Estilo especial para slides de fórmulas */
+    .informe-slide.formula-slide {
+      background: linear-gradient(135deg, rgba(138, 214, 255, 0.06), rgba(114, 240, 213, 0.04));
+    }
+
+    .informe-slide.formula-slide li {
+      line-height: 2.2;
+    }
+
+
+    /* INFORME CAROUSEL */
+    .informe-carousel {
+      margin-top: 40px;
+    }
+
+    .informe-carousel .section__head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .slide-nav-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+
+    .slide-nav-info span:first-child {
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .current-section {
+      padding: 6px 12px;
+      background: linear-gradient(120deg, rgba(138, 214, 255, 0.15), rgba(114, 240, 213, 0.15));
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .informe-slider {
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 0;
+      background: linear-gradient(160deg, var(--surface), var(--surface-2));
+      box-shadow: var(--shadow), 0 0 0 1px rgba(138, 214, 255, 0.05);
+      overflow: hidden;
+    }
+
+    .informe-slide {
+      padding: 40px;
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+
+    .slide-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      flex: 1;
+      align-items: center;
+    }
+
+    .slide-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .slide-image {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border);
+      max-height: 320px;
+    }
+
+    .slide-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .slide-image:hover img {
+      transform: scale(1.03);
+    }
+
+    @media (max-width: 900px) {
+      .slide-content {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .slide-image {
+        max-height: 200px;
+        order: -1;
+      }
+    }
+
+    .informe-slide.slide-transition {
+      opacity: 0.4;
+      transform: scale(0.98);
+    }
+
+    .informe-slide.highlight {
+      background: linear-gradient(135deg, rgba(138, 214, 255, 0.08), rgba(114, 240, 213, 0.06));
+    }
+
+    .informe-slide.code-slide {
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.2));
+    }
+
+    .slide-section {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent-2);
+      margin-bottom: 8px;
+    }
+
+    .informe-slide h3 {
+      font-size: clamp(24px, 4vw, 36px);
+      margin-bottom: 12px;
+      background: linear-gradient(120deg, var(--ink), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .slide-subtitle {
+      font-size: 18px;
+      color: var(--muted);
+      margin-bottom: 16px;
+      font-style: italic;
+    }
+
+    .informe-slide ul {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .informe-slide li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--muted);
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .informe-slide li:hover {
+      transform: translateX(4px);
+      border-color: rgba(138, 214, 255, 0.3);
+    }
+
+    .informe-slide li::before {
+      content: "→";
+      color: var(--accent);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .informe-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 20px 24px;
+      border-top: 1px solid var(--border);
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--ink);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .nav-btn:active {
+      transform: translateY(0);
+    }
+
+    .nav-icon {
+      font-size: 18px;
+    }
+
+    .slide-dots {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 60%;
+    }
+
+    .slide-dots .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255, 255, 255, 0.15);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      padding: 0;
+    }
+
+    .slide-dots .dot:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.2);
+    }
+
+    .slide-dots .dot.active {
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      box-shadow: 0 0 8px var(--accent);
+      transform: scale(1.3);
+    }
+
+    .keyboard-hint {
+      text-align: center;
+      padding: 12px;
+      font-size: 12px;
+      color: var(--muted);
+      opacity: 0.6;
+      border-top: 1px solid var(--border);
+    }
+
+    .keyboard-hint kbd {
+      display: inline-block;
+      padding: 3px 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 11px;
+      margin: 0 2px;
+    }
+
+    @media (max-width: 700px) {
+      .informe-slide {
+        padding: 32px 24px;
+        min-height: 320px;
+      }
+      
+      .slide-icon {
+        font-size: 36px;
+      }
+      
+      .informe-slide h3 {
+        font-size: 22px;
+      }
+      
+      .informe-slide li {
+        font-size: 14px;
+        padding: 10px 12px;
+      }
+      
+      .nav-text {
+        display: none;
+      }
+      
+      .slide-dots {
+        max-width: 50%;
+      }
+      
+      .keyboard-hint {
+        display: none;
+      }
+    }
+
+    /* CODE */
+    .code {
+      margin-top: 40px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 18px;
+      background: rgba(255, 255, 255, 0.02);
+      box-shadow: var(--shadow);
+    }
+
+    .code-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+    }
+
+    .code-card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.02);
+      display: grid;
+      gap: 8px;
+    }
+
+    .code-card.highlight {
+      background: linear-gradient(140deg, rgba(138, 214, 255, 0.06), rgba(114, 240, 213, 0.06));
+    }
+
+    /* Nueva sección de código mejorada */
+    .code-notice {
+      display: flex;
+      gap: 16px;
+      padding: 20px;
+      background: linear-gradient(135deg, rgba(138, 214, 255, 0.08), rgba(114, 240, 213, 0.05));
+      border: 1px solid var(--accent);
+      border-radius: 14px;
+      margin-bottom: 24px;
+    }
+
+    .notice-icon {
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+
+    .notice-content {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .notice-content strong {
+      color: var(--accent);
+    }
+
+    .code-section {
+      margin-bottom: 24px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    .code-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      background: linear-gradient(90deg, rgba(138, 214, 255, 0.1), rgba(114, 240, 213, 0.05));
+      border-bottom: 1px solid var(--border);
+    }
+
+    .code-filename {
+      font-family: "SF Mono", "Fira Code", monospace;
+      font-weight: 700;
+      color: var(--accent);
+      font-size: 15px;
+    }
+
+    .code-desc {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .code-block {
+      margin: 0;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.4);
+      border: none;
+      border-radius: 0;
+      font-size: 13px;
+      line-height: 1.6;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    .code-block code {
+      font-family: "SF Mono", "Fira Code", "Consolas", monospace;
+      color: #e0e0e0;
+    }
+
+    .code-run {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .run-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 20px;
+      background: linear-gradient(90deg, rgba(114, 240, 213, 0.15), rgba(138, 214, 255, 0.08));
+      border-bottom: 1px solid var(--border);
+      font-weight: 700;
+      color: var(--accent-2);
+    }
+
+    .run-icon {
+      font-size: 18px;
+    }
+
+    .run-commands {
+      margin: 0;
+      padding: 16px 20px;
+      background: rgba(0, 0, 0, 0.4);
+      border: none;
+      border-radius: 0;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .run-commands code {
+      font-family: "SF Mono", "Fira Code", "Consolas", monospace;
+      color: var(--accent-2);
+    }
+
+    .run-note {
+      padding: 12px 20px;
+      margin: 0;
+      font-size: 13px;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    .run-note code {
+      background: rgba(114, 240, 213, 0.1);
+      padding: 2px 8px;
+      border-radius: 4px;
+      color: var(--accent-2);
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      color: #051019;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .pill.ghost {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    pre {
+      margin: 0;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px;
+      color: var(--ink);
+      overflow-x: auto;
+    }
+
+    code.small {
+      font-size: 12px;
+      display: block;
+      white-space: pre-wrap;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .footer {
+      margin-top: 40px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 6px;
+      color: var(--muted);
+      font-size: 14px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+      nav {
+        display: none;
+      }
+      .topbar {
+        position: static;
+      }
+    }
+  </style>
+
+  <!-- Templates para código Python (no procesados por Astro) -->
+  <script type="text/template" id="tpl-simulator"># simulator.py
+import simpy
+import random
+import numpy as np
+import math
+
+def run_simulation(lambda_rate, mu_rate, num_servers, sim_time=600, seed=42):
+    random.seed(seed)
+    np.random.seed(seed)
+    
+    arrivals, queue_lengths, wait_times = [], [], []
+
+    def arrival(env, servers):
+        while True:
+            yield env.timeout(random.expovariate(lambda_rate))
+            arrivals.append(env.now)
+            env.process(customer(env, servers))
+    
+    def customer(env, servers):
+        arrive = env.now
+        with servers.request() as req:
+            queue_lengths.append(len(servers.queue))
+            yield req
+            wait_times.append(env.now - arrive)
+            yield env.timeout(random.expovariate(mu_rate))
+    
+    env = simpy.Environment()
+    servers = simpy.Resource(env, capacity=num_servers)
+    env.process(arrival(env, servers))
+    env.run(until=sim_time)
+
+    # === CÁLCULO TEÓRICO (Erlang-C) ===
+    rho = lambda_rate / (num_servers * mu_rate)
+    if rho &lt; 1:
+        r = lambda_rate / mu_rate
+        sum_term = sum(r**k / math.factorial(k) for k in range(num_servers))
+        P0 = 1 / (sum_term + r**num_servers / (math.factorial(num_servers) * (1-rho)))
+        Lq = P0 * (r**num_servers) * rho / (math.factorial(num_servers) * (1-rho)**2)
+        Wq = Lq / lambda_rate
+    else:
+        Lq = Wq = float('inf')
+
+    return dict(rho=rho, Lq_theory=Lq, Wq_theory=Wq,
+                Lq_sim=np.mean(queue_lengths), Wq_sim=np.mean(wait_times))</script>
+
+  <script type="text/template" id="tpl-app"># app.py - Cloud Queue Simulator M/M/c
+import streamlit as st
+import numpy as np
+import pandas as pd
+import plotly.express as px
+from simulator import run_simulation
+
+st.set_page_config(page_title="Cloud Queue Simulator", layout="wide")
+
+with st.sidebar:
+    lambda_rate = st.slider("Tasa de llegada (λ)", 10, 400, 120)
+    mu_rate = st.slider("Tasa de servicio (μ)", 10, 100, 30)
+    num_servers = st.slider("Servidores (c)", 1, 40, 6)
+    sim_time = st.slider("Duración (s)", 120, 1800, 600)
+    costo = st.number_input("Costo/servidor ($)", 10, 2000, 120)
+
+results = run_simulation(lambda_rate, mu_rate, num_servers, sim_time)
+
+# Métricas
+c1, c2, c3, c4 = st.columns(4)
+c1.metric("Utilización ρ", f"{results['rho']:.1%}")
+c2.metric("Tiempo en cola", f"{results['Wq_sim']:.3f} s")
+c3.metric("Cola promedio", f"{results['Lq_sim']:.1f}")
+c4.metric("Costo mensual", f"${num_servers * costo:,}")
+
+# Gráfico de cola
+df = pd.DataFrame(dict(
+    Tiempo=np.linspace(0, sim_time, len(results.get('queue_lengths', []))),
+    Cola=results.get('queue_lengths', [])
+))
+fig = px.area(df, x='Tiempo', y='Cola', template="plotly_dark")
+st.plotly_chart(fig, use_container_width=True)</script>
+
+  <!-- Script para renderizar código y fórmulas -->
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Insertar código desde templates
+      var simTpl = document.getElementById('tpl-simulator');
+      var simEl = document.getElementById('code-simulator');
+      if (simTpl && simEl) simEl.innerHTML = '<code>' + simTpl.innerHTML + '</code>';
+      
+      var appTpl = document.getElementById('tpl-app');
+      var appEl = document.getElementById('code-app');
+      if (appTpl && appEl) appEl.innerHTML = '<code>' + appTpl.innerHTML + '</code>';
+
+      // KaTeX
+      function tryRenderKaTeX() {
+        if (typeof katex === 'undefined') { setTimeout(tryRenderKaTeX, 100); return; }
+        var formulas = {
+          'f1': '\\rho = \\dfrac{\\lambda}{c \\cdot \\mu} \\quad \\text{condición de estabilidad: } \\rho < 1',
+          'f2': 'P_0 = \\left[ \\sum_{k=0}^{c-1} \\dfrac{r^k}{k!} + \\dfrac{r^c}{c!(1-\\rho)} \\right]^{-1}, \\quad r = \\dfrac{\\lambda}{\\mu}',
+          'f3': 'L_q = \\dfrac{P_0 \\cdot r^c \\cdot \\rho}{c! \\cdot (1-\\rho)^2}',
+          'f4': 'W_q = \\dfrac{L_q}{\\lambda} \\quad ; \\quad W = W_q + \\dfrac{1}{\\mu} \\quad ; \\quad L = \\lambda \\cdot W'
+        };
+        Object.keys(formulas).forEach(function(id) {
+          var el = document.getElementById(id);
+          if (el) katex.render(formulas[id], el, { displayMode: false, throwOnError: false });
+        });
+      }
+      tryRenderKaTeX();
+    });
+  </script>
+</html>
