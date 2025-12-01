@@ -1,0 +1,27 @@
+---
+interface Props {
+  leftText?: string;
+  rightText?: string;
+}
+
+const { leftText = "Universidad Mayor de San Andrés · 2025", rightText } = Astro.props;
+---
+
+<footer class="footer">
+  <span>{leftText}</span>
+  {rightText && <span>{rightText}</span>}
+</footer>
+
+<style>
+  .footer {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 6px;
+    color: var(--muted);
+    font-size: 13px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+</style>
+

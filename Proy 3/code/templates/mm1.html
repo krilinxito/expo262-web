@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Proyecto 1 - Sistema M/M/1</title>
+    <!-- CSS externo -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="layout">
+    <header>
+        <div>
+            <div class="title">Proyecto 1: Sistema M/M/1</div>
+            <div class="subtitle">Servidor Flask, cliente Poisson y análisis de colas en una sola vista.</div>
+        </div>
+        <div class="badge">Procesos Estocásticos</div>
+    </header>
+
+    <div class="grid">
+        <!-- Columna izquierda: controles + métricas -->
+        <div class="card">
+            <h2>Control del experimento</h2>
+            <p class="subtitle" style="margin-top: 2px;">
+                Usa estos botones para iniciar el servidor, el cliente y (opcionalmente) la simulación.
+            </p>
+
+            <div class="controls">
+                <button class="btn btn-primary" id="btn-server">
+                    <span class="btn-icon">🖥️</span>
+                    Iniciar servidor
+                </button>
+                <button class="btn btn-primary" id="btn-client">
+                    <span class="btn-icon">📡</span>
+                    Iniciar cliente
+                </button>
+                <button class="btn btn-secondary" id="btn-sim">
+                    <span class="btn-icon">📊</span>
+                    Correr simulación
+                </button>
+                <button class="btn btn-secondary" onclick="window.location.reload()">
+                    <span class="btn-icon">🔄</span>
+                    Actualizar métricas
+                </button>
+            </div>
+
+            <div id="status" class="status"></div>
+
+            {% if not data_available %}
+            <div class="alert">
+                <strong>Sin datos todavía.</strong> Inicia el servidor y luego el cliente para generar los CSV en la carpeta
+                <code>file/</code>. Después presiona <em>Actualizar métricas</em>.
+            </div>
+            {% endif %}
+
+            {% if data_available and metricas %}
+            <h3>Métricas principales</h3>
+
+            <div class="metrics-badges">
+                <div class="metric-pill">
+                    <span>λ̂ (server):</span> {{ metricas.lambda_hat_server|round(4) }}
+                </div>
+                <div class="metric-pill">
+                    <span>λ̂ (cliente):</span> {{ metricas.lambda_hat_client|round(4) }}
+                </div>
+                <div class="metric-pill">
+                    <span>μ̂:</span> {{ metricas.mu_hat|round(4) }}
+                </div>
+                <div class="metric-pill">
+                    <span>ρ̂:</span> {{ metricas.rho_hat|round(4) }}
+                </div>
+            </div>
+
+            <table class="metrics-table">
+                <tr><th>Métrica</th><th>Empírico</th><th>Teórico M/M/1</th></tr>
+                <tr>
+                    <td>Wq (espera en cola)</td>
+                    <td>{{ metricas.Wq_emp|round(4) }} s</td>
+                    <td>{{ metricas.Wq_teo|round(4) }} s</td>
+                </tr>
+                <tr>
+                    <td>W (tiempo en sistema)</td>
+                    <td>{{ metricas.W_emp|round(4) }} s</td>
+                    <td>{{ metricas.W_teo|round(4) }} s</td>
+                </tr>
+                <tr>
+                    <td>W (cliente)</td>
+                    <td>{{ metricas.W_client_emp|round(4) }} s</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>Lq (n° en cola)</td>
+                    <td>{{ metricas.Lq_emp|round(4) }}</td>
+                    <td>{{ metricas.Lq_teo|round(4) }}</td>
+                </tr>
+                <tr>
+                    <td>L (n° en sistema)</td>
+                    <td>{{ metricas.L_emp|round(4) }}</td>
+                    <td>{{ metricas.L_teo|round(4) }}</td>
+                </tr>
+            </table>
+            {% endif %}
+        </div>
+
+        <!-- Columna derecha: carrusel de gráficas -->
+        <div class="card">
+            <h2>Gráficas del sistema</h2>
+
+            {% if data_available and plots %}
+            <div class="carousel-wrapper">
+                <div class="carousel" id="carousel">
+                    <button class="carousel-btn prev" id="carousel-prev" type="button">‹</button>
+                    <button class="carousel-btn next" id="carousel-next" type="button">›</button>
+                    <img id="carousel-image" src="" alt="Gráfica">
+                    <div class="carousel-caption" id="carousel-caption"></div>
+                </div>
+                <div class="carousel-dots" id="carousel-dots"></div>
+            </div>
+            {% else %}
+            <div class="alert">
+                No hay gráficas todavía. Genera datos con el servidor y el cliente, luego actualiza esta vista.
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+    async function callApi(endpoint, label) {
+        const statusEl = document.getElementById("status");
+        statusEl.textContent = `Ejecutando ${label}...`;
+        statusEl.className = "status";
+
+        try {
+            const resp = await fetch(endpoint, { method: "POST" });
+            const data = await resp.json();
+
+            statusEl.textContent = data.message || `Respuesta de ${label}`;
+            statusEl.className = "status " + (data.success ? "ok" : "error");
+        } catch (err) {
+            statusEl.textContent = `Error al llamar ${label}: ` + err;
+            statusEl.className = "status error";
+        }
+    }
+
+    document.getElementById("btn-server").addEventListener("click", () => {
+        callApi("/api/start_server", "servidor");
+    });
+
+    document.getElementById("btn-client").addEventListener("click", () => {
+        callApi("/api/start_client", "cliente");
+    });
+
+    document.getElementById("btn-sim").addEventListener("click", () => {
+        callApi("/api/run_sim", "simulación");
+    });
+
+    // -------- Carrusel --------
+    {% if data_available and plots %}
+    const carouselItems = [
+        {% for pf in plots %}
+        {
+            src: "{{ url_for('static', filename='plots/' + pf) }}",
+            title: "{{ pf }}"
+        }{% if not loop.last %},{% endif %}
+        {% endfor %}
+    ];
+
+    let currentIndex = 0;
+
+    const imgEl = document.getElementById("carousel-image");
+    const captionEl = document.getElementById("carousel-caption");
+    const dotsContainer = document.getElementById("carousel-dots");
+    const prevBtn = document.getElementById("carousel-prev");
+    const nextBtn = document.getElementById("carousel-next");
+
+    function renderDots() {
+        dotsContainer.innerHTML = "";
+        carouselItems.forEach((_, idx) => {
+            const dot = document.createElement("button");
+            dot.className = "carousel-dot" + (idx === currentIndex ? " active" : "");
+            dot.type = "button";
+            dot.addEventListener("click", () => {
+                currentIndex = idx;
+                updateCarousel();
+            });
+            dotsContainer.appendChild(dot);
+        });
+    }
+
+    function updateCarousel() {
+        if (!carouselItems.length) return;
+        const item = carouselItems[currentIndex];
+        imgEl.src = item.src;
+        captionEl.textContent = item.title;
+        renderDots();
+    }
+
+    prevBtn.addEventListener("click", () => {
+        if (!carouselItems.length) return;
+        currentIndex = (currentIndex - 1 + carouselItems.length) % carouselItems.length;
+        updateCarousel();
+    });
+
+    nextBtn.addEventListener("click", () => {
+        if (!carouselItems.length) return;
+        currentIndex = (currentIndex + 1) % carouselItems.length;
+        updateCarousel();
+    });
+
+    // Inicializar carrusel
+    updateCarousel();
+    {% endif %}
+</script>
+</body>
+</html>

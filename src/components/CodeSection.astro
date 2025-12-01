@@ -1,0 +1,175 @@
+---
+interface CodeFile {
+  filename: string;
+  description: string;
+  code: string;
+}
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  notice?: { icon: string; text: string };
+  files: CodeFile[];
+  runCommands?: string;
+}
+
+const { title = "Código Fuente", subtitle, notice, files, runCommands } = Astro.props;
+---
+
+<section class="code-section" id="codigo">
+  <div class="section__head">
+    <div>
+      <p class="eyebrow">Código Fuente</p>
+      <h2>{title}</h2>
+      {subtitle && <p class="section__lede" set:html={subtitle}></p>}
+    </div>
+  </div>
+
+  {notice && (
+    <div class="code-notice">
+      <div class="notice-icon">{notice.icon}</div>
+      <div class="notice-content" set:html={notice.text}></div>
+    </div>
+  )}
+
+  {files.map((file, index) => (
+    <div class="code-file">
+      <div class="code-header">
+        <span class="code-filename">{file.filename}</span>
+        <span class="code-desc">{file.description}</span>
+      </div>
+      <pre class="code-block"><code set:html={file.code}></code></pre>
+    </div>
+  ))}
+
+  {runCommands && (
+    <div class="code-run">
+      <div class="run-header">
+        <span class="run-icon">▶</span>
+        <span>Ejecutar</span>
+      </div>
+      <pre class="run-commands"><code>{runCommands}</code></pre>
+    </div>
+  )}
+</section>
+
+<style>
+  .code-section {
+    margin-top: 40px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .code-notice {
+    display: flex;
+    gap: 16px;
+    padding: 18px;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 8%, transparent), color-mix(in srgb, var(--accent-2) 5%, transparent));
+    border: 1px solid var(--accent);
+    border-radius: 14px;
+    margin-bottom: 24px;
+  }
+
+  .notice-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+
+  .notice-content {
+    color: var(--muted);
+    line-height: 1.6;
+    font-size: 14px;
+  }
+
+  .notice-content :global(strong) {
+    color: var(--accent);
+  }
+
+  .notice-content :global(code) {
+    background: rgba(0,0,0,0.3);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: var(--accent-2);
+  }
+
+  .code-file {
+    margin-bottom: 20px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    background: rgba(0,0,0,0.3);
+  }
+
+  .code-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 18px;
+    background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 10%, transparent), color-mix(in srgb, var(--accent-2) 5%, transparent));
+    border-bottom: 1px solid var(--border);
+  }
+
+  .code-filename {
+    font-family: "SF Mono", monospace;
+    font-weight: 700;
+    color: var(--accent);
+    font-size: 14px;
+  }
+
+  .code-desc {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .code-block {
+    margin: 0;
+    padding: 18px;
+    background: rgba(0,0,0,0.4);
+    font-size: 12px;
+    line-height: 1.6;
+    max-height: 300px;
+    overflow-y: auto;
+    border: none;
+    border-radius: 0;
+  }
+
+  .code-block code {
+    font-family: "SF Mono", "Fira Code", monospace;
+    color: #e0e0e0;
+    white-space: pre-wrap;
+  }
+
+  .code-run {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .run-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+    background: linear-gradient(90deg, rgba(139,92,246,0.15), rgba(59,130,246,0.08));
+    border-bottom: 1px solid var(--border);
+    font-weight: 700;
+    color: var(--accent-3);
+    font-size: 14px;
+  }
+
+  .run-commands {
+    margin: 0;
+    padding: 14px 18px;
+    background: rgba(0,0,0,0.4);
+    font-size: 13px;
+    border: none;
+  }
+
+  .run-commands code {
+    font-family: "SF Mono", "Fira Code", monospace;
+    color: var(--accent-3);
+  }
+</style>
+

@@ -1,0 +1,152 @@
+---
+interface PanelItem {
+  label: string;
+  value: string;
+  accent?: boolean;
+}
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  description: string;
+  tags: string[];
+  primaryBtn: { href: string; text: string };
+  secondaryBtn?: { href: string; text: string };
+  panelStatus: string;
+  panelItems: PanelItem[];
+  panelFooterTags: string[];
+}
+
+const { 
+  eyebrow, title, description, tags, 
+  primaryBtn, secondaryBtn,
+  panelStatus, panelItems, panelFooterTags 
+} = Astro.props;
+---
+
+<section class="hero">
+  <div class="hero__copy">
+    <p class="eyebrow">{eyebrow}</p>
+    <h1 set:html={title}></h1>
+    <p class="lede" set:html={description}></p>
+    <div class="tags">
+      {tags.map(tag => <span>{tag}</span>)}
+    </div>
+    <div class="cta">
+      <a class="primary" href={primaryBtn.href}>{primaryBtn.text}</a>
+      {secondaryBtn && <a class="ghost" href={secondaryBtn.href}>{secondaryBtn.text}</a>}
+    </div>
+  </div>
+  <div class="hero__panel">
+    <div class="panel__header">
+      <span class="chip">Estado</span>
+      <span class="status">{panelStatus}</span>
+    </div>
+    <div class="panel__list">
+      {panelItems.map(item => (
+        <div class="panel__item">
+          <span class="label">{item.label}</span>
+          <p class:list={[{ accent: item.accent }]}>{item.value}</p>
+        </div>
+      ))}
+    </div>
+    <div class="panel__footer">
+      {panelFooterTags.map((tag, i) => (
+        <span class:list={["bubble", { ghost: i === 0 }]}>{tag}</span>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    margin-top: 40px;
+    padding: clamp(24px,5vw,48px);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: clamp(20px,4vw,32px);
+    box-shadow: var(--shadow);
+  }
+
+  .hero__copy h1 {
+    font-size: clamp(26px,3.5vw,38px);
+    margin-top: 8px;
+  }
+
+  .hero__copy .lede {
+    margin: 12px 0 18px;
+    max-width: 600px;
+  }
+
+  .hero__panel {
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: linear-gradient(160deg, var(--surface), var(--surface-2));
+    padding: 18px;
+    display: grid;
+    gap: 12px;
+  }
+
+  .panel__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .chip, .bubble {
+    padding: 6px 12px;
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 12px;
+  }
+
+  .bubble.ghost {
+    background: rgba(255,255,255,0.04);
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+
+  .status {
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  .panel__list {
+    display: grid;
+    gap: 10px;
+  }
+
+  .panel__item {
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.02);
+  }
+
+  .panel__item .label {
+    color: var(--muted);
+    font-size: 12px;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .panel__item p.accent {
+    color: var(--accent);
+  }
+
+  .panel__footer {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+  }
+</style>
+

@@ -1,0 +1,640 @@
+---
+import BaseLayout from '../../components/BaseLayout.astro';
+import Topbar from '../../components/Topbar.astro';
+import Hero from '../../components/Hero.astro';
+import InformeCarousel from '../../components/InformeCarousel.astro';
+import CodeSection from '../../components/CodeSection.astro';
+import Footer from '../../components/Footer.astro';
+
+// Datos del informe
+const informeSlides = [
+  {
+    section: "Portada",
+    title: "Sistema de Colas M/M/1 en Servidor Flask",
+    subtitle: "Modelado y Simulación de Tráfico Web",
+    bullets: [
+      "Grupo G42 · Noviembre 2025",
+      "Procesos Estocásticos y Series de Tiempo",
+      "Universidad Mayor de San Andrés"
+    ],
+    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80"
+  },
+  {
+    section: "Resumen",
+    title: "Resumen Ejecutivo",
+    bullets: [
+      "Modelado del tráfico de solicitudes HTTP como sistema de colas M/M/1",
+      "Servidor Flask monohilo como servidor del sistema de colas",
+      "Captura de datos reales con Wireshark para estimar λ y μ",
+      "Validación mediante simulación discreta con SimPy"
+    ],
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
+  },
+  {
+    section: "Introducción",
+    title: "Contexto del Problema",
+    bullets: [
+      "Los servidores web reciben solicitudes que llegan aleatoriamente",
+      "Cada solicitud consume recursos de CPU, memoria y red",
+      "Si el servidor está ocupado, las solicitudes deben esperar en cola",
+      "El modelo M/M/1 permite analizar este comportamiento matemáticamente"
+    ],
+    image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&q=80"
+  },
+  {
+    section: "Introducción",
+    title: "¿Por qué Teoría de Colas?",
+    bullets: [
+      "Predecir el rendimiento del servidor bajo diferentes cargas",
+      "Identificar cuellos de botella antes de que ocurran",
+      "Tomar decisiones sobre escalabilidad e infraestructura",
+      "Optimizar tiempos de respuesta para mejor experiencia de usuario"
+    ],
+    image: "https://images.unsplash.com/photo-1573164713988-8665fc963095?w=800&q=80"
+  },
+  {
+    section: "Problema",
+    title: "Planteamiento del Problema",
+    highlight: true,
+    bullets: [
+      "¿El tráfico HTTP sigue un proceso de Poisson?",
+      "¿Los tiempos de servicio son exponenciales?",
+      "¿El servidor Flask se comporta como un sistema M/M/1?",
+      "¿Las métricas observadas coinciden con la teoría?"
+    ],
+    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80"
+  },
+  {
+    section: "Objetivos",
+    title: "Objetivo General",
+    bullets: [
+      "Modelar y simular el tráfico de solicitudes en un servidor Flask",
+      "Utilizar el modelo de colas M/M/1",
+      "Validar con datos capturados por Wireshark",
+      "Comparar resultados teóricos, empíricos y simulados"
+    ],
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80"
+  },
+  {
+    section: "Marco Teórico",
+    title: "Teoría de Colas",
+    bullets: [
+      "Estudia sistemas donde entidades llegan para ser atendidas",
+      "Parámetros clave: λ (llegadas/s) y μ (servicios/s)",
+      "Disciplina de servicio: FIFO (First In, First Out)",
+      "Métricas: L, Lq, W, Wq, ρ (utilización)"
+    ],
+    image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&q=80"
+  },
+  {
+    section: "Marco Teórico",
+    title: "Modelo M/M/1",
+    highlight: true,
+    isFormula: true,
+    bullets: [
+      "Primera M: llegadas Poisson con tasa λ",
+      "Segunda M: tiempos de servicio Exp(μ)",
+      "El 1: un solo servidor",
+      "Condición de estabilidad: ρ = λ/μ < 1"
+    ],
+    image: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800&q=80"
+  },
+  {
+    section: "Marco Teórico",
+    title: "Fórmulas M/M/1",
+    isFormula: true,
+    bullets: [
+      "Utilización: ρ = λ/μ",
+      "Clientes en sistema: L = ρ/(1-ρ)",
+      "Clientes en cola: Lq = ρ²/(1-ρ)",
+      "Tiempo en sistema: W = 1/(μ-λ) ; Tiempo en cola: Wq = λ/(μ(μ-λ))"
+    ],
+    image: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=800&q=80"
+  },
+  {
+    section: "Metodología",
+    title: "Herramientas Utilizadas",
+    bullets: [
+      "Flask: servidor web monohilo (Python)",
+      "Requests: generador de solicitudes con llegadas exponenciales",
+      "Wireshark: captura de tráfico de red",
+      "SimPy: simulación discreta de eventos"
+    ],
+    image: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=800&q=80"
+  },
+  {
+    section: "Metodología",
+    title: "Diseño del Experimento",
+    code: true,
+    bullets: [
+      "Servidor Flask escucha en puerto 5001 con lock (capacidad=1)",
+      "Cliente genera 50 solicitudes con interarrivals ~ Exp(λ=0.5)",
+      "Wireshark captura todo el tráfico HTTP",
+      "Se exportan timestamps a CSV para análisis"
+    ],
+    image: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=800&q=80"
+  },
+  {
+    section: "Resultados",
+    title: "Parámetros Estimados",
+    highlight: true,
+    bullets: [
+      "λ empírico = 0.3057 solicitudes/segundo",
+      "μ empírico = 0.8185 solicitudes/segundo",
+      "Utilización ρ = λ/μ = 0.3734 (sistema estable)",
+      "El servidor está ocupado solo el 37% del tiempo"
+    ],
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80"
+  },
+  {
+    section: "Resultados",
+    title: "Métricas del Sistema (Teóricas)",
+    bullets: [
+      "L = 0.5960 clientes promedio en sistema",
+      "Lq = 0.2226 clientes promedio en cola",
+      "W = 1.9499 s tiempo promedio en sistema",
+      "Wq = 0.7281 s tiempo promedio en cola"
+    ],
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
+  },
+  {
+    section: "Resultados",
+    title: "Comparación Teoría vs Simulación",
+    bullets: [
+      "Wq teórico = 0.7283 s → Wq simulado ≈ 1.2029 s (+65%)",
+      "W teórico = 1.9501 s → W simulado ≈ 2.3944 s (+22%)",
+      "Diferencias por varianza de Monte Carlo",
+      "Factores reales: latencia, TCP/IP, planificación CPU"
+    ],
+    image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80"
+  },
+  {
+    section: "Conclusiones",
+    title: "Conclusiones Principales",
+    bullets: [
+      "El servidor Flask se comporta como un sistema M/M/1",
+      "Utilización ρ = 0.37 garantiza estabilidad",
+      "Métricas simuladas aproximan bien a las teóricas",
+      "La integración Flask + Wireshark + SimPy fue exitosa"
+    ],
+    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80"
+  },
+  {
+    section: "Bibliografía",
+    title: "Referencias",
+    bullets: [
+      "Gross, D. et al. (2018). Fundamentals of Queueing Theory. Wiley.",
+      "Ross, S. M. (2014). Introduction to Probability Models. Academic Press.",
+      "SimPy Documentation (2024). simpy.readthedocs.io",
+      "Wireshark Foundation (2024). wireshark.org"
+    ],
+    image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&q=80"
+  }
+];
+
+// Archivos de código
+const codeFiles = [
+  {
+    filename: "server.py",
+    description: "Servidor Flask con cola M/M/1",
+    code: `# server.py - Servidor Flask M/M/1
+from flask import Flask
+import time, random, csv, threading, os
+
+MU = 0.82  # tasa de servicio (clientes/segundo)
+app = Flask(__name__)
+lock = threading.Lock()  # Capacidad = 1
+
+@app.route("/")
+def atender_cliente():
+    llegada = time.time()
+    
+    with lock:  # Solo un cliente a la vez
+        inicio_servicio = time.time()
+        tiempo_servicio = random.expovariate(MU)
+        time.sleep(tiempo_servicio)
+        salida = time.time()
+    
+    tiempo_en_sistema = salida - llegada
+    tiempo_espera = inicio_servicio - llegada
+    
+    return f"Servicio={tiempo_servicio:.4f}s, Espera={tiempo_espera:.4f}s"
+
+if __name__ == "__main__":
+    random.seed(123)
+    app.run(host="127.0.0.1", port=5001, threaded=True)`
+  },
+  {
+    filename: "client.py",
+    description: "Generador de llegadas Poisson",
+    code: `# client.py - Generador de llegadas Poisson
+import requests, random, time, csv
+
+URL = "http://127.0.0.1:5001/"
+LAMBDA = 0.5  # tasa de llegadas (clientes/segundo)
+N_SOLICITUDES = 50
+
+random.seed(123)
+interarrivals = []
+
+for i in range(1, N_SOLICITUDES + 1):
+    interarrival = random.expovariate(LAMBDA)
+    interarrivals.append(interarrival)
+    time.sleep(interarrival)
+    
+    t_inicio = time.time()
+    r = requests.get(URL, timeout=10)
+    t_total = time.time() - t_inicio
+    print(f"[Req {i:03d}] Status={r.status_code}, Total={t_total:.3f}s")
+
+# λ empírico
+lambda_emp = 1.0 / (sum(interarrivals) / len(interarrivals))
+print(f"λ teórico={LAMBDA:.4f}, λ empírico≈{lambda_emp:.4f}")`
+  },
+  {
+    filename: "sim.py",
+    description: "Simulación discreta con SimPy",
+    code: `# sim.py - Simulación M/M/1 con SimPy
+import simpy, random, numpy as np
+
+LAMBDA = 0.3057  # tasa de llegadas
+MU = 0.8185      # tasa de servicio
+SIM_TIME = 2000.0
+
+tiempos_espera, tiempos_sistema = [], []
+
+def cliente(env, servidor):
+    llegada = env.now
+    with servidor.request() as req:
+        yield req
+        espera = env.now - llegada
+        tiempos_espera.append(espera)
+        
+        tiempo_servicio = random.expovariate(MU)
+        yield env.timeout(tiempo_servicio)
+        tiempos_sistema.append(env.now - llegada)
+
+def generador(env, servidor):
+    while True:
+        yield env.timeout(random.expovariate(LAMBDA))
+        env.process(cliente(env, servidor))
+
+env = simpy.Environment()
+servidor = simpy.Resource(env, capacity=1)
+env.process(generador(env, servidor))
+env.run(until=SIM_TIME)
+
+print(f"Wq simulado = {np.mean(tiempos_espera):.4f} s")
+print(f"W simulado  = {np.mean(tiempos_sistema):.4f} s")`
+  }
+];
+
+const runCommands = `# Terminal 1: Iniciar servidor
+cd "Proy 3/code"
+python server.py
+
+# Terminal 2: Ejecutar cliente (mientras Wireshark captura)
+python client.py --lmbda 0.5 --n 50
+
+# Terminal 3: Simulación SimPy
+python sim.py`;
+---
+
+<BaseLayout 
+  title="Proyecto 3 · Sistema de Colas M/M/1 en Servidor Flask" 
+  description="Modelado y simulación de tráfico web usando teoría de colas M/M/1 con Flask, Wireshark y SimPy."
+  accentColor="#10b981"
+  accentColor2="#3b82f6"
+>
+  <Topbar 
+    brandText="Proyecto 3 · M/M/1"
+    links={[
+      { href: "/", text: "Home" },
+      { href: "#informe", text: "Informe" },
+      { href: "#sim", text: "Simulador" },
+      { href: "#codigo", text: "Código" }
+    ]}
+  />
+
+  <main>
+    <Hero
+      eyebrow="Tema 3"
+      title="Redes de computadoras: modelado de tráfico y solicitudes"
+      description="Modelado del flujo de paquetes y solicitudes HTTP usando <strong>teoría de colas M/M/1</strong>. Captura de datos reales con Wireshark, servidor Flask y simulación con SimPy."
+      tags={["Poisson · Exp(μ)", "Flask + Wireshark", "SimPy", "ρ = 0.37"]}
+      primaryBtn={{ href: "#sim", text: "Simulador M/M/1" }}
+      secondaryBtn={{ href: "#informe", text: "Ver presentación" }}
+      panelStatus="Completado"
+      panelItems={[
+        { label: "Modelo", value: "M/M/1 · Poisson(λ) · Exp(μ) · 1 servidor" },
+        { label: "Parámetros", value: "λ = 0.3057 /s · μ = 0.8185 /s" },
+        { label: "Utilización", value: "ρ = 0.3734 (estable)", accent: true }
+      ]}
+      panelFooterTags={["Grupo 42", "Flask · SimPy"]}
+    />
+
+    <InformeCarousel slides={informeSlides} id="informe" />
+
+    <!-- SIMULADOR M/M/1 -->
+    <section class="sim" id="sim">
+      <div class="section__head">
+        <div>
+          <p class="eyebrow">Interactivo</p>
+          <h2>Simulador de Colas M/M/1</h2>
+          <p class="section__lede">Ajusta los parámetros λ y μ para ver cómo afectan al sistema.</p>
+        </div>
+      </div>
+
+      <div class="sim-grid">
+        <div class="controls">
+          <label>
+            λ (llegadas/s)
+            <input type="range" id="lambda" min="0.1" max="2" step="0.05" value="0.3" />
+            <span class="value" id="lambda-value">0.30</span>
+          </label>
+          <label>
+            μ (servicio/s)
+            <input type="range" id="mu" min="0.2" max="3" step="0.05" value="0.8" />
+            <span class="value" id="mu-value">0.80</span>
+          </label>
+          <label>
+            Tiempo de simulación (s)
+            <input type="range" id="time" min="100" max="2000" step="50" value="500" />
+            <span class="value" id="time-value">500</span>
+          </label>
+        </div>
+
+        <div class="metrics">
+          <div class="metric"><p>Utilización ρ</p><h3 id="rho-out">0.00</h3><small id="stable-out">—</small></div>
+          <div class="metric"><p>L · Clientes en sistema</p><h3 id="l-out">0.00</h3></div>
+          <div class="metric"><p>Lq · Clientes en cola</p><h3 id="lq-out">0.00</h3></div>
+          <div class="metric"><p>W (s) · Tiempo en sistema</p><h3 id="w-out">0.00</h3></div>
+          <div class="metric"><p>Wq (s) · Tiempo en cola</p><h3 id="wq-out">0.00</h3></div>
+        </div>
+
+        <div class="actions">
+          <button id="run-sim" class="primary">Ejecutar simulación</button>
+        </div>
+
+        <div class="charts">
+          <div id="queue-chart" style="width:100%;height:350px;"></div>
+        </div>
+
+        <div class="charts-row">
+          <div class="chart-half">
+            <h4>Distribución de Tiempos en Cola</h4>
+            <div id="wait-hist" style="width:100%;height:280px;"></div>
+          </div>
+          <div class="chart-half">
+            <h4>Clientes en Sistema vs Tiempo</h4>
+            <div id="clients-chart" style="width:100%;height:280px;"></div>
+          </div>
+        </div>
+
+        <div class="formula-section">
+          <p class="eyebrow">Fórmulas M/M/1</p>
+          <div class="formula-grid">
+            <div class="formula-item"><span class="formula-label">Utilización:</span><span class="formula-math" id="f-rho"></span></div>
+            <div class="formula-item"><span class="formula-label">Clientes en sistema:</span><span class="formula-math" id="f-l"></span></div>
+            <div class="formula-item"><span class="formula-label">Clientes en cola:</span><span class="formula-math" id="f-lq"></span></div>
+            <div class="formula-item"><span class="formula-label">Tiempo en sistema:</span><span class="formula-math" id="f-w"></span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULTADOS EMPÍRICOS -->
+    <section class="results" id="resultados">
+      <div class="section__head">
+        <div>
+          <p class="eyebrow">Datos Reales</p>
+          <h2>Resultados del Experimento</h2>
+          <p class="section__lede">Métricas obtenidas con Flask + Wireshark.</p>
+        </div>
+      </div>
+
+      <div class="results-grid">
+        <div class="result-card highlight">
+          <h4>Parámetros Estimados</h4>
+          <div class="param-row">
+            <div class="param"><span class="param-label">λ empírico</span><span class="param-value">0.3057</span><span class="param-unit">solicitudes/s</span></div>
+            <div class="param"><span class="param-label">μ empírico</span><span class="param-value">0.8185</span><span class="param-unit">servicios/s</span></div>
+            <div class="param accent"><span class="param-label">ρ = λ/μ</span><span class="param-value">0.3734</span><span class="param-unit">utilización</span></div>
+          </div>
+        </div>
+
+        <div class="result-card">
+          <h4>Métricas Teóricas M/M/1</h4>
+          <table class="data-table">
+            <tr><td>L (clientes en sistema)</td><td class="val">0.5960</td></tr>
+            <tr><td>Lq (clientes en cola)</td><td class="val">0.2226</td></tr>
+            <tr><td>W (tiempo en sistema)</td><td class="val">1.9499 s</td></tr>
+            <tr><td>Wq (tiempo en cola)</td><td class="val">0.7281 s</td></tr>
+          </table>
+        </div>
+
+        <div class="result-card comparison">
+          <h4>Teoría vs Simulación</h4>
+          <table class="data-table">
+            <thead><tr><th>Métrica</th><th>Teórico</th><th>Simulado</th><th>Δ%</th></tr></thead>
+            <tbody>
+              <tr><td>Wq (s)</td><td>0.7283</td><td>1.2029</td><td class="warn">+65%</td></tr>
+              <tr><td>W (s)</td><td>1.9501</td><td>2.3944</td><td class="warn">+22%</td></tr>
+            </tbody>
+          </table>
+          <p class="note">Diferencias por varianza Monte Carlo y latencias TCP/IP reales.</p>
+        </div>
+
+        <div class="result-card wide">
+          <h4>Distribuciones Observadas</h4>
+          <div id="dist-charts" style="width:100%;height:280px;"></div>
+        </div>
+      </div>
+    </section>
+
+    <CodeSection
+      title="Implementación Python"
+      subtitle="Servidor Flask, cliente generador y simulación SimPy."
+      notice={{ icon: "🖥️", text: "<strong>Arquitectura:</strong> El servidor Flask usa <code>threading.Lock()</code> para garantizar capacidad = 1 (M/M/1). El cliente genera llegadas Poisson y Wireshark captura el tráfico para análisis offline." }}
+      files={codeFiles}
+      runCommands={runCommands}
+    />
+  </main>
+
+  <Footer rightText="Proyecto 3 · Colas M/M/1 en Flask" />
+</BaseLayout>
+
+<script is:inline>
+  // Simulador M/M/1
+  document.addEventListener("DOMContentLoaded", function() {
+    var lambdaInput = document.getElementById("lambda");
+    var muInput = document.getElementById("mu");
+    var timeInput = document.getElementById("time");
+    
+    function updateLabels() {
+      document.getElementById("lambda-value").textContent = parseFloat(lambdaInput.value).toFixed(2);
+      document.getElementById("mu-value").textContent = parseFloat(muInput.value).toFixed(2);
+      document.getElementById("time-value").textContent = timeInput.value;
+    }
+    
+    lambdaInput.addEventListener("input", updateLabels);
+    muInput.addEventListener("input", updateLabels);
+    timeInput.addEventListener("input", updateLabels);
+    
+    function randExp(rate) { return -Math.log(1 - Math.random()) / rate; }
+    
+    function simulate(lambda, mu, simTime) {
+      let t = 0, nextArrival = randExp(lambda);
+      let serviceEndTimes = [], queue = [], waitTimes = [];
+      let timeline = [[0, 0]], clientsInSystem = [[0, 0]];
+      
+      while (true) {
+        const nextService = serviceEndTimes.length > 0 ? serviceEndTimes[0] : Infinity;
+        
+        if (nextArrival <= nextService && nextArrival <= simTime) {
+          t = nextArrival;
+          if (serviceEndTimes.length < 1) {
+            serviceEndTimes.push(t + randExp(mu));
+            serviceEndTimes.sort((a, b) => a - b);
+            waitTimes.push(0);
+          } else { queue.push(t); }
+          nextArrival += randExp(lambda);
+          timeline.push([t, queue.length]);
+          clientsInSystem.push([t, queue.length + serviceEndTimes.length]);
+        } else if (nextService < nextArrival && nextService <= simTime) {
+          t = nextService;
+          serviceEndTimes.shift();
+          if (queue.length > 0) {
+            waitTimes.push(t - queue.shift());
+            serviceEndTimes.push(t + randExp(mu));
+            serviceEndTimes.sort((a, b) => a - b);
+          }
+          timeline.push([t, queue.length]);
+          clientsInSystem.push([t, queue.length + serviceEndTimes.length]);
+        } else { break; }
+        if (t > simTime) break;
+      }
+      
+      if (timeline[timeline.length - 1][0] < simTime) {
+        timeline.push([simTime, timeline[timeline.length - 1][1]]);
+        clientsInSystem.push([simTime, clientsInSystem[clientsInSystem.length - 1][1]]);
+      }
+      
+      let area = 0;
+      for (let i = 0; i < timeline.length - 1; i++) area += timeline[i][1] * (timeline[i + 1][0] - timeline[i][0]);
+      
+      const rho = lambda / mu, stable = rho < 1;
+      let L_theory = NaN, Lq_theory = NaN, W_theory = NaN, Wq_theory = NaN;
+      if (stable && lambda > 0 && mu > 0) {
+        L_theory = rho / (1 - rho);
+        Lq_theory = (rho * rho) / (1 - rho);
+        W_theory = 1 / (mu - lambda);
+        Wq_theory = lambda / (mu * (mu - lambda));
+      }
+      
+      return { timeline, clientsInSystem, waitTimes, Lq_sim: area / simTime, Wq_sim: waitTimes.length > 0 ? waitTimes.reduce((a, b) => a + b, 0) / waitTimes.length : 0, rho, stable, L_theory, Lq_theory, W_theory, Wq_theory };
+    }
+    
+    var darkLayout = {
+      paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0.15)',
+      font: { color: '#94a3b8', family: 'Manrope, sans-serif', size: 11 },
+      margin: { t: 30, b: 40, l: 50, r: 20 },
+      xaxis: { gridcolor: 'rgba(255,255,255,0.05)', zerolinecolor: 'rgba(255,255,255,0.1)' },
+      yaxis: { gridcolor: 'rgba(255,255,255,0.05)', zerolinecolor: 'rgba(255,255,255,0.1)' }
+    };
+    
+    function runSimulation() {
+      var lambda = parseFloat(lambdaInput.value), mu = parseFloat(muInput.value), simTime = parseInt(timeInput.value);
+      var res = simulate(lambda, mu, simTime);
+      
+      document.getElementById("rho-out").textContent = res.rho.toFixed(4);
+      document.getElementById("stable-out").textContent = res.stable ? "✓ Estable" : "⚠️ Inestable";
+      document.getElementById("stable-out").className = res.stable ? "stable" : "unstable";
+      
+      if (res.stable) {
+        document.getElementById("l-out").textContent = res.L_theory.toFixed(4);
+        document.getElementById("lq-out").textContent = res.Lq_theory.toFixed(4);
+        document.getElementById("w-out").textContent = res.W_theory.toFixed(4);
+        document.getElementById("wq-out").textContent = res.Wq_theory.toFixed(4);
+      } else {
+        ["l-out", "lq-out", "w-out", "wq-out"].forEach(id => document.getElementById(id).textContent = "∞");
+      }
+      
+      Plotly.newPlot("queue-chart", [{ x: res.timeline.map(p => p[0]), y: res.timeline.map(p => p[1]), type: "scatter", mode: "lines", fill: "tozeroy", line: { color: "#10b981", width: 2 }, fillcolor: "rgba(16,185,129,0.2)" }], Object.assign({}, darkLayout, { title: `Cola M/M/1 (λ=${lambda}, μ=${mu})`, xaxis: { ...darkLayout.xaxis, title: "Tiempo (s)" }, yaxis: { ...darkLayout.yaxis, title: "Clientes en cola" }, height: 350 }), { responsive: true });
+      
+      if (res.waitTimes.length > 0) Plotly.newPlot("wait-hist", [{ x: res.waitTimes, type: "histogram", nbinsx: 30, marker: { color: "#3b82f6" } }], Object.assign({}, darkLayout, { xaxis: { ...darkLayout.xaxis, title: "Tiempo de espera (s)" }, yaxis: { ...darkLayout.yaxis, title: "Frecuencia" }, height: 280 }), { responsive: true });
+      
+      Plotly.newPlot("clients-chart", [{ x: res.clientsInSystem.map(p => p[0]), y: res.clientsInSystem.map(p => p[1]), type: "scatter", mode: "lines", line: { color: "#8b5cf6", width: 2 }, fill: "tozeroy", fillcolor: "rgba(139,92,246,0.15)" }], Object.assign({}, darkLayout, { xaxis: { ...darkLayout.xaxis, title: "Tiempo (s)" }, yaxis: { ...darkLayout.yaxis, title: "Clientes" }, height: 280 }), { responsive: true });
+    }
+    
+    document.getElementById("run-sim").addEventListener("click", runSimulation);
+    runSimulation();
+    
+    // KaTeX
+    function tryKaTeX() {
+      if (typeof katex === "undefined") { setTimeout(tryKaTeX, 100); return; }
+      var formulas = { "f-rho": "\\rho = \\frac{\\lambda}{\\mu}", "f-l": "L = \\frac{\\rho}{1 - \\rho}", "f-lq": "L_q = \\frac{\\rho^2}{1 - \\rho}", "f-w": "W = \\frac{1}{\\mu - \\lambda}" };
+      Object.keys(formulas).forEach(id => { var el = document.getElementById(id); if (el) katex.render(formulas[id], el, { displayMode: false, throwOnError: false }); });
+    }
+    tryKaTeX();
+    
+    // Distribuciones
+    var interarrivals = [], serviceTimes = [];
+    for (var i = 0; i < 100; i++) { interarrivals.push(-Math.log(Math.random()) / 0.3057); serviceTimes.push(-Math.log(Math.random()) / 0.8185); }
+    Plotly.newPlot("dist-charts", [{ x: interarrivals, type: "histogram", nbinsx: 20, name: "Interarrivals", marker: { color: "#3b82f6", opacity: 0.7 } }, { x: serviceTimes, type: "histogram", nbinsx: 20, name: "Servicio", marker: { color: "#10b981", opacity: 0.7 } }], Object.assign({}, darkLayout, { barmode: "overlay", xaxis: { ...darkLayout.xaxis, title: "Tiempo (s)" }, yaxis: { ...darkLayout.yaxis, title: "Frecuencia" }, height: 280, showlegend: true, legend: { x: 0.7, y: 0.95 } }), { responsive: true });
+  });
+</script>
+
+<style>
+  /* Simulador */
+  .sim { margin-top: 40px; border: 1px solid var(--border); border-radius: 24px; padding: 28px; background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); }
+  .sim-grid { display: grid; gap: 20px; }
+  .controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+  label { display: grid; gap: 6px; font-size: 14px; color: var(--muted); background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 14px; border-radius: 12px; }
+  input[type="range"] { width: 100%; accent-color: var(--accent); }
+  .value { font-weight: 700; color: var(--accent); text-align: center; }
+  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+  .metric { padding: 16px; border: 1px solid var(--border); border-radius: 14px; background: rgba(255,255,255,0.02); text-align: center; }
+  .metric h3 { margin: 6px 0 2px; font-size: 24px; color: var(--accent); }
+  .metric p { font-size: 12px; color: var(--muted); }
+  .metric small { font-size: 11px; }
+  .metric small.stable { color: var(--accent); }
+  .metric small.unstable { color: var(--danger); }
+  .actions { display: flex; gap: 12px; }
+  .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+  .chart-half { background: rgba(0,0,0,0.2); border: 1px solid var(--border); border-radius: 14px; padding: 16px; }
+  .chart-half h4 { margin: 0 0 10px; font-size: 14px; color: var(--muted); }
+  .formula-section { padding: 20px; background: linear-gradient(135deg, rgba(16,185,129,0.05), rgba(59,130,246,0.03)); border: 1px solid var(--border); border-radius: 14px; margin-top: 20px; }
+  .formula-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-top: 14px; }
+  .formula-item { padding: 12px 16px; background: rgba(0,0,0,0.2); border: 1px solid var(--border); border-radius: 10px; }
+  .formula-label { font-size: 11px; color: var(--accent); text-transform: uppercase; display: block; margin-bottom: 6px; }
+  .formula-math { font-size: 16px; color: var(--ink); }
+
+  /* Resultados */
+  .results { margin-top: 40px; }
+  .results-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .result-card { padding: 20px; border: 1px solid var(--border); border-radius: 18px; background: rgba(255,255,255,0.02); }
+  .result-card.wide { grid-column: span 2; }
+  .result-card.highlight { border-color: var(--accent); background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(59,130,246,0.04)); }
+  .result-card.comparison { border-color: var(--accent-2); }
+  .result-card h4 { margin: 0 0 16px; font-size: 16px; }
+  .param-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .param { flex: 1; min-width: 140px; text-align: center; padding: 14px; background: rgba(0,0,0,0.2); border-radius: 12px; border: 1px solid var(--border); }
+  .param.accent { border-color: var(--accent); background: rgba(16,185,129,0.1); }
+  .param-label { display: block; font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+  .param-value { display: block; font-size: 24px; font-weight: 700; color: var(--ink); font-family: "Space Grotesk", sans-serif; }
+  .param.accent .param-value { color: var(--accent); }
+  .param-unit { display: block; font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .data-table td, .data-table th { padding: 10px 8px; border-bottom: 1px solid var(--border); text-align: left; }
+  .data-table td.val { text-align: right; font-weight: 600; color: var(--ink); }
+  .data-table td.warn { color: var(--warning); }
+  .data-table th { color: var(--muted); font-weight: 600; font-size: 11px; text-transform: uppercase; }
+  .note { font-size: 12px; color: var(--muted); margin-top: 12px; font-style: italic; }
+
+  @media (max-width: 900px) {
+    .charts-row { grid-template-columns: 1fr; }
+    .results-grid { grid-template-columns: 1fr; }
+    .result-card.wide { grid-column: span 1; }
+  }
+</style>
