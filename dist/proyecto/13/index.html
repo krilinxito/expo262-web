@@ -1,414 +1,283 @@
-<!DOCTYPE html><html lang="es" data-astro-cid-kvyfnm2w> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Proyecto 13 · Modelos de colas en servicios en la nube (M/M/c)</title><meta name="description" content="Proyecto 13: Modelos de colas M/M/c aplicados a servicios en la nube. Teoría, simulación y slides del informe."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/_astro/13.XR422c4u.css"><script type="module" src="/_astro/hoisted.CMV6gRO_.js"></script></head> <body data-astro-cid-kvyfnm2w> <div class="page" data-astro-cid-kvyfnm2w> <header class="topbar" data-astro-cid-kvyfnm2w> <div class="brand" data-astro-cid-kvyfnm2w> <div class="dot" data-astro-cid-kvyfnm2w></div> <span data-astro-cid-kvyfnm2w>Proyecto 13 · M/M/c</span> </div> <nav data-astro-cid-kvyfnm2w> <a href="/" data-astro-cid-kvyfnm2w>Home</a> <a href="#informe" data-astro-cid-kvyfnm2w>Informe</a> <a href="#sim" data-astro-cid-kvyfnm2w>Simulador</a> <a href="#slides" data-astro-cid-kvyfnm2w>Slides</a> <a href="#codigo" data-astro-cid-kvyfnm2w>Código Python</a> </nav> </header> <main data-astro-cid-kvyfnm2w> <section class="hero" data-astro-cid-kvyfnm2w> <div class="hero__copy" data-astro-cid-kvyfnm2w> <p class="eyebrow" data-astro-cid-kvyfnm2w>Tema 13</p> <h1 data-astro-cid-kvyfnm2w>Modelos de colas en servicios en la nube (M/M/c)</h1> <p class="lede" data-astro-cid-kvyfnm2w>
-Evaluación de rendimiento y asignación de recursos con llegadas Poisson, servicios
-              exponenciales y múltiples servidores. Integra teoría, simulación y visualizaciones interactivas.
-</p> <div class="tags" data-astro-cid-kvyfnm2w> <span data-astro-cid-kvyfnm2w>λ/μ · Erlang-C</span> <span data-astro-cid-kvyfnm2w>SimPy + Streamlit</span> <span data-astro-cid-kvyfnm2w>Cloud scaling</span> </div> <div class="cta" data-astro-cid-kvyfnm2w> <a class="primary" href="#sim" data-astro-cid-kvyfnm2w>Simulador M/M/c</a> <a class="ghost" href="#slides" data-astro-cid-kvyfnm2w>Ver slides del informe</a> </div> </div> <div class="hero__panel" data-astro-cid-kvyfnm2w> <div class="panel__header" data-astro-cid-kvyfnm2w> <span class="chip" data-astro-cid-kvyfnm2w>Estado</span> <span class="status" data-astro-cid-kvyfnm2w>Preparado</span> </div> <div class="panel__list" data-astro-cid-kvyfnm2w> <div class="panel__item" data-astro-cid-kvyfnm2w> <span class="label" data-astro-cid-kvyfnm2w>Asignatura</span> <p data-astro-cid-kvyfnm2w>Procesos Estocásticos y Series de Tiempo</p> </div> <div class="panel__item" data-astro-cid-kvyfnm2w> <span class="label" data-astro-cid-kvyfnm2w>Modelo</span> <p data-astro-cid-kvyfnm2w>M/M/c · Poisson(λ), Exp(μ), c servidores</p> </div> <div class="panel__item" data-astro-cid-kvyfnm2w> <span class="label" data-astro-cid-kvyfnm2w>Herramientas</span> <p data-astro-cid-kvyfnm2w>SimPy · Streamlit · Plotly · NumPy/Pandas</p> </div> </div> <div class="panel__footer" data-astro-cid-kvyfnm2w> <span class="bubble ghost" data-astro-cid-kvyfnm2w>Grupo 42</span> <span class="bubble" data-astro-cid-kvyfnm2w>Colas · Cloud</span> </div> </div> </section> <!-- INFORME COMPLETO --> <section class="report" id="informe" data-astro-cid-kvyfnm2w> <div class="section__head" data-astro-cid-kvyfnm2w> <div data-astro-cid-kvyfnm2w> <p class="eyebrow" data-astro-cid-kvyfnm2w>Informe</p> <h2 data-astro-cid-kvyfnm2w>Informe del proyecto en carrusel</h2> <p class="section__lede" data-astro-cid-kvyfnm2w>
-Síntesis navegable del documento original: motivación, modelo M/M/c, metodología, escenarios y resultados.
-</p> </div> <span class="pill ghost small" data-astro-cid-kvyfnm2w>
-Basado en 235 líneas del informe completo
-</span> </div> <div class="report-carousel carousel" data-astro-cid-kvyfnm2w> <div class="slide" data-astro-cid-kvyfnm2w> <p class="pill ghost" id="report-count" data-astro-cid-kvyfnm2w>1 / 7</p> <h3 id="report-title" data-astro-cid-kvyfnm2w>Resumen ejecutivo</h3> <ul id="report-bullets" data-astro-cid-kvyfnm2w> <li data-astro-cid-kvyfnm2w>Análisis de sistemas de colas M/M/c en cloud (AWS, Azure, GCP) con llegadas Poisson y servicio exponencial.</li><li data-astro-cid-kvyfnm2w>Simulación discreta en Python + Streamlit para explorar trade-offs entre costo operativo y tiempos de respuesta.</li><li data-astro-cid-kvyfnm2w>Casos: picos de e-commerce (Black Friday), microservicios en Kubernetes y funciones serverless con autoscaling.</li> </ul> <p class="muted note" id="report-note" data-astro-cid-kvyfnm2w>Revisa las secciones clave con fórmulas y hallazgos.</p> </div> <div class="carousel-controls" data-astro-cid-kvyfnm2w> <button id="report-prev" data-astro-cid-kvyfnm2w>← Anterior</button> <button id="report-next" data-astro-cid-kvyfnm2w>Siguiente →</button> </div> </div> </section> <!-- SIMULADOR M/M/c --> <section class="sim" id="sim" data-astro-cid-kvyfnm2w> <div class="section__head" data-astro-cid-kvyfnm2w> <div data-astro-cid-kvyfnm2w> <p class="eyebrow" data-astro-cid-kvyfnm2w>Interactivo</p> <h2 data-astro-cid-kvyfnm2w>Simulador M/M/c con JavaScript</h2> <p class="section__lede" data-astro-cid-kvyfnm2w>Ajusta parámetros, ejecuta la simulación real en el navegador y analiza escalabilidad y costo.</p> </div> </div> <div class="sim-grid" data-astro-cid-kvyfnm2w> <div class="controls" data-astro-cid-kvyfnm2w> <label data-astro-cid-kvyfnm2w>
-λ&nbsp;(llegadas/s)
-<input type="range" id="lambda" min="10" max="400" step="10" value="120" data-astro-cid-kvyfnm2w> <span class="value" id="lambda-value" data-astro-cid-kvyfnm2w>120</span> </label> <label data-astro-cid-kvyfnm2w>
-μ&nbsp;(servicio por servidor)
-<input type="range" id="mu" min="5" max="120" step="5" value="30" data-astro-cid-kvyfnm2w> <span class="value" id="mu-value" data-astro-cid-kvyfnm2w>30</span> </label> <label data-astro-cid-kvyfnm2w>
-c&nbsp;(servidores)
-<input type="range" id="servers" min="1" max="40" step="1" value="6" data-astro-cid-kvyfnm2w> <span class="value" id="servers-value" data-astro-cid-kvyfnm2w>6</span> </label> <label data-astro-cid-kvyfnm2w>
-Tiempo de simulación&nbsp;(s)
-<input type="range" id="time" min="100" max="2000" step="50" value="600" data-astro-cid-kvyfnm2w> <span class="value" id="time-value" data-astro-cid-kvyfnm2w>600</span> </label> <label data-astro-cid-kvyfnm2w>
-Costo/servidor&nbsp;(USD/mes)
-<input type="range" id="cost" min="50" max="1500" value="300" data-astro-cid-kvyfnm2w> <span class="value" id="cost-value" data-astro-cid-kvyfnm2w>300</span> </label> </div> <div class="metrics" data-astro-cid-kvyfnm2w> <div class="metric" data-astro-cid-kvyfnm2w> <p data-astro-cid-kvyfnm2w>Utilización&nbsp;ρ</p> <h3 id="rho-out" data-astro-cid-kvyfnm2w>0.00</h3> <small id="stable-out" data-astro-cid-kvyfnm2w>—</small> </div> <div class="metric" data-astro-cid-kvyfnm2w> <p data-astro-cid-kvyfnm2w>Wq&nbsp;(s) · Tiempo en cola</p> <h3 id="wq-out" data-astro-cid-kvyfnm2w>0.00</h3> <small data-astro-cid-kvyfnm2w></small> </div> <div class="metric" data-astro-cid-kvyfnm2w> <p data-astro-cid-kvyfnm2w>Lq · Cola promedio</p> <h3 id="lq-out" data-astro-cid-kvyfnm2w>0.00</h3> <small data-astro-cid-kvyfnm2w></small> </div> <div class="metric" data-astro-cid-kvyfnm2w> <p data-astro-cid-kvyfnm2w>Costo mensual&nbsp;(USD)</p> <h3 id="cost-out" data-astro-cid-kvyfnm2w>0</h3> <small data-astro-cid-kvyfnm2w></small> </div> </div> <!-- Botones de acción --> <div class="actions" data-astro-cid-kvyfnm2w> <button id="run-sim" class="primary" data-astro-cid-kvyfnm2w>Ejecutar simulación</button> <button id="analyze" class="ghost" data-astro-cid-kvyfnm2w>Analizar escalabilidad</button> </div> <!-- Contenedores de gráficos y resultados --> <div class="charts" data-astro-cid-kvyfnm2w> <div id="queue-chart" style="width:100%;height:400px;" data-astro-cid-kvyfnm2w></div> <div id="scalability-chart" style="width:100%;height:400px;margin-top:24px;" data-astro-cid-kvyfnm2w></div> <div id="tradeoff-chart" style="width:100%;height:400px;margin-top:24px;" data-astro-cid-kvyfnm2w></div> <div id="analysis-table" class="analysis-table" style="overflow-x:auto;margin-top:24px;" data-astro-cid-kvyfnm2w></div> <div id="analysis-optimum" class="analysis-optimum" style="margin-top:12px;font-size:14px;color:var(--accent);" data-astro-cid-kvyfnm2w></div> </div> <div class="formula" data-astro-cid-kvyfnm2w> <p class="eyebrow" data-astro-cid-kvyfnm2w>Fórmulas clave</p> <ul id="formula-list" data-astro-cid-kvyfnm2w> <li class="math-item" data-note="· condición de estabilidad" data-astro-cid-kvyfnm2w></li> <li class="math-item" data-astro-cid-kvyfnm2w></li> <li class="math-item" data-astro-cid-kvyfnm2w></li> <li class="math-item" data-astro-cid-kvyfnm2w></li> </ul> </div> </div> </section> <!-- SLIDES DEL INFORME --> <section class="slides" id="slides" data-astro-cid-kvyfnm2w> <div class="section__head" data-astro-cid-kvyfnm2w> <div data-astro-cid-kvyfnm2w> <p class="eyebrow" data-astro-cid-kvyfnm2w>Resumen en carrusel</p> <h2 data-astro-cid-kvyfnm2w>Informe · Modelo de colas en la nube</h2> <p class="section__lede" data-astro-cid-kvyfnm2w>Síntesis del informe en formato de slides navegables.</p> </div> </div> <div class="carousel" data-astro-cid-kvyfnm2w> <div class="slide" data-astro-cid-kvyfnm2w> <p class="pill ghost" id="slide-count" data-astro-cid-kvyfnm2w>1 / 5</p> <h3 id="slide-title" data-astro-cid-kvyfnm2w>Introducción</h3> <ul id="slide-bullets" data-astro-cid-kvyfnm2w> <li data-astro-cid-kvyfnm2w>Optimizar servicios cloud con llegadas Poisson y servicios exponenciales (M/M/c).</li><li data-astro-cid-kvyfnm2w>Casos: picos de tráfico en e-commerce, APIs en Kubernetes, funciones serverless.</li><li data-astro-cid-kvyfnm2w>Meta: balancear costo operativo vs. tiempo de respuesta y colas.</li> </ul> </div> <div class="carousel-controls" data-astro-cid-kvyfnm2w> <button id="prev" data-astro-cid-kvyfnm2w>← Anterior</button> <button id="next" data-astro-cid-kvyfnm2w>Siguiente →</button> </div> </div> </section> <!-- CÓDIGO PYTHON --> <section class="code" id="codigo" data-astro-cid-kvyfnm2w> <div class="section__head" data-astro-cid-kvyfnm2w> <div data-astro-cid-kvyfnm2w> <p class="eyebrow" data-astro-cid-kvyfnm2w>Simulador Python</p> <h2 data-astro-cid-kvyfnm2w>Streamlit + SimPy + Plotly</h2> <p class="section__lede" data-astro-cid-kvyfnm2w>
-Usa el mismo código del repositorio para correr la demo completa y comparar con los resultados teóricos de arriba.
-</p> </div> </div> <div class="code-grid" data-astro-cid-kvyfnm2w> <div class="code-card" data-astro-cid-kvyfnm2w> <p class="pill ghost" data-astro-cid-kvyfnm2w>Ejecutar</p> <pre data-astro-cid-kvyfnm2w><code data-astro-cid-kvyfnm2w>cd "proy 13 (python)"
-streamlit run app.py</code></pre> <p class="muted" data-astro-cid-kvyfnm2w>App web con pestañas (animación, escalabilidad, costo vs rendimiento).</p> </div> <div class="code-card" data-astro-cid-kvyfnm2w> <p class="pill ghost" data-astro-cid-kvyfnm2w>run_simulation</p> <pre data-astro-cid-kvyfnm2w><code class="small" data-astro-cid-kvyfnm2w>def run_simulation(lambda_rate, mu_rate, num_servers, sim_time=600, seed=42):
-    # SimPy arrivals/services (Poisson/Exp), recursos c
-    # Calcula rho, Lq, Wq teórico y simulaciones de espera/cola
-    return {&quot;rho&quot;: rho, &quot;Wq_theory&quot;: Wq, &quot;Lq_theory&quot;: Lq, ...}</code></pre> <p class="muted" data-astro-cid-kvyfnm2w>Basado en <code data-astro-cid-kvyfnm2w>simulator.py</code> con cálculos Erlang-C y métricas simuladas.</p> </div> <div class="code-card highlight" data-astro-cid-kvyfnm2w> <p class="pill" data-astro-cid-kvyfnm2w>Descarga</p> <p class="muted" data-astro-cid-kvyfnm2w>Archivos en el repo:</p> <ul data-astro-cid-kvyfnm2w> <li data-astro-cid-kvyfnm2w><code data-astro-cid-kvyfnm2w>proy 13 (python)/app.py</code></li> <li data-astro-cid-kvyfnm2w><code data-astro-cid-kvyfnm2w>proy 13 (python)/simulator.py</code></li> <li data-astro-cid-kvyfnm2w><code data-astro-cid-kvyfnm2w>proy 13 (python)/informe-proy-13.txt</code></li> </ul> <p class="muted" data-astro-cid-kvyfnm2w>Puedes enlazar esta página a la app Streamlit desplegada (placeholder).</p> </div> </div> </section> </main> <footer class="footer" data-astro-cid-kvyfnm2w> <span data-astro-cid-kvyfnm2w>Universidad Mayor de San Andrés · 2025</span> <span data-astro-cid-kvyfnm2w>Proyecto 13 · Modelos de colas M/M/c</span> </footer> </div> <!-- PARTICLES --> <div id="tsparticles" data-astro-cid-kvyfnm2w></div>  <!-- Plotly.js para gráficos -->  <!-- MathJax para fórmulas LaTeX -->   <script>
-    // Partículas
-    const accent =
-      getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() ||
-      "#8ad6ff";
-    const accent2 =
-      getComputedStyle(document.documentElement).getPropertyValue("--accent-2").trim() ||
-      "#72f0d5";
+<!DOCTYPE html><html lang="es" style="--accentColor: #8ad6ff;--accentColor2: #72f0d5;"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Proyecto 13 · Modelos de colas en servicios en la nube (M/M/c)</title><meta name="description" content="Evaluación de rendimiento y asignación de recursos con llegadas Poisson, servicios exponenciales y múltiples servidores."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script><script src="https://cdn.plot.ly/plotly-2.27.0.min.js" charset="utf-8"></script><link rel="stylesheet" href="/_astro/13.BMqXB1Sc.css">
+<style>.hero[data-astro-cid-bbe6dxrz]{margin-top:40px;padding:clamp(24px,5vw,48px);border:1px solid var(--border);border-radius:24px;background:linear-gradient(135deg,#ffffff0a,#ffffff03);display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(20px,4vw,32px);box-shadow:var(--shadow)}.hero__copy[data-astro-cid-bbe6dxrz] h1[data-astro-cid-bbe6dxrz]{font-size:clamp(26px,3.5vw,38px);margin-top:8px}.hero__copy[data-astro-cid-bbe6dxrz] .lede[data-astro-cid-bbe6dxrz]{margin:12px 0 18px;max-width:600px}.hero__panel[data-astro-cid-bbe6dxrz]{border:1px solid var(--border);border-radius:18px;background:linear-gradient(160deg,var(--surface),var(--surface-2));padding:18px;display:grid;gap:12px}.panel__header[data-astro-cid-bbe6dxrz]{display:flex;justify-content:space-between;align-items:center}.chip[data-astro-cid-bbe6dxrz],.bubble[data-astro-cid-bbe6dxrz]{padding:6px 12px;border-radius:10px;background:color-mix(in srgb,var(--accent) 10%,transparent);color:var(--accent);font-weight:700;font-size:12px}.bubble[data-astro-cid-bbe6dxrz].ghost{background:#ffffff0a;color:var(--muted);border:1px solid var(--border)}.status[data-astro-cid-bbe6dxrz]{color:var(--ink);font-weight:700}.panel__list[data-astro-cid-bbe6dxrz]{display:grid;gap:10px}.panel__item[data-astro-cid-bbe6dxrz]{padding:12px 14px;border-radius:12px;border:1px solid var(--border);background:#ffffff05}.panel__item[data-astro-cid-bbe6dxrz] .label[data-astro-cid-bbe6dxrz]{color:var(--muted);font-size:12px;display:block;margin-bottom:4px}.panel__item[data-astro-cid-bbe6dxrz] p[data-astro-cid-bbe6dxrz].accent{color:var(--accent)}.panel__footer[data-astro-cid-bbe6dxrz]{display:flex;gap:10px;flex-wrap:wrap}@media (max-width: 900px){.hero[data-astro-cid-bbe6dxrz]{grid-template-columns:1fr}}
+</style>
+<link rel="stylesheet" href="/_astro/13.C4fpJ5N-.css"><script type="module" src="/_astro/hoisted.QOdwnJaL.js"></script></head> <body style="--accent: #8ad6ff; --accent-2: #72f0d5;; --accentColor: #8ad6ff;--accentColor2: #72f0d5;"> <div class="page" style="--accentColor: #8ad6ff;--accentColor2: #72f0d5;">  <header class="topbar" data-astro-cid-axxsutmj> <div class="brand" data-astro-cid-axxsutmj> <div class="dot" data-astro-cid-axxsutmj></div> <span data-astro-cid-axxsutmj>Proyecto 13 · M/M/c</span> </div> <nav data-astro-cid-axxsutmj> <a href="/" data-astro-cid-axxsutmj>Home</a><a href="#informe" data-astro-cid-axxsutmj>Informe</a><a href="#sim" data-astro-cid-axxsutmj>Simulador</a><a href="#codigo" data-astro-cid-axxsutmj>Código Python</a> </nav> </header>  <main data-astro-cid-kvyfnm2w> <section class="hero" data-astro-cid-bbe6dxrz> <div class="hero__copy" data-astro-cid-bbe6dxrz> <p class="eyebrow" data-astro-cid-bbe6dxrz>Tema 13</p> <h1 data-astro-cid-bbe6dxrz>Modelos de colas en servicios en la nube (M/M/c)</h1> <p class="lede" data-astro-cid-bbe6dxrz>Evaluación de rendimiento y asignación de recursos con llegadas Poisson, servicios exponenciales y múltiples servidores. Integra teoría, simulación y visualizaciones interactivas.</p> <div class="tags" data-astro-cid-bbe6dxrz> <span data-astro-cid-bbe6dxrz>λ/μ · Erlang-C</span><span data-astro-cid-bbe6dxrz>SimPy + Streamlit</span><span data-astro-cid-bbe6dxrz>Cloud scaling</span> </div> <div class="cta" data-astro-cid-bbe6dxrz> <a class="primary" href="#sim" data-astro-cid-bbe6dxrz>Simulador M/M/c</a> <a class="ghost" href="#informe" data-astro-cid-bbe6dxrz>Ver presentación</a> </div> </div> <div class="hero__panel" data-astro-cid-bbe6dxrz> <div class="panel__header" data-astro-cid-bbe6dxrz> <span class="chip" data-astro-cid-bbe6dxrz>Estado</span> <span class="status" data-astro-cid-bbe6dxrz>Preparado</span> </div> <div class="panel__list" data-astro-cid-bbe6dxrz> <div class="panel__item" data-astro-cid-bbe6dxrz> <span class="label" data-astro-cid-bbe6dxrz>Asignatura</span> <p data-astro-cid-bbe6dxrz>Procesos Estocásticos y Series de Tiempo</p> </div><div class="panel__item" data-astro-cid-bbe6dxrz> <span class="label" data-astro-cid-bbe6dxrz>Modelo</span> <p data-astro-cid-bbe6dxrz>M/M/c · Poisson(λ), Exp(μ), c servidores</p> </div><div class="panel__item" data-astro-cid-bbe6dxrz> <span class="label" data-astro-cid-bbe6dxrz>Herramientas</span> <p data-astro-cid-bbe6dxrz>SimPy · Streamlit · Plotly · NumPy/Pandas</p> </div> </div> <div class="panel__footer" data-astro-cid-bbe6dxrz> <span class="bubble ghost" data-astro-cid-bbe6dxrz>Grupo 42</span><span class="bubble" data-astro-cid-bbe6dxrz>Colas · Cloud</span> </div> </div> </section>  <section class="informe-carousel" id="informe" data-astro-cid-n5etzuft> <div class="section__head" data-astro-cid-n5etzuft> <div data-astro-cid-n5etzuft> <p class="eyebrow" data-astro-cid-n5etzuft>Informe</p> <h2 data-astro-cid-n5etzuft>Presentación del Proyecto</h2> <p class="section__lede" data-astro-cid-n5etzuft>Navegá a través de las slides del análisis completo.</p> </div> <div class="slide-nav-info" data-astro-cid-n5etzuft> <span class="slide-progress" data-astro-cid-n5etzuft>1 / 24</span> <span class="current-section" data-astro-cid-n5etzuft>Portada</span> </div> </div> <div class="informe-slider" data-astro-cid-n5etzuft> <div class="informe-slide" data-astro-cid-n5etzuft> <div class="slide-content" data-astro-cid-n5etzuft> <div class="slide-text" data-astro-cid-n5etzuft> <p class="slide-section" data-astro-cid-n5etzuft>Portada</p> <h3 class="slide-title" data-astro-cid-n5etzuft>Modelos de Colas M/M/c en la Nube</h3> <p class="slide-subtitle" data-astro-cid-n5etzuft>Evaluación de Rendimiento y Asignación de Recursos</p> <ul class="slide-bullets" data-astro-cid-n5etzuft> <li data-astro-cid-n5etzuft>Grupo G42 · Noviembre 2025</li><li data-astro-cid-n5etzuft>Procesos Estocásticos y Series de Tiempo</li><li data-astro-cid-n5etzuft>Universidad Mayor de San Andrés</li> </ul> </div> <div class="slide-image" data-astro-cid-n5etzuft> <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&q=80" alt="" data-astro-cid-n5etzuft> </div> </div> </div> <div class="informe-controls" data-astro-cid-n5etzuft> <button class="nav-btn prev-btn" data-astro-cid-n5etzuft><span class="nav-icon" data-astro-cid-n5etzuft>←</span><span class="nav-text" data-astro-cid-n5etzuft>Anterior</span></button> <div class="slide-dots" data-astro-cid-n5etzuft> <button class="dot active" data-index="0" data-astro-cid-n5etzuft></button><button class="dot " data-index="1" data-astro-cid-n5etzuft></button><button class="dot " data-index="2" data-astro-cid-n5etzuft></button><button class="dot " data-index="3" data-astro-cid-n5etzuft></button><button class="dot " data-index="4" data-astro-cid-n5etzuft></button><button class="dot " data-index="5" data-astro-cid-n5etzuft></button><button class="dot " data-index="6" data-astro-cid-n5etzuft></button><button class="dot " data-index="7" data-astro-cid-n5etzuft></button><button class="dot " data-index="8" data-astro-cid-n5etzuft></button><button class="dot " data-index="9" data-astro-cid-n5etzuft></button><button class="dot " data-index="10" data-astro-cid-n5etzuft></button><button class="dot " data-index="11" data-astro-cid-n5etzuft></button><button class="dot " data-index="12" data-astro-cid-n5etzuft></button><button class="dot " data-index="13" data-astro-cid-n5etzuft></button><button class="dot " data-index="14" data-astro-cid-n5etzuft></button><button class="dot " data-index="15" data-astro-cid-n5etzuft></button><button class="dot " data-index="16" data-astro-cid-n5etzuft></button><button class="dot " data-index="17" data-astro-cid-n5etzuft></button><button class="dot " data-index="18" data-astro-cid-n5etzuft></button><button class="dot " data-index="19" data-astro-cid-n5etzuft></button><button class="dot " data-index="20" data-astro-cid-n5etzuft></button><button class="dot " data-index="21" data-astro-cid-n5etzuft></button><button class="dot " data-index="22" data-astro-cid-n5etzuft></button><button class="dot " data-index="23" data-astro-cid-n5etzuft></button> </div> <button class="nav-btn next-btn" data-astro-cid-n5etzuft><span class="nav-text" data-astro-cid-n5etzuft>Siguiente</span><span class="nav-icon" data-astro-cid-n5etzuft>→</span></button> </div> <div class="keyboard-hint" data-astro-cid-n5etzuft><kbd data-astro-cid-n5etzuft>←</kbd> <kbd data-astro-cid-n5etzuft>→</kbd> para navegar</div> </div> </section> <script>(function(){const slidesJson = "[{\"section\":\"Portada\",\"title\":\"Modelos de Colas M/M/c en la Nube\",\"subtitle\":\"Evaluación de Rendimiento y Asignación de Recursos\",\"bullets\":[\"Grupo G42 · Noviembre 2025\",\"Procesos Estocásticos y Series de Tiempo\",\"Universidad Mayor de San Andrés\"],\"image\":\"https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&q=80\"},{\"section\":\"Resumen\",\"title\":\"Resumen Ejecutivo\",\"bullets\":[\"Análisis de simulación de modelos de colas M/M/c aplicados a servicios cloud\",\"Evaluación de rendimiento y asignación óptima de recursos\",\"Simulación discreta en Python con interfaz web interactiva en Streamlit\",\"Comparación de resultados teóricos vs simulados con visualizaciones\"],\"image\":\"https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80\"},{\"section\":\"Introducción\",\"title\":\"Contexto del Problema\",\"bullets\":[\"AWS, Azure y Google Cloud han transformado la gestión de infraestructuras\",\"Durante eventos como Black Friday, las peticiones aumentan exponencialmente\",\"Colas largas causan tiempos de respuesta lentos y abandono de carritos\",\"Pérdidas económicas estimadas en miles de millones de dólares anuales\"],\"image\":\"https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80\"},{\"section\":\"Introducción\",\"title\":\"Teoría de Colas en Cloud\",\"bullets\":[\"Modela sistemas donde entidades llegan aleatoriamente y son procesadas\",\"Aplicaciones: microservicios en Kubernetes, funciones serverless en AWS Lambda\",\"Mal dimensionamiento → sobreprovisionamiento (costos) o subprovisionamiento (degradación)\",\"M/M/c simula escenarios para evaluar trade-offs costo vs eficiencia\"],\"image\":\"https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=800&q=80\"},{\"section\":\"Problema\",\"title\":\"Planteamiento del Problema\",\"bullets\":[\"Incertidumbre: llegadas siguen patrones estocásticos (horarios pico, campañas)\",\"Con c servidores (tasa μ) y tasa llegada λ: utilización ρ = λ/(cμ) debe ser < 1\",\"Variaciones en λ (100 a 500 req/s) requieren autoscaling dinámico\",\"Escenarios reales: Netflix en estrenos, Uber Eats en horas pico\"],\"image\":\"https://images.unsplash.com/photo-1573164713988-8665fc963095?w=800&q=80\"},{\"section\":\"Problema\",\"title\":\"Pregunta de Investigación\",\"highlight\":true,\"bullets\":[\"¿Cómo determinar el número óptimo de instancias virtuales (servidores)?\",\"Minimizar tiempo en cola Wq y longitud de cola Lq\",\"Controlar costo operativo simultáneamente\",\"Considerando distribuciones Poisson para llegadas y Exponenciales para servicios\"],\"image\":\"https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80\"},{\"section\":\"Objetivos\",\"title\":\"Objetivo General\",\"bullets\":[\"Evaluar el rendimiento y asignación de recursos en sistemas M/M/c\",\"Aplicado a servicios en la nube\",\"Mediante simulación discreta y modelado interactivo\",\"Con análisis visual de resultados\"],\"image\":\"https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80\"},{\"section\":\"Objetivos\",\"title\":\"Objetivos Específicos\",\"bullets\":[\"Desarrollar simulador interactivo en Python con interfaz web Streamlit\",\"Analizar métricas: Wq, Lq, ρ y probabilidad de espera\",\"Identificar trade-offs costo-rendimiento mediante curvas de sensibilidad\",\"Comparar resultados simulados vs teóricos para validar el modelo\"],\"image\":\"https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800&q=80\"},{\"section\":\"Justificación\",\"title\":\"Justificación Práctica\",\"bullets\":[\"Gasto en cloud: $591 mil millones en 2023 (Gartner)\",\"Desperdicio estimado: 30-35% por ineficiencias en asignación de recursos\",\"Modelos M/M/c permiten optimizar sin interrupciones en producción\",\"Mejora experiencia del usuario (SLA 99.9% uptime)\"],\"image\":\"https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=800&q=80\"},{\"section\":\"Justificación\",\"title\":\"Justificación Académica\",\"bullets\":[\"Herramientas interactivas promueven aprendizaje activo\",\"Experimentación con parámetros reales de procesos estocásticos\",\"Aplicaciones en fintech, healthcare donde colas impactan tiempos críticos\",\"Prevención de fallos costosos en sistemas de misión crítica\"],\"image\":\"https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=80\"},{\"section\":\"Marco Teórico\",\"title\":\"Proceso de Poisson\",\"bullets\":[\"Proceso de conteo {N(t), t ≥ 0} donde N(t) = número de eventos hasta t\",\"Propiedades: incrementos independientes, estacionarios, sin memoria\",\"Inter-llegada exponencial con parámetro λ\",\"Aplicación: modela peticiones HTTP asumiendo independencia\"],\"image\":\"https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&q=80\"},{\"section\":\"Marco Teórico\",\"title\":\"Distribución Exponencial\",\"bullets\":[\"Tiempo entre eventos T ~ Exp(μ), densidad f(t) = μe^{-μt}\",\"Propiedad sin memoria: P(T > t+s | T > s) = P(T > t)\",\"En colas: representa tiempos de servicio variables pero predecibles\",\"Fundamental para modelar servicios en sistemas de colas\"],\"image\":\"https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800&q=80\"},{\"section\":\"Marco Teórico\",\"title\":\"Cadenas de Markov\",\"bullets\":[\"Estado S(t) = número de peticiones en el sistema\",\"Matriz de tasas Q: q_{n,n+1} = λ, q_{n,n-1} = min(n,c)·μ\",\"En equilibrio: πQ = 0 con Σπᵢ = 1\",\"Base matemática para el análisis del modelo M/M/c\"],\"image\":\"https://images.unsplash.com/photo-1527474305487-b87b222841cc?w=800&q=80\"},{\"section\":\"Marco Teórico\",\"title\":\"Modelo M/M/c · Fórmulas Principales\",\"highlight\":true,\"isFormula\":true,\"bullets\":[\"ρ = λ/(cμ) < 1 → condición de estabilidad\",\"P₀ = [Σ(r^k/k!) + r^c/(c!(1-ρ))]⁻¹, donde r = λ/μ\",\"Lq = P₀·r^c·ρ / (c!(1-ρ)²) → longitud de cola\",\"Wq = Lq/λ ; W = Wq + 1/μ ; L = λW\"],\"image\":\"https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=800&q=80\"},{\"section\":\"Marco Teórico\",\"title\":\"Ejemplo Numérico\",\"bullets\":[\"Parámetros: λ = 100, μ = 20, c = 6 servidores\",\"Utilización: ρ = 100/(6×20) = 0.833 (sistema estable)\",\"Longitud de cola: Lq ≈ 2.5 peticiones esperando\",\"Múltiples servidores mitigan significativamente las colas\"],\"image\":\"https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80\"},{\"section\":\"Metodología\",\"title\":\"Diseño Metodológico\",\"bullets\":[\"Tipo: Simulación discreta de eventos + cálculos analíticos\",\"Python 3.12 con SimPy para simulación de eventos\",\"Streamlit para interfaz web interactiva\",\"NumPy/Pandas para datos, Plotly para visualizaciones\"],\"image\":\"https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=800&q=80\"},{\"section\":\"Metodología\",\"title\":\"Escenarios de Simulación\",\"bullets\":[\"Base: λ=120, μ=30, c=1..20, tiempo=600s, semilla fija\",\"Pico: λ aumenta ×3 para simular sobrecargas\",\"Sensibilidad: variar λ (50-300), μ (10-50), costos ($100-500/servidor)\",\"1000+ corridas por escenario para promedios estables\"],\"image\":\"https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80\"},{\"section\":\"Metodología\",\"title\":\"Modelo de Simulación\",\"code\":true,\"bullets\":[\"<code>env = Environment()</code> → entorno SimPy\",\"<code>servidores = Resource(env, capacity=c)</code> → pool de servidores\",\"<code>generar_llegadas(env, servidores, λ)</code> → proceso de llegadas Poisson\",\"<code>env.run(until=tiempo)</code> → ejecutar simulación\"],\"image\":\"https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=800&q=80\"},{\"section\":\"Resultados\",\"title\":\"Resultados Preliminares\",\"bullets\":[\"c=4: ρ=1.00 (inestable), Lq → ∞, cola creciente\",\"c=6: ρ=0.67, Lq ≈ 0.15, Wq ≈ 0.001s → estable\",\"c=8: ρ=0.50, Lq ≈ 0.003, Wq ≈ 0.00003s → muy holgado\",\"Punto óptimo: c=7-8 donde Wq < 0.01s con costo razonable\"],\"image\":\"https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80\"},{\"section\":\"Resultados\",\"title\":\"Análisis de Sensibilidad\",\"bullets\":[\"Para c < 5: sistema inestable (ρ ≥ 1), colas crecientes\",\"Simulación aproxima bien la teoría en sistemas estables\",\"Discrepancias mínimas por varianza finita de la simulación\",\"En picos, aumentar c dinámicamente reduce Lq en 85%\"],\"image\":\"https://images.unsplash.com/photo-1543286386-713bdd548da4?w=800&q=80\"},{\"section\":\"Conclusiones\",\"title\":\"Conclusiones\",\"bullets\":[\"M/M/c es robusto para optimizar recursos cloud\",\"Mantener ρ < 0.8 para resiliencia ante picos\",\"Visualizaciones interactivas mejoran comprensión\",\"Trade-off costo-rendimiento muestra diminishing returns más allá de cierto c\"],\"image\":\"https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80\"},{\"section\":\"Aplicaciones\",\"title\":\"Aplicaciones Prácticas\",\"bullets\":[\"AWS CloudWatch para autoscaling predictivo\",\"Laboratorios educativos de procesos estocásticos\",\"E-commerce: modelar tráfico estacional (Black Friday)\",\"IoT: manejar colas de sensores en tiempo real\"],\"image\":\"https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80\"},{\"section\":\"Futuro\",\"title\":\"Extensiones Futuras\",\"bullets\":[\"Colas finitas: modelo M/M/c/K\",\"Sistemas con prioridades (urgencia diferenciada)\",\"Integración con métricas reales de producción\",\"Machine Learning para predicción de λ dinámico\"],\"image\":\"https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80\"},{\"section\":\"Bibliografía\",\"title\":\"Referencias\",\"bullets\":[\"Kleinrock, L. (1975). Queueing Systems: Volume 1 - Theory. Wiley.\",\"Gross, D. et al. (2008). Fundamentals of Queueing Theory. Wiley.\",\"Hillier, F. & Lieberman, G. (2010). Intro to Operations Research. McGraw-Hill.\",\"Gartner (2023). Cloud Computing Trends Report.\"],\"image\":\"https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&q=80\"}]";
+const id = "informe";
 
+  const slides = JSON.parse(slidesJson);
+  let idx = 0;
+  
+  const container = document.getElementById(id);
+  if (container) {
+    const slideEl = container.querySelector('.informe-slide');
+    const titleEl = container.querySelector('.slide-title');
+    const bulletsEl = container.querySelector('.slide-bullets');
+    const progressEl = container.querySelector('.slide-progress');
+    const sectionEl = container.querySelector('.current-section');
+    const sectionLabel = container.querySelector('.slide-section');
+    const subtitleEl = container.querySelector('.slide-subtitle');
+    const imageContainer = container.querySelector('.slide-image');
+    const dotsContainer = container.querySelector('.slide-dots');
+    
+    function renderSlide() {
+      const s = slides[idx];
+      if (titleEl) titleEl.textContent = s.title;
+      if (bulletsEl) bulletsEl.innerHTML = s.bullets.map(b => "<li>" + b + "</li>").join("");
+      if (progressEl) progressEl.textContent = (idx + 1) + " / " + slides.length;
+      if (sectionEl) sectionEl.textContent = s.section;
+      if (sectionLabel) sectionLabel.textContent = s.section;
+      
+      if (subtitleEl) {
+        if (s.subtitle) { subtitleEl.textContent = s.subtitle; subtitleEl.style.display = "block"; }
+        else { subtitleEl.style.display = "none"; }
+      }
+      
+      if (imageContainer) {
+        if (s.image) { imageContainer.innerHTML = '<img src="' + s.image + '" alt="" />'; }
+      }
+      
+      if (slideEl) {
+        slideEl.classList.toggle("highlight", s.highlight === true);
+        slideEl.classList.toggle("code-slide", s.code === true);
+        slideEl.classList.toggle("formula-slide", s.isFormula === true);
+      }
+      
+      if (dotsContainer) {
+        dotsContainer.querySelectorAll(".dot").forEach((d, i) => {
+          d.classList.toggle("active", i === idx);
+        });
+      }
+    }
+    
+    container.querySelector(".prev-btn")?.addEventListener("click", () => { 
+      idx = (idx - 1 + slides.length) % slides.length; 
+      renderSlide(); 
+    });
+    
+    container.querySelector(".next-btn")?.addEventListener("click", () => { 
+      idx = (idx + 1) % slides.length; 
+      renderSlide(); 
+    });
+    
+    dotsContainer?.querySelectorAll(".dot").forEach(d => {
+      d.addEventListener("click", (e) => { 
+        idx = parseInt(e.target.dataset.index); 
+        renderSlide(); 
+      });
+    });
+    
+    document.addEventListener("keydown", (e) => {
+      const rect = container.getBoundingClientRect();
+      const inView = rect.top < window.innerHeight && rect.bottom > 0;
+      if (!inView) return;
+      if (e.key === "ArrowLeft") { idx = (idx - 1 + slides.length) % slides.length; renderSlide(); }
+      if (e.key === "ArrowRight") { idx = (idx + 1) % slides.length; renderSlide(); }
+    });
+  }
+})();</script>  <!-- SIMULADOR M/M/c --> <section class="sim" id="sim" data-astro-cid-kvyfnm2w> <div class="section__head" data-astro-cid-kvyfnm2w> <div data-astro-cid-kvyfnm2w> <p class="eyebrow" data-astro-cid-kvyfnm2w>Interactivo</p> <h2 data-astro-cid-kvyfnm2w>Simulador M/M/c con JavaScript</h2> <p class="section__lede" data-astro-cid-kvyfnm2w>Ajusta parámetros, ejecuta la simulación real en el navegador y analiza escalabilidad y costo.</p> </div> </div> <div class="sim-grid" data-astro-cid-kvyfnm2w> <div class="controls" data-astro-cid-kvyfnm2w> <label data-astro-cid-kvyfnm2w>λ (llegadas/s)<input type="range" id="lambda" min="10" max="400" step="10" value="120" data-astro-cid-kvyfnm2w><span class="value" id="lambda-value" data-astro-cid-kvyfnm2w>120</span></label> <label data-astro-cid-kvyfnm2w>μ (servicio por servidor)<input type="range" id="mu" min="5" max="120" step="5" value="30" data-astro-cid-kvyfnm2w><span class="value" id="mu-value" data-astro-cid-kvyfnm2w>30</span></label> <label data-astro-cid-kvyfnm2w>c (servidores)<input type="range" id="servers" min="1" max="40" step="1" value="6" data-astro-cid-kvyfnm2w><span class="value" id="servers-value" data-astro-cid-kvyfnm2w>6</span></label> <label data-astro-cid-kvyfnm2w>Tiempo de simulación (s)<input type="range" id="time" min="100" max="2000" step="50" value="600" data-astro-cid-kvyfnm2w><span class="value" id="time-value" data-astro-cid-kvyfnm2w>600</span></label> <label data-astro-cid-kvyfnm2w>Costo/servidor (USD/mes)<input type="range" id="cost" min="50" max="1500" value="300" data-astro-cid-kvyfnm2w><span class="value" id="cost-value" data-astro-cid-kvyfnm2w>300</span></label> </div> <div class="metrics" data-astro-cid-kvyfnm2w> <div class="metric" data-astro-cid-kvyfnm2w><p data-astro-cid-kvyfnm2w>Utilización ρ</p><h3 id="rho-out" data-astro-cid-kvyfnm2w>0.00</h3><small id="stable-out" data-astro-cid-kvyfnm2w>—</small></div> <div class="metric" data-astro-cid-kvyfnm2w><p data-astro-cid-kvyfnm2w>Wq (s) · Tiempo en cola</p><h3 id="wq-out" data-astro-cid-kvyfnm2w>0.00</h3></div> <div class="metric" data-astro-cid-kvyfnm2w><p data-astro-cid-kvyfnm2w>Lq · Cola promedio</p><h3 id="lq-out" data-astro-cid-kvyfnm2w>0.00</h3></div> <div class="metric" data-astro-cid-kvyfnm2w><p data-astro-cid-kvyfnm2w>Costo mensual (USD)</p><h3 id="cost-out" data-astro-cid-kvyfnm2w>0</h3></div> </div> <div class="actions" data-astro-cid-kvyfnm2w> <button id="run-sim" class="primary" data-astro-cid-kvyfnm2w>Ejecutar simulación</button> <button id="analyze" class="ghost" data-astro-cid-kvyfnm2w>Analizar escalabilidad</button> </div> <div class="charts" data-astro-cid-kvyfnm2w><div id="queue-chart" style="width:100%;height:400px;" data-astro-cid-kvyfnm2w></div></div> <div id="analysis-wrapper" class="analysis-wrapper" data-astro-cid-kvyfnm2w> <div id="analysis-loading" class="analysis-loading" data-astro-cid-kvyfnm2w> <div class="loading-ring" data-astro-cid-kvyfnm2w><div data-astro-cid-kvyfnm2w></div><div data-astro-cid-kvyfnm2w></div><div data-astro-cid-kvyfnm2w></div><div data-astro-cid-kvyfnm2w></div></div> <p data-astro-cid-kvyfnm2w>Simulando configuraciones...</p> <div class="loading-progress" data-astro-cid-kvyfnm2w><div id="loading-bar" class="loading-bar" data-astro-cid-kvyfnm2w></div></div> </div> <div id="analysis-content" class="analysis-content" data-astro-cid-kvyfnm2w> <div class="analysis-charts" data-astro-cid-kvyfnm2w> <div class="analysis-chart-box" data-astro-cid-kvyfnm2w><h4 data-astro-cid-kvyfnm2w>Impacto del Número de Servidores</h4><div id="scalability-chart" data-astro-cid-kvyfnm2w></div></div> <div class="analysis-chart-box" data-astro-cid-kvyfnm2w><h4 data-astro-cid-kvyfnm2w>Trade-off: Costo vs Rendimiento</h4><div id="tradeoff-chart" data-astro-cid-kvyfnm2w></div></div> </div> <div class="analysis-results" data-astro-cid-kvyfnm2w> <h4 data-astro-cid-kvyfnm2w>Resultados Detallados</h4> <div id="analysis-table" class="analysis-table" data-astro-cid-kvyfnm2w></div> <div id="analysis-optimum" class="analysis-optimum" data-astro-cid-kvyfnm2w></div> </div> </div> </div> <div class="formula" data-astro-cid-kvyfnm2w> <p class="eyebrow" data-astro-cid-kvyfnm2w>Fórmulas clave</p> <div class="formula-list" data-astro-cid-kvyfnm2w> <div class="formula-item" data-astro-cid-kvyfnm2w><span class="formula-label" data-astro-cid-kvyfnm2w>Utilización:</span><span class="formula-math" id="f1" data-astro-cid-kvyfnm2w></span></div> <div class="formula-item" data-astro-cid-kvyfnm2w><span class="formula-label" data-astro-cid-kvyfnm2w>Probabilidad sistema vacío:</span><span class="formula-math" id="f2" data-astro-cid-kvyfnm2w></span></div> <div class="formula-item" data-astro-cid-kvyfnm2w><span class="formula-label" data-astro-cid-kvyfnm2w>Longitud de cola:</span><span class="formula-math" id="f3" data-astro-cid-kvyfnm2w></span></div> <div class="formula-item" data-astro-cid-kvyfnm2w><span class="formula-label" data-astro-cid-kvyfnm2w>Tiempos y relaciones:</span><span class="formula-math" id="f4" data-astro-cid-kvyfnm2w></span></div> </div> </div> </div> </section> <section class="code-section" id="codigo" data-astro-cid-kkraiuss> <div class="section__head" data-astro-cid-kkraiuss> <div data-astro-cid-kkraiuss> <p class="eyebrow" data-astro-cid-kkraiuss>Código Fuente</p> <h2 data-astro-cid-kkraiuss>Simulador Python · Streamlit + SimPy</h2> <p class="section__lede" data-astro-cid-kkraiuss>El simulador interactivo de arriba es una <strong>réplica en JavaScript</strong> del código Python original. Aquí está el código fuente completo para ejecutar la versión con Streamlit.</p> </div> </div> <div class="code-notice" data-astro-cid-kkraiuss> <div class="notice-icon" data-astro-cid-kkraiuss>💡</div> <div class="notice-content" data-astro-cid-kkraiuss><strong>Nota:</strong> El simulador M/M/c que ves arriba en esta página está implementado en JavaScript puro, replicando la lógica del código Python. Ambas versiones usan las mismas fórmulas de Erlang-C y simulación de eventos discretos.</div> </div> <div class="code-file" data-astro-cid-kkraiuss> <div class="code-header" data-astro-cid-kkraiuss> <span class="code-filename" data-astro-cid-kkraiuss>simulator.py</span> <span class="code-desc" data-astro-cid-kkraiuss>Motor de simulación M/M/c con SimPy</span> </div> <pre class="code-block" data-astro-cid-kkraiuss><code data-astro-cid-kkraiuss># simulator.py
+import simpy
+import random
+import numpy as np
+import math
+
+def run_simulation(lambda_rate, mu_rate, num_servers, sim_time=600, seed=42):
+    random.seed(seed)
+    np.random.seed(seed)
+    
+    arrivals, queue_lengths, wait_times = [], [], []
+
+    def arrival(env, servers):
+        while True:
+            yield env.timeout(random.expovariate(lambda_rate))
+            arrivals.append(env.now)
+            env.process(customer(env, servers))
+    
+    def customer(env, servers):
+        arrive = env.now
+        with servers.request() as req:
+            queue_lengths.append(len(servers.queue))
+            yield req
+            wait_times.append(env.now - arrive)
+            yield env.timeout(random.expovariate(mu_rate))
+    
+    env = simpy.Environment()
+    servers = simpy.Resource(env, capacity=num_servers)
+    env.process(arrival(env, servers))
+    env.run(until=sim_time)
+
+    # === CÁLCULO TEÓRICO (Erlang-C) ===
+    rho = lambda_rate / (num_servers * mu_rate)
+    if rho < 1:
+        r = lambda_rate / mu_rate
+        sum_term = sum(r**k / math.factorial(k) for k in range(num_servers))
+        P0 = 1 / (sum_term + r**num_servers / (math.factorial(num_servers) * (1-rho)))
+        Lq = P0 * (r**num_servers) * rho / (math.factorial(num_servers) * (1-rho)**2)
+        Wq = Lq / lambda_rate
+    else:
+        Lq = Wq = float('inf')
+
+    return dict(rho=rho, Lq_theory=Lq, Wq_theory=Wq,
+                Lq_sim=np.mean(queue_lengths), Wq_sim=np.mean(wait_times))</code></pre> </div><div class="code-file" data-astro-cid-kkraiuss> <div class="code-header" data-astro-cid-kkraiuss> <span class="code-filename" data-astro-cid-kkraiuss>app.py</span> <span class="code-desc" data-astro-cid-kkraiuss>Interfaz web con Streamlit y Plotly</span> </div> <pre class="code-block" data-astro-cid-kkraiuss><code data-astro-cid-kkraiuss># app.py - Cloud Queue Simulator M/M/c
+import streamlit as st
+import numpy as np
+import pandas as pd
+import plotly.express as px
+from simulator import run_simulation
+
+st.set_page_config(page_title="Cloud Queue Simulator", layout="wide")
+
+with st.sidebar:
+    lambda_rate = st.slider("Tasa de llegada", 10, 400, 120)
+    mu_rate = st.slider("Tasa de servicio", 10, 100, 30)
+    num_servers = st.slider("Servidores (c)", 1, 40, 6)
+    sim_time = st.slider("Duracion (s)", 120, 1800, 600)
+    costo = st.number_input("Costo/servidor ($)", 10, 2000, 120)
+
+results = run_simulation(lambda_rate, mu_rate, num_servers, sim_time)
+
+# Metricas
+c1, c2, c3, c4 = st.columns(4)
+c1.metric("Utilizacion", f"{results['rho']:.1%}")
+c2.metric("Tiempo en cola", f"{results['Wq_sim']:.3f} s")
+c3.metric("Cola promedio", f"{results['Lq_sim']:.1f}")
+c4.metric("Costo mensual", f"${num_servers * costo}")
+
+# Grafico de cola
+df = pd.DataFrame({
+    'Tiempo': np.linspace(0, sim_time, 100),
+    'Cola': results.get('queue_lengths', [])
+})
+fig = px.area(df, x='Tiempo', y='Cola', template="plotly_dark")
+st.plotly_chart(fig, use_container_width=True)</code></pre> </div> <div class="code-run" data-astro-cid-kkraiuss> <div class="run-header" data-astro-cid-kkraiuss> <span class="run-icon" data-astro-cid-kkraiuss>▶</span> <span data-astro-cid-kkraiuss>Ejecutar</span> </div> <pre class="run-commands" data-astro-cid-kkraiuss><code data-astro-cid-kkraiuss># Instalar dependencias
+pip install streamlit simpy numpy pandas plotly
+
+# Ejecutar la app
+cd &quot;proy 13 (python)&quot;
+streamlit run app.py</code></pre> </div> </section>  </main> <footer class="footer" data-astro-cid-sz7xmlte> <span data-astro-cid-sz7xmlte>Universidad Mayor de San Andrés · 2025</span> <span data-astro-cid-sz7xmlte>Proyecto 13 · Modelos de colas M/M/c</span> </footer>   </div> <div id="tsparticles" style="--accentColor: #8ad6ff;--accentColor2: #72f0d5;"></div>  <script>
     window.addEventListener("load", () => {
       if (window.tsParticles) {
+        const accent = getComputedStyle(document.body).getPropertyValue('--accent').trim() || '#10b981';
+        const accent2 = getComputedStyle(document.body).getPropertyValue('--accent-2').trim() || '#3b82f6';
+        
         window.tsParticles.load("tsparticles", {
-          fpsLimit: 60,
-          fullScreen: { enable: false },
+          fpsLimit: 60, fullScreen: { enable: false },
           particles: {
-            number: { value: 80, density: { enable: true, area: 900 } },
-            color: { value: [accent, accent2] },
-            links: { enable: true, distance: 140, color: accent, opacity: 0.35, width: 1 },
-            move: { enable: true, speed: 1.6, outModes: "out" },
-            opacity: { value: { min: 0.25, max: 0.7 } },
-            size: { value: { min: 1.5, max: 3.5 } },
+            number: { value: 60, density: { enable: true, area: 900 } },
+            color: { value: [accent, accent2, "#8b5cf6"] },
+            links: { enable: true, distance: 140, color: accent, opacity: 0.25, width: 1 },
+            move: { enable: true, speed: 1.2, outModes: "out" },
+            opacity: { value: { min: 0.2, max: 0.5 } },
+            size: { value: { min: 1.5, max: 3 } }
           },
-          interactivity: { events: { onHover: { enable: true, mode: "grab" } }, modes: { grab: { distance: 180, links: { opacity: 0.6 } } } },
-          detectRetina: true,
-        });
-        const canvas = document.querySelector("#tsparticles canvas");
-        if (canvas) canvas.style.pointerEvents = "none";
-      }
-    });
-  </script> <script>
-    // Datos de slides desde la variable Astro (serializado manualmente)
-    // Serializa y clona slides para su uso en JS
-    const slidesDataManual = JSON.parse(JSON.stringify(slides));
-
-    const titleEl = document.getElementById("slide-title");
-    const bulletsEl = document.getElementById("slide-bullets");
-    const countEl = document.getElementById("slide-count");
-    let idx = 0;
-
-    function renderSlide() {
-      const s = slidesDataManual[idx];
-      if (!s) return;
-      titleEl.textContent = s.title;
-      bulletsEl.innerHTML = s.bullets.map((b) => `<li>${b}</li>`).join("");
-      countEl.textContent = `${idx + 1} / ${slidesDataManual.length}`;
-    }
-
-    document.getElementById("prev").addEventListener("click", () => {
-      idx = (idx - 1 + slidesDataManual.length) % slidesDataManual.length;
-      renderSlide();
-    });
-    document.getElementById("next").addEventListener("click", () => {
-      idx = (idx + 1) % slidesDataManual.length;
-      renderSlide();
-    });
-    renderSlide();
-
-    // Carrusel del informe detallado
-    const reportSlidesData = JSON.parse(JSON.stringify(reportSlides));
-    const reportTitleEl = document.getElementById("report-title");
-    const reportBulletsEl = document.getElementById("report-bullets");
-    const reportCountEl = document.getElementById("report-count");
-    const reportNoteEl = document.getElementById("report-note");
-    let reportIdx = 0;
-
-    function renderReportSlide() {
-      const s = reportSlidesData[reportIdx];
-      if (!s) return;
-      reportTitleEl.textContent = s.title;
-      reportBulletsEl.innerHTML = s.bullets.map((b) => `<li>${b}</li>`).join("");
-      reportCountEl.textContent = `${reportIdx + 1} / ${reportSlidesData.length}`;
-      reportNoteEl.textContent = s.note || "Síntesis generada desde el informe completo.";
-      if (window.MathJax?.typesetPromise) {
-        window.MathJax.typesetPromise();
-      }
-    }
-
-    document.getElementById("report-prev").addEventListener("click", () => {
-      reportIdx = (reportIdx - 1 + reportSlidesData.length) % reportSlidesData.length;
-      renderReportSlide();
-    });
-    document.getElementById("report-next").addEventListener("click", () => {
-      reportIdx = (reportIdx + 1) % reportSlidesData.length;
-      renderReportSlide();
-    });
-    renderReportSlide();
-
-    // Fórmulas LaTeX en la tarjeta de "Fórmulas clave"
-    const latexFormulas = [
-      "\\rho = \\frac{\\lambda}{c\\mu} \\lt 1",
-      "P_0 = \\left[\\sum_{k=0}^{c-1} \\frac{r^k}{k!} + \\frac{r^c}{c!(1-\\rho)}\\right]^{-1},\\quad r = \\frac{\\lambda}{\\mu}",
-      "L_q = P_0 \\frac{r^c \\rho}{c!(1-\\rho)^2}",
-      "W_q = \\frac{L_q}{\\lambda},\\quad W = W_q + \\frac{1}{\\mu},\\quad L = \\lambda W",
-    ];
-    const formulaItems = document.querySelectorAll("#formula-list .math-item");
-    formulaItems.forEach((li, i) => {
-      const latex = latexFormulas[i];
-      if (!latex) return;
-      const note = li.dataset.note ? ` ${li.dataset.note}` : "";
-      li.innerHTML = `\\(${latex}\\)${note}`;
-    });
-    if (window.MathJax?.typesetPromise) {
-      window.MathJax.typesetPromise();
-    }
-
-    // === Simulador M/M/c en JavaScript ===
-    // Utilidades generales
-    function factorial(n) {
-      let r = 1;
-      for (let i = 2; i <= n; i++) r *= i;
-      return r;
-    }
-    // Genera un valor exponencial dado un rate
-    function randExp(rate) {
-      return -Math.log(1 - Math.random()) / rate;
-    }
-    // Simulación de cola M/M/c por eventos discretos
-    function simulate(lambda, mu, c, simTime) {
-      let t = 0;
-      // próxima llegada
-      let nextArrival = randExp(lambda);
-      // tiempos de finalización de servicio en cada servidor
-      let serviceEndTimes = [];
-      // cola de tiempos de llegada de clientes en espera
-      let queue = [];
-      // tiempos de espera observados
-      let waitTimes = [];
-      // registros de longitud de cola (tiempo, longitud)
-      let timeline = [[0, 0]];
-      while (true) {
-        const nextService = serviceEndTimes.length > 0 ? serviceEndTimes[0] : Infinity;
-        // Evento de llegada
-        if (nextArrival <= nextService && nextArrival <= simTime) {
-          t = nextArrival;
-          if (serviceEndTimes.length < c) {
-            // Se inicia servicio inmediatamente
-            const s = randExp(mu);
-            // agregar tiempo de fin al array y ordenarlo
-            serviceEndTimes.push(t + s);
-            serviceEndTimes.sort((a, b) => a - b);
-            waitTimes.push(0);
-          } else {
-            // se encola
-            queue.push(t);
-          }
-          // programar siguiente llegada
-          nextArrival += randExp(lambda);
-          // registrar longitud de cola tras la llegada
-          timeline.push([t, queue.length]);
-        }
-        // Evento de finalización de servicio
-        else if (nextService < nextArrival && nextService <= simTime) {
-          t = nextService;
-          // quitar el servidor que termina
-          serviceEndTimes.shift();
-          if (queue.length > 0) {
-            const arrivalTime = queue.shift();
-            const wait = t - arrivalTime;
-            waitTimes.push(wait);
-            const s = randExp(mu);
-            serviceEndTimes.push(t + s);
-            serviceEndTimes.sort((a, b) => a - b);
-          }
-          // registrar longitud de cola tras la salida
-          timeline.push([t, queue.length]);
-        } else {
-          break;
-        }
-        // por si acaso se excede el tiempo
-        if (t > simTime) break;
-      }
-      // completar hasta el final del tiempo de simulación
-      const last = timeline[timeline.length - 1];
-      if (last[0] < simTime) {
-        timeline.push([simTime, last[1]]);
-      }
-      // cálculo de métricas simuladas
-      let area = 0;
-      for (let i = 0; i < timeline.length - 1; i++) {
-        const dt = timeline[i + 1][0] - timeline[i][0];
-        area += timeline[i][1] * dt;
-      }
-      const Lq_sim = area / simTime;
-      const Wq_sim = waitTimes.length > 0 ? waitTimes.reduce((a, b) => a + b, 0) / waitTimes.length : 0;
-      // métricas teóricas (Erlang-C)
-      const rho = lambda / (c * mu);
-      const stable = rho < 1;
-      const r = lambda / mu;
-      let Lq_theory = NaN;
-      let Wq_theory = NaN;
-      let L_theory = NaN;
-      let W_theory = NaN;
-      if (stable && lambda > 0 && mu > 0) {
-        let sumTerm = 0;
-        for (let k = 0; k < c; k++) {
-          sumTerm += Math.pow(r, k) / factorial(k);
-        }
-        const lastTerm = Math.pow(r, c) / (factorial(c) * (1 - rho));
-        const P0 = 1 / (sumTerm + lastTerm);
-        Lq_theory = P0 * Math.pow(r, c) * rho / (factorial(c) * Math.pow(1 - rho, 2));
-        Wq_theory = Lq_theory / lambda;
-        W_theory = Wq_theory + 1 / mu;
-        L_theory = lambda * W_theory;
-      }
-      return {
-        timeline,
-        waitTimes,
-        Lq_sim,
-        Wq_sim,
-        rho,
-        stable,
-        Lq_theory,
-        Wq_theory,
-        L_theory,
-        W_theory,
-      };
-    }
-    // Actualiza las etiquetas que muestran el valor actual de cada control
-    function bindSliders() {
-      const ids = ["lambda", "mu", "servers", "time", "cost"];
-      ids.forEach((id) => {
-        const input = document.getElementById(id);
-        const valueEl = document.getElementById(`${id}-value`);
-        function update() {
-          valueEl.textContent = input.value;
-        }
-        input.addEventListener("input", update);
-        update();
-      });
-    }
-    // Ejecuta una simulación y actualiza métricas y gráfico
-    async function runSimulation() {
-      const lambda = Number(document.getElementById("lambda").value);
-      const mu = Number(document.getElementById("mu").value);
-      const servers = Number(document.getElementById("servers").value);
-      const simTime = Number(document.getElementById("time").value);
-      const cost = Number(document.getElementById("cost").value);
-      const res = simulate(lambda, mu, servers, simTime);
-      // Actualizar métricas
-      document.getElementById("rho-out").textContent = res.rho.toFixed(3);
-      document.getElementById("stable-out").textContent = res.stable
-        ? "Estable (ρ < 1)"
-        : "Inestable (cola infinita)";
-      document.getElementById("wq-out").textContent = res.Wq_sim.toFixed(3);
-      document.getElementById("lq-out").textContent = res.Lq_sim.toFixed(3);
-      document.getElementById("cost-out").textContent = (servers * cost).toLocaleString("en-US", {
-        style: "currency",
-        currency: "USD",
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-      });
-      // Dibujar gráfica de cola
-      const times = res.timeline.map((p) => p[0]);
-      const queues = res.timeline.map((p) => p[1]);
-      const trace = {
-        x: times,
-        y: queues,
-        type: "scatter",
-        mode: "lines",
-        fill: "tozeroy",
-        name: "Longitud de cola",
-      };
-      const layout = {
-        title: `Evolución de la cola – M/M/${servers} (λ=${lambda}, μ=${mu})`,
-        xaxis: { title: "Tiempo (s)" },
-        yaxis: { title: "Longitud de cola" },
-        margin: { t: 40, l: 50, r: 10, b: 40 },
-      };
-      Plotly.newPlot("queue-chart", [trace], layout);
-    }
-    // Analiza escalabilidad y costo para distintos valores de c
-    async function analyze() {
-      const lambda = Number(document.getElementById("lambda").value);
-      const mu = Number(document.getElementById("mu").value);
-      const serversCurrent = Number(document.getElementById("servers").value);
-      const costPerServer = Number(document.getElementById("cost").value);
-      const simTime = Math.min(Number(document.getElementById("time").value), 400);
-      const minServers = Math.max(1, Math.floor(lambda / mu) - 2);
-      const maxServers = serversCurrent + 15;
-      const results = [];
-      for (let c = minServers; c <= maxServers; c++) {
-        const res = simulate(lambda, mu, c, simTime);
-        results.push({
-          servers: c,
-          Wq: res.Wq_sim,
-          Lq: res.Lq_sim,
-          rho: res.rho,
-          cost: c * costPerServer,
+          interactivity: { events: { onHover: { enable: true, mode: "grab" } } },
+          detectRetina: true
         });
       }
-      // Graficar impacto de c en Wq y costo
-      const traceWq = {
-        x: results.map((d) => d.servers),
-        y: results.map((d) => d.Wq),
-        type: "scatter",
-        mode: "lines+markers",
-        name: "Tiempo en cola (s)",
-        line: { width: 3 },
-      };
-      const traceCost = {
-        x: results.map((d) => d.servers),
-        y: results.map((d) => d.cost),
-        type: "scatter",
-        mode: "lines+markers",
-        name: "Costo mensual ($)",
-        yaxis: "y2",
-        line: { width: 3 },
-      };
-      const layout1 = {
-        title: "Impacto del número de servidores",
-        xaxis: { title: "Número de servidores (c)" },
-        yaxis: { title: "Tiempo en cola (s)" },
-        yaxis2: {
-          title: "Costo mensual ($)",
-          overlaying: "y",
-          side: "right",
-        },
-        margin: { t: 40, l: 50, r: 50, b: 50 },
-      };
-      Plotly.newPlot("scalability-chart", [traceWq, traceCost], layout1);
-      // Graficar trade-off costo vs tiempo
-      const traceTradeoff = {
-        x: results.map((d) => d.cost),
-        y: results.map((d) => d.Wq),
-        type: "scatter",
-        mode: "lines+markers",
-        name: "Frontera eficiente",
-        line: { width: 4 },
-      };
-      const layout2 = {
-        title: "Costo mensual vs Tiempo en cola",
-        xaxis: { title: "Costo mensual ($)" },
-        yaxis: { title: "Tiempo en cola (s)" },
-        margin: { t: 40, l: 50, r: 10, b: 50 },
-        shapes: [
-          {
-            type: "line",
-            x0: serversCurrent * costPerServer,
-            x1: serversCurrent * costPerServer,
-            y0: 0,
-            y1: Math.max(...results.map((d) => d.Wq)),
-            line: {
-              dash: "dash",
-              width: 2,
-              color: "#888",
-            },
-          },
-        ],
-        annotations: [
-          {
-            x: serversCurrent * costPerServer,
-            y: Math.max(...results.map((d) => d.Wq)),
-            xref: "x",
-            yref: "y",
-            text: `Configuración actual (${serversCurrent} serv.)`,
-            showarrow: true,
-            arrowhead: 7,
-            ay: -40,
-          },
-        ],
-      };
-      Plotly.newPlot("tradeoff-chart", [traceTradeoff], layout2);
-      // Tabla con resultados
-      const table = document.getElementById("analysis-table");
-      let html = "<table><thead><tr><th>Servidores</th><th>Tiempo en cola (s)</th><th>Cola promedio</th><th>Utilización ρ</th><th>Costo ($)</th></tr></thead><tbody>";
-      results.forEach((row) => {
-        html += `<tr><td>${row.servers}</td><td>${row.Wq.toFixed(3)}</td><td>${row.Lq.toFixed(3)}</td><td>${row.rho.toFixed(3)}</td><td>${row.cost.toLocaleString()}</td></tr>`;
-      });
-      html += "</tbody></table>";
-      table.innerHTML = html;
-      // Calcular y mostrar punto óptimo (menor costo con Wq < 0.5s)
-      const candidates = results.filter((r) => r.Wq < 0.5);
-      const optimum = candidates.length > 0 ? candidates.reduce((min, cur) => (cur.cost < min.cost ? cur : min)) : null;
-      const optDiv = document.getElementById("analysis-optimum");
-      if (optimum) {
-        optDiv.innerHTML = `Punto óptimo sugerido: <strong>${optimum.servers} servidores</strong> → Tiempo en cola ≈ ${optimum.Wq.toFixed(3)}s → Costo = $${optimum.cost.toLocaleString()}`;
-      } else {
-        optDiv.innerHTML = "No se encontró un punto con Tiempo en cola &lt; 0.5s en el rango analizado.";
-      }
+    });
+  </script>  </body></html> <script>
+  // === Simulador M/M/c en JavaScript ===
+  function factorial(n) { let r = 1; for (let i = 2; i <= n; i++) r *= i; return r; }
+  function randExp(rate) { return -Math.log(1 - Math.random()) / rate; }
+
+  function simulate(lambda, mu, c, simTime) {
+    let t = 0, nextArrival = randExp(lambda), serviceEndTimes = [], queue = [], waitTimes = [], timeline = [[0, 0]];
+    while (true) {
+      const nextService = serviceEndTimes.length > 0 ? serviceEndTimes[0] : Infinity;
+      if (nextArrival <= nextService && nextArrival <= simTime) {
+        t = nextArrival;
+        if (serviceEndTimes.length < c) { serviceEndTimes.push(t + randExp(mu)); serviceEndTimes.sort((a, b) => a - b); waitTimes.push(0); }
+        else { queue.push(t); }
+        nextArrival += randExp(lambda);
+        timeline.push([t, queue.length]);
+      } else if (nextService < nextArrival && nextService <= simTime) {
+        t = nextService; serviceEndTimes.shift();
+        if (queue.length > 0) { waitTimes.push(t - queue.shift()); serviceEndTimes.push(t + randExp(mu)); serviceEndTimes.sort((a, b) => a - b); }
+        timeline.push([t, queue.length]);
+      } else { break; }
+      if (t > simTime) break;
     }
-    // Vincular eventos a botones
-    function initSim() {
-      bindSliders();
-      document.getElementById("run-sim").addEventListener("click", runSimulation);
-      document.getElementById("analyze").addEventListener("click", analyze);
-      // Ejecutar una simulación inicial
-      runSimulation();
+    if (timeline[timeline.length - 1][0] < simTime) timeline.push([simTime, timeline[timeline.length - 1][1]]);
+    
+    let area = 0; for (let i = 0; i < timeline.length - 1; i++) area += timeline[i][1] * (timeline[i + 1][0] - timeline[i][0]);
+    const rho = lambda / (c * mu), stable = rho < 1, r = lambda / mu;
+    let Lq_theory = NaN, Wq_theory = NaN;
+    if (stable && lambda > 0 && mu > 0) {
+      let sumTerm = 0; for (let k = 0; k < c; k++) sumTerm += Math.pow(r, k) / factorial(k);
+      const P0 = 1 / (sumTerm + Math.pow(r, c) / (factorial(c) * (1 - rho)));
+      Lq_theory = P0 * Math.pow(r, c) * rho / (factorial(c) * Math.pow(1 - rho, 2));
+      Wq_theory = Lq_theory / lambda;
     }
-    // Ejecutar al cargar
-    window.addEventListener("load", initSim);
-  </script>  </body></html>
+    return { timeline, waitTimes, Lq_sim: area / simTime, Wq_sim: waitTimes.length > 0 ? waitTimes.reduce((a, b) => a + b, 0) / waitTimes.length : 0, rho, stable, Lq_theory, Wq_theory };
+  }
+
+  function bindSliders() {
+    ["lambda", "mu", "servers", "time", "cost"].forEach(id => {
+      const input = document.getElementById(id), valueEl = document.getElementById(`${id}-value`);
+      input.addEventListener("input", () => valueEl.textContent = input.value);
+    });
+  }
+
+  async function runSimulation() {
+    const lambda = +document.getElementById("lambda").value, mu = +document.getElementById("mu").value;
+    const servers = +document.getElementById("servers").value, simTime = +document.getElementById("time").value, cost = +document.getElementById("cost").value;
+    const res = simulate(lambda, mu, servers, simTime);
+    
+    document.getElementById("rho-out").textContent = res.rho.toFixed(3);
+    document.getElementById("stable-out").textContent = res.stable ? "Estable (ρ < 1)" : "Inestable";
+    document.getElementById("wq-out").textContent = res.Wq_sim.toFixed(3);
+    document.getElementById("lq-out").textContent = res.Lq_sim.toFixed(3);
+    document.getElementById("cost-out").textContent = "$" + (servers * cost).toLocaleString();
+
+    Plotly.newPlot("queue-chart", [{ x: res.timeline.map(p => p[0]), y: res.timeline.map(p => p[1]), type: "scatter", mode: "lines", fill: "tozeroy", name: "Cola", line: { color: "#8ad6ff" } }], {
+      title: `Evolución de la cola – M/M/${servers}`, xaxis: { title: "Tiempo (s)" }, yaxis: { title: "Longitud de cola" },
+      paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0.1)', font: { color: '#94a3b8' }, margin: { t: 40, l: 50, r: 10, b: 40 }
+    }, { responsive: true });
+  }
+
+  async function analyze() {
+    const wrapper = document.getElementById("analysis-wrapper"), loading = document.getElementById("analysis-loading"), content = document.getElementById("analysis-content"), loadingBar = document.getElementById("loading-bar");
+    wrapper.classList.add("visible"); loading.classList.add("active"); content.classList.remove("visible"); loadingBar.style.width = "0%";
+    wrapper.scrollIntoView({ behavior: "smooth", block: "start" });
+    await new Promise(r => setTimeout(r, 100));
+    
+    const lambda = +document.getElementById("lambda").value, mu = +document.getElementById("mu").value, serversCurrent = +document.getElementById("servers").value, costPerServer = +document.getElementById("cost").value;
+    const simTime = Math.min(+document.getElementById("time").value, 400);
+    const minServers = Math.max(1, Math.floor(lambda / mu) - 2), maxServers = serversCurrent + 15, results = [];
+    
+    for (let c = minServers; c <= maxServers; c++) {
+      const res = simulate(lambda, mu, c, simTime);
+      results.push({ servers: c, Wq: res.Wq_sim, Lq: res.Lq_sim, rho: res.rho, cost: c * costPerServer });
+      loadingBar.style.width = ((c - minServers + 1) / (maxServers - minServers + 1)) * 100 + "%";
+      await new Promise(r => setTimeout(r, 30));
+    }
+    
+    loading.classList.remove("active"); content.classList.add("visible");
+    
+    Plotly.newPlot("scalability-chart", [
+      { x: results.map(d => d.servers), y: results.map(d => d.Wq), type: "scatter", mode: "lines+markers", name: "Tiempo en cola (s)", line: { width: 3, color: "#8ad6ff" } },
+      { x: results.map(d => d.servers), y: results.map(d => d.cost), type: "scatter", mode: "lines+markers", name: "Costo ($)", yaxis: "y2", line: { width: 3, color: "#72f0d5" } }
+    ], { xaxis: { title: "Servidores (c)" }, yaxis: { title: "Tiempo en cola (s)" }, yaxis2: { title: "Costo ($)", overlaying: "y", side: "right" }, paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0.1)', font: { color: '#94a3b8' }, margin: { t: 20, l: 50, r: 50, b: 50 }, legend: { x: 0.5, y: 1.1, orientation: "h" } }, { responsive: true });
+    
+    Plotly.newPlot("tradeoff-chart", [{ x: results.map(d => d.cost), y: results.map(d => d.Wq), type: "scatter", mode: "lines+markers", name: "Frontera", line: { width: 4, color: "#8ad6ff" } }], { xaxis: { title: "Costo ($)" }, yaxis: { title: "Tiempo en cola (s)" }, paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0.1)', font: { color: '#94a3b8' }, margin: { t: 20, l: 50, r: 10, b: 50 } }, { responsive: true });
+    
+    document.getElementById("analysis-table").innerHTML = "<table><thead><tr><th>Servidores</th><th>Wq (s)</th><th>Lq</th><th>ρ</th><th>Costo</th></tr></thead><tbody>" + results.map(r => `<tr><td>${r.servers}</td><td>${r.Wq.toFixed(3)}</td><td>${r.Lq.toFixed(3)}</td><td>${r.rho.toFixed(3)}</td><td>$${r.cost.toLocaleString()}</td></tr>`).join("") + "</tbody></table>";
+    
+    const candidates = results.filter(r => r.Wq < 0.5), optimum = candidates.length > 0 ? candidates.reduce((min, cur) => cur.cost < min.cost ? cur : min) : null;
+    document.getElementById("analysis-optimum").innerHTML = optimum ? `Punto óptimo: <strong>${optimum.servers} servidores</strong> → Wq ≈ ${optimum.Wq.toFixed(3)}s → $${optimum.cost.toLocaleString()}` : "No se encontró configuración con Wq < 0.5s";
+  }
+
+  window.addEventListener("load", () => {
+    bindSliders();
+    document.getElementById("run-sim").addEventListener("click", runSimulation);
+    document.getElementById("analyze").addEventListener("click", analyze);
+    runSimulation();
+    
+    // KaTeX
+    function tryKaTeX() {
+      if (typeof katex === "undefined") { setTimeout(tryKaTeX, 100); return; }
+      var formulas = { 'f1': '\\rho = \\dfrac{\\lambda}{c \\cdot \\mu} < 1', 'f2': 'P_0 = \\left[ \\sum_{k=0}^{c-1} \\dfrac{r^k}{k!} + \\dfrac{r^c}{c!(1-\\rho)} \\right]^{-1}', 'f3': 'L_q = \\dfrac{P_0 \\cdot r^c \\cdot \\rho}{c! \\cdot (1-\\rho)^2}', 'f4': 'W_q = \\dfrac{L_q}{\\lambda}, W = W_q + \\dfrac{1}{\\mu}, L = \\lambda W' };
+      Object.keys(formulas).forEach(id => { var el = document.getElementById(id); if (el) katex.render(formulas[id], el, { displayMode: false, throwOnError: false }); });
+    }
+    tryKaTeX();
+  });
+</script> 

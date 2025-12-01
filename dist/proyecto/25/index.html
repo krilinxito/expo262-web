@@ -1,0 +1,259 @@
+<!DOCTYPE html><html lang="es" style="--accentColor: #22d3ee;--accentColor2: #a78bfa;"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Proyecto 25 · Mutaciones TP53 con Procesos de Poisson</title><meta name="description" content="Análisis de mutaciones del gen TP53 usando Procesos de Poisson homogéneos y no homogéneos."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script><script src="https://cdn.plot.ly/plotly-2.27.0.min.js" charset="utf-8"></script><link rel="stylesheet" href="/_astro/13.BMqXB1Sc.css">
+<link rel="stylesheet" href="/_astro/25.DmQIS5hG.css"><script type="module" src="/_astro/hoisted.QOdwnJaL.js"></script></head> <body style="--accent: #22d3ee; --accent-2: #a78bfa;; --accentColor: #22d3ee;--accentColor2: #a78bfa;"> <div class="page" style="--accentColor: #22d3ee;--accentColor2: #a78bfa;">  <header class="topbar" data-astro-cid-axxsutmj> <div class="brand" data-astro-cid-axxsutmj> <div class="dot" data-astro-cid-axxsutmj></div> <span data-astro-cid-axxsutmj>Proyecto 25 · TP53 Mutations</span> </div> <nav data-astro-cid-axxsutmj> <a href="/" data-astro-cid-axxsutmj>Home</a><a href="#informe" data-astro-cid-axxsutmj>Informe</a><a href="#simulador" data-astro-cid-axxsutmj>Simulador</a><a href="#graficos" data-astro-cid-axxsutmj>Gráficos</a><a href="#analisis" data-astro-cid-axxsutmj>Análisis</a> </nav> </header>  <main data-astro-cid-oimuypky> <!-- HERO PERSONALIZADO --> <section class="hero" data-astro-cid-oimuypky> <div class="hero__copy" data-astro-cid-oimuypky> <p class="eyebrow" data-astro-cid-oimuypky>Tema 25</p> <h1 data-astro-cid-oimuypky>Procesos de Poisson en Mutaciones del Gen TP53</h1> <p class="lede" data-astro-cid-oimuypky>Análisis estadístico del gen supresor de tumores más importante. Modelado con procesos de Poisson <strong data-astro-cid-oimuypky>homogéneos</strong> y <strong data-astro-cid-oimuypky>no homogéneos</strong> para identificar hotspots mutacionales y tendencias temporales.</p> <div class="tags" data-astro-cid-oimuypky> <span data-astro-cid-oimuypky>Gen TP53 · p53</span> <span data-astro-cid-oimuypky>Poisson Homogéneo</span> <span data-astro-cid-oimuypky>Poisson No Homogéneo</span> <span data-astro-cid-oimuypky>Bioinformática</span> </div> <div class="cta" data-astro-cid-oimuypky> <a class="primary" href="#simulador" data-astro-cid-oimuypky>Simulador Interactivo</a> <a class="ghost" href="#graficos" data-astro-cid-oimuypky>Ver Gráficos</a> </div> </div> <div class="hero__panel" data-astro-cid-oimuypky> <div class="panel__header" data-astro-cid-oimuypky><span class="chip" data-astro-cid-oimuypky>Dataset Real</span><span class="status" data-astro-cid-oimuypky>TP53 UMD</span></div> <div class="panel__list" data-astro-cid-oimuypky> <div class="panel__item" data-astro-cid-oimuypky><span class="label" data-astro-cid-oimuypky>Variantes únicas</span><p data-astro-cid-oimuypky>33,603 mutaciones</p></div> <div class="panel__item" data-astro-cid-oimuypky><span class="label" data-astro-cid-oimuypky>Total de eventos</span><p data-astro-cid-oimuypky>37,018,402 ocurrencias</p></div> <div class="panel__item" data-astro-cid-oimuypky><span class="label" data-astro-cid-oimuypky>Tasa λ global</span><p data-astro-cid-oimuypky>1,101.64 /variante</p></div> <div class="panel__item" data-astro-cid-oimuypky><span class="label" data-astro-cid-oimuypky>Índice Dispersión</span><p class="warning" data-astro-cid-oimuypky>1,082.6 (sobredispersión)</p></div> </div> <div class="panel__footer" data-astro-cid-oimuypky><span class="bubble ghost" data-astro-cid-oimuypky>1989-2016</span><span class="bubble" data-astro-cid-oimuypky>CpG 6.44× más</span></div> </div> </section> <section class="informe-carousel" id="informe" data-astro-cid-n5etzuft> <div class="section__head" data-astro-cid-n5etzuft> <div data-astro-cid-n5etzuft> <p class="eyebrow" data-astro-cid-n5etzuft>Informe</p> <h2 data-astro-cid-n5etzuft>Presentación del Proyecto</h2> <p class="section__lede" data-astro-cid-n5etzuft>Navegá a través de las slides del análisis completo.</p> </div> <div class="slide-nav-info" data-astro-cid-n5etzuft> <span class="slide-progress" data-astro-cid-n5etzuft>1 / 16</span> <span class="current-section" data-astro-cid-n5etzuft>Portada</span> </div> </div> <div class="informe-slider" data-astro-cid-n5etzuft> <div class="informe-slide" data-astro-cid-n5etzuft> <div class="slide-content" data-astro-cid-n5etzuft> <div class="slide-text" data-astro-cid-n5etzuft> <p class="slide-section" data-astro-cid-n5etzuft>Portada</p> <h3 class="slide-title" data-astro-cid-n5etzuft>Procesos de Poisson en Mutaciones del Gen TP53</h3> <p class="slide-subtitle" data-astro-cid-n5etzuft>Análisis Estadístico de Variantes Genéticas</p> <ul class="slide-bullets" data-astro-cid-n5etzuft> <li data-astro-cid-n5etzuft>Grupo G42 · Noviembre 2025</li><li data-astro-cid-n5etzuft>Procesos Estocásticos y Series de Tiempo</li><li data-astro-cid-n5etzuft>Universidad Mayor de San Andrés</li> </ul> </div> <div class="slide-image" data-astro-cid-n5etzuft> <img src="https://images.unsplash.com/photo-1628595351029-c2bf17511435?w=800&q=80" alt="" data-astro-cid-n5etzuft> </div> </div> </div> <div class="informe-controls" data-astro-cid-n5etzuft> <button class="nav-btn prev-btn" data-astro-cid-n5etzuft><span class="nav-icon" data-astro-cid-n5etzuft>←</span><span class="nav-text" data-astro-cid-n5etzuft>Anterior</span></button> <div class="slide-dots" data-astro-cid-n5etzuft> <button class="dot active" data-index="0" data-astro-cid-n5etzuft></button><button class="dot " data-index="1" data-astro-cid-n5etzuft></button><button class="dot " data-index="2" data-astro-cid-n5etzuft></button><button class="dot " data-index="3" data-astro-cid-n5etzuft></button><button class="dot " data-index="4" data-astro-cid-n5etzuft></button><button class="dot " data-index="5" data-astro-cid-n5etzuft></button><button class="dot " data-index="6" data-astro-cid-n5etzuft></button><button class="dot " data-index="7" data-astro-cid-n5etzuft></button><button class="dot " data-index="8" data-astro-cid-n5etzuft></button><button class="dot " data-index="9" data-astro-cid-n5etzuft></button><button class="dot " data-index="10" data-astro-cid-n5etzuft></button><button class="dot " data-index="11" data-astro-cid-n5etzuft></button><button class="dot " data-index="12" data-astro-cid-n5etzuft></button><button class="dot " data-index="13" data-astro-cid-n5etzuft></button><button class="dot " data-index="14" data-astro-cid-n5etzuft></button><button class="dot " data-index="15" data-astro-cid-n5etzuft></button> </div> <button class="nav-btn next-btn" data-astro-cid-n5etzuft><span class="nav-text" data-astro-cid-n5etzuft>Siguiente</span><span class="nav-icon" data-astro-cid-n5etzuft>→</span></button> </div> <div class="keyboard-hint" data-astro-cid-n5etzuft><kbd data-astro-cid-n5etzuft>←</kbd> <kbd data-astro-cid-n5etzuft>→</kbd> para navegar</div> </div> </section> <script>(function(){const slidesJson = "[{\"section\":\"Portada\",\"title\":\"Procesos de Poisson en Mutaciones del Gen TP53\",\"subtitle\":\"Análisis Estadístico de Variantes Genéticas\",\"bullets\":[\"Grupo G42 · Noviembre 2025\",\"Procesos Estocásticos y Series de Tiempo\",\"Universidad Mayor de San Andrés\"],\"image\":\"https://images.unsplash.com/photo-1628595351029-c2bf17511435?w=800&q=80\"},{\"section\":\"Resumen\",\"title\":\"Resumen Ejecutivo\",\"bullets\":[\"Análisis de 33,603 variantes únicas del gen TP53 con 37 millones de eventos\",\"Modelado con Procesos de Poisson homogéneos y no homogéneos\",\"Identificación de hotspots mutacionales en codones críticos\",\"Validación estadística y detección de sobredispersión extrema\"],\"image\":\"https://images.unsplash.com/photo-1530026186672-2cd00ffc50fe?w=800&q=80\"},{\"section\":\"Introducción\",\"title\":\"El Gen TP53: Guardián del Genoma\",\"bullets\":[\"TP53 codifica la proteína p53, supresora de tumores más estudiada\",\"Mutado en >50% de todos los cánceres humanos\",\"Regula ciclo celular, apoptosis y reparación del ADN\",\"Base de datos UMD: repositorio mundial con 33,603 variantes únicas\"],\"image\":\"https://images.unsplash.com/photo-1559757175-5700dde675bc?w=800&q=80\"},{\"section\":\"Problema\",\"title\":\"Planteamiento del Problema\",\"bullets\":[\"Las mutaciones no se distribuyen uniformemente en el gen\",\"Algunos codones acumulan miles de veces más mutaciones que otros\",\"Factores biológicos (sitios CpG) alteran las tasas locales\",\"Se requiere un modelo que capture esta heterogeneidad espacial y temporal\"],\"image\":\"https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=800&q=80\"},{\"section\":\"Marco Teórico\",\"title\":\"Proceso de Poisson Homogéneo\",\"bullets\":[\"N(t) cuenta eventos en intervalo [0,t] con tasa CONSTANTE λ\",\"P(N(t)=k) = (λt)^k · e^(-λt) / k!\",\"E[N(t)] = Var[N(t)] = λt (equidispersión)\",\"Tiempos entre eventos siguen distribución Exponencial(λ)\"],\"image\":\"https://images.unsplash.com/photo-1509228627152-72ae9ae6848d?w=800&q=80\"},{\"section\":\"Marco Teórico\",\"title\":\"Proceso de Poisson NO Homogéneo\",\"bullets\":[\"Tasa λ(t) VARIABLE en el tiempo: λ(t) = a + b·t\",\"Intensidad acumulada: Λ(t) = ∫₀ᵗ λ(s)ds\",\"Captura tendencias temporales en la tasa de mutación\",\"En TP53: λ(t) = 10,769.5 - 4.82·t (tendencia decreciente)\"],\"image\":\"https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80\"},{\"section\":\"Marco Teórico\",\"title\":\"Proceso de Poisson Compuesto\",\"bullets\":[\"Cada tumor puede tener múltiples mutaciones TP53\",\"N tumores llegan con tasa λ, cada uno con Xᵢ mutaciones\",\"S = Σᵢ₌₁ᴺ Xᵢ es el total de mutaciones observadas\",\"E[S] = λ·E[X], Var[S] = λ·E[X²]\"],\"image\":\"https://images.unsplash.com/photo-1576086213369-97a306d36557?w=800&q=80\"},{\"section\":\"Metodología\",\"title\":\"Fuente de Datos: TP53 UMD\",\"bullets\":[\"Base de datos Universal Mutation Database (UMD)\",\"33,603 variantes únicas del gen TP53\",\"37,018,402 eventos mutacionales totales\",\"Período: 1989-2016 (27 años de registros)\"],\"image\":\"https://images.unsplash.com/photo-1518152006812-edab29b069ac?w=800&q=80\"},{\"section\":\"Resultados\",\"title\":\"Estimación de λ Global\",\"bullets\":[\"λ global = 1,101.64 ocurrencias/variante\",\"IC 95%: [1,101.28 , 1,101.99]\",\"Total eventos: 37,018,402\",\"Mediana: 508 (distribución muy sesgada a la derecha)\"],\"image\":\"https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80\"},{\"section\":\"Resultados\",\"title\":\"Comparación CpG vs No-CpG\",\"bullets\":[\"λ sitios CpG = 1,931.93 (hotspots bioquímicos)\",\"λ no-CpG = 299.95\",\"Ratio CpG/no-CpG = 6.44× mayor\",\"Los dinucleótidos CpG son hipermutables por desaminación\"],\"image\":\"https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?w=800&q=80\"},{\"section\":\"Resultados\",\"title\":\"Hotspots Identificados (Top 5)\",\"bullets\":[\"Codón 175 (R175H): 9.3M eventos, λ=3,205\",\"Codón 248 (R248Q/W): 8.6M eventos, λ=2,189\",\"Codón 273 (R273H/C): 8.4M eventos, λ=2,072\",\"Solo 8 codones (5%) acumulan >498,000 mutaciones c/u\"],\"image\":\"https://images.unsplash.com/photo-1579165466949-3180a3d056d5?w=800&q=80\"},{\"section\":\"Resultados\",\"title\":\"Validación: Índice de Dispersión\",\"bullets\":[\"Media: 1,101.64 | Varianza: 1,192,660.46\",\"Índice de dispersión = Var/Media = 1,082.6\",\"Sobredispersión EXTREMA detectada (≫1)\",\"Conclusión: Poisson simple NO es adecuado\"],\"image\":\"https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800&q=80\"},{\"section\":\"Resultados\",\"title\":\"Proceso No Homogéneo: Tendencia Temporal\",\"bullets\":[\"Modelo ajustado: λ(t) = 10,769.5 - 4.82·t\",\"R² = 0.184, p = 0.026 (significativo al 5%)\",\"Tendencia DECRECIENTE: -4.82 unidades/año\",\"Mutaciones recientes son menos recurrentes\"],\"image\":\"https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80\"},{\"section\":\"Resultados\",\"title\":\"Procesos Compuestos: Mutaciones Múltiples\",\"bullets\":[\"87.5% de tumores tienen 1 sola mutación TP53 (SM)\",\"12.5% tienen mutaciones múltiples (DMU, MM)\",\"λ simples = 1,136 vs λ múltiples = 860\",\"Media: 1.15 mutaciones/tumor\"],\"image\":\"https://images.unsplash.com/photo-1582719471384-894fbb16f2b1?w=800&q=80\"},{\"section\":\"Conclusiones\",\"title\":\"Conclusiones Principales\",\"bullets\":[\"Los datos NO siguen Poisson simple (sobredispersión 1,082×)\",\"Los sitios CpG son hotspots con λ 6.4× mayor que no-CpG\",\"Solo 8 codones concentran la mayoría de mutaciones\",\"El proceso NO homogéneo captura la tendencia temporal\"],\"image\":\"https://images.unsplash.com/photo-1581093458791-9d42e3c2fd45?w=800&q=80\"},{\"section\":\"Aplicaciones\",\"title\":\"Aplicaciones Clínicas\",\"bullets\":[\"Priorización de paneles de secuenciación genética\",\"Cálculo de probabilidad de mutación por codón\",\"Detección temprana enfocada en hotspots R175, R248, R273\",\"Desarrollo de terapias dirigidas a mutaciones frecuentes\"],\"image\":\"https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=800&q=80\"}]";
+const id = "informe";
+
+  const slides = JSON.parse(slidesJson);
+  let idx = 0;
+  
+  const container = document.getElementById(id);
+  if (container) {
+    const slideEl = container.querySelector('.informe-slide');
+    const titleEl = container.querySelector('.slide-title');
+    const bulletsEl = container.querySelector('.slide-bullets');
+    const progressEl = container.querySelector('.slide-progress');
+    const sectionEl = container.querySelector('.current-section');
+    const sectionLabel = container.querySelector('.slide-section');
+    const subtitleEl = container.querySelector('.slide-subtitle');
+    const imageContainer = container.querySelector('.slide-image');
+    const dotsContainer = container.querySelector('.slide-dots');
+    
+    function renderSlide() {
+      const s = slides[idx];
+      if (titleEl) titleEl.textContent = s.title;
+      if (bulletsEl) bulletsEl.innerHTML = s.bullets.map(b => "<li>" + b + "</li>").join("");
+      if (progressEl) progressEl.textContent = (idx + 1) + " / " + slides.length;
+      if (sectionEl) sectionEl.textContent = s.section;
+      if (sectionLabel) sectionLabel.textContent = s.section;
+      
+      if (subtitleEl) {
+        if (s.subtitle) { subtitleEl.textContent = s.subtitle; subtitleEl.style.display = "block"; }
+        else { subtitleEl.style.display = "none"; }
+      }
+      
+      if (imageContainer) {
+        if (s.image) { imageContainer.innerHTML = '<img src="' + s.image + '" alt="" />'; }
+      }
+      
+      if (slideEl) {
+        slideEl.classList.toggle("highlight", s.highlight === true);
+        slideEl.classList.toggle("code-slide", s.code === true);
+        slideEl.classList.toggle("formula-slide", s.isFormula === true);
+      }
+      
+      if (dotsContainer) {
+        dotsContainer.querySelectorAll(".dot").forEach((d, i) => {
+          d.classList.toggle("active", i === idx);
+        });
+      }
+    }
+    
+    container.querySelector(".prev-btn")?.addEventListener("click", () => { 
+      idx = (idx - 1 + slides.length) % slides.length; 
+      renderSlide(); 
+    });
+    
+    container.querySelector(".next-btn")?.addEventListener("click", () => { 
+      idx = (idx + 1) % slides.length; 
+      renderSlide(); 
+    });
+    
+    dotsContainer?.querySelectorAll(".dot").forEach(d => {
+      d.addEventListener("click", (e) => { 
+        idx = parseInt(e.target.dataset.index); 
+        renderSlide(); 
+      });
+    });
+    
+    document.addEventListener("keydown", (e) => {
+      const rect = container.getBoundingClientRect();
+      const inView = rect.top < window.innerHeight && rect.bottom > 0;
+      if (!inView) return;
+      if (e.key === "ArrowLeft") { idx = (idx - 1 + slides.length) % slides.length; renderSlide(); }
+      if (e.key === "ArrowRight") { idx = (idx + 1) % slides.length; renderSlide(); }
+    });
+  }
+})();</script>  <!-- SIMULADOR INTERACTIVO --> <section class="simulator" id="simulador" data-astro-cid-oimuypky> <div class="section__head" data-astro-cid-oimuypky> <div data-astro-cid-oimuypky> <p class="eyebrow" data-astro-cid-oimuypky>Simulación de Mutaciones</p> <h2 data-astro-cid-oimuypky>Visualización: Poisson Homogéneo vs No Homogéneo</h2> <p class="section__lede" data-astro-cid-oimuypky>Observá cómo las <strong data-astro-cid-oimuypky>mutaciones</strong> ocurren aleatoriamente. Compará un proceso con tasa constante vs uno con tasa decreciente.</p> </div> </div> <div class="sim-container" data-astro-cid-oimuypky> <div class="sim-controls" data-astro-cid-oimuypky> <div class="control-group" data-astro-cid-oimuypky><label data-astro-cid-oimuypky>Tasa de mutación λ</label><input type="range" id="sim-lambda" min="5" max="50" value="20" step="1" data-astro-cid-oimuypky><span id="sim-lambda-val" data-astro-cid-oimuypky>20 mut/año</span></div> <div class="control-group" data-astro-cid-oimuypky><label data-astro-cid-oimuypky>Pendiente temporal (b)</label><input type="range" id="sim-slope" min="-2" max="2" value="-0.5" step="0.1" data-astro-cid-oimuypky><span id="sim-slope-val" data-astro-cid-oimuypky>-0.5</span></div> <div class="control-group" data-astro-cid-oimuypky><label data-astro-cid-oimuypky>Tiempo (años)</label><input type="range" id="sim-time" min="5" max="30" value="20" step="1" data-astro-cid-oimuypky><span id="sim-time-val" data-astro-cid-oimuypky>20 años</span></div> <button id="sim-run" class="sim-btn pulse" data-astro-cid-oimuypky><span class="btn-icon" data-astro-cid-oimuypky>▶</span> Generar Mutaciones</button> </div> <div class="sim-stats" data-astro-cid-oimuypky> <div class="stat-box hom" data-astro-cid-oimuypky><span class="stat-label" data-astro-cid-oimuypky>Homogéneo</span><span class="stat-value" id="stat-hom-count" data-astro-cid-oimuypky>0</span><span class="stat-unit" data-astro-cid-oimuypky>mutaciones</span></div> <div class="stat-box nhom" data-astro-cid-oimuypky><span class="stat-label" data-astro-cid-oimuypky>No Homogéneo</span><span class="stat-value" id="stat-nhom-count" data-astro-cid-oimuypky>0</span><span class="stat-unit" data-astro-cid-oimuypky>mutaciones</span></div> <div class="stat-box diff" data-astro-cid-oimuypky><span class="stat-label" data-astro-cid-oimuypky>Diferencia</span><span class="stat-value" id="stat-diff" data-astro-cid-oimuypky>0%</span><span class="stat-unit" data-astro-cid-oimuypky>más/menos</span></div> </div> <div class="sim-charts-grid" data-astro-cid-oimuypky> <div class="chart-box" data-astro-cid-oimuypky><div class="chart-header hom" data-astro-cid-oimuypky><span class="chart-dot" data-astro-cid-oimuypky></span><h4 data-astro-cid-oimuypky>Poisson Homogéneo (λ constante)</h4></div><div id="chart-mutations-hom" class="mutation-chart" data-astro-cid-oimuypky></div></div> <div class="chart-box" data-astro-cid-oimuypky><div class="chart-header nhom" data-astro-cid-oimuypky><span class="chart-dot" data-astro-cid-oimuypky></span><h4 data-astro-cid-oimuypky>Poisson No Homogéneo (λ(t) decreciente)</h4></div><div id="chart-mutations-nhom" class="mutation-chart" data-astro-cid-oimuypky></div></div> </div> <div class="chart-box wide" data-astro-cid-oimuypky><div class="chart-header comparison" data-astro-cid-oimuypky><span class="chart-icon" data-astro-cid-oimuypky>≡</span><h4 data-astro-cid-oimuypky>Comparación: Mutaciones Acumuladas N(t)</h4></div><div id="chart-cumulative" class="mutation-chart tall" data-astro-cid-oimuypky></div></div> <div class="sim-charts-grid" data-astro-cid-oimuypky> <div class="chart-box" data-astro-cid-oimuypky><div class="chart-header hom" data-astro-cid-oimuypky><h4 data-astro-cid-oimuypky>Distribución de Intervalos (Homogéneo)</h4></div><div id="chart-intervals-hom" class="mutation-chart" data-astro-cid-oimuypky></div></div> <div class="chart-box" data-astro-cid-oimuypky><div class="chart-header nhom" data-astro-cid-oimuypky><h4 data-astro-cid-oimuypky>Distribución de Intervalos (No Homogéneo)</h4></div><div id="chart-intervals-nhom" class="mutation-chart" data-astro-cid-oimuypky></div></div> </div> <div class="sim-formulas" data-astro-cid-oimuypky> <div class="formula-box hom-box" data-astro-cid-oimuypky><h5 data-astro-cid-oimuypky>Proceso Homogéneo</h5><div class="formula-content" id="formula-hom" data-astro-cid-oimuypky></div></div> <div class="formula-box nhom-box" data-astro-cid-oimuypky><h5 data-astro-cid-oimuypky>Proceso No Homogéneo</h5><div class="formula-content" id="formula-nhom" data-astro-cid-oimuypky></div></div> </div> </div> </section> <!-- GRÁFICOS INTERACTIVOS --> <section class="charts-section" id="graficos" data-astro-cid-oimuypky> <div class="section__head" data-astro-cid-oimuypky> <div data-astro-cid-oimuypky> <p class="eyebrow" data-astro-cid-oimuypky>Visualizaciones</p> <h2 data-astro-cid-oimuypky>Gráficos Interactivos del Dataset TP53</h2> <p class="section__lede" data-astro-cid-oimuypky>Datos reales de 33,603 variantes del gen TP53.</p> </div> </div> <div class="charts-grid" data-astro-cid-oimuypky> <div class="chart-card wide" data-astro-cid-oimuypky><h4 data-astro-cid-oimuypky>Hotspots Mutacionales: Top 8 Codones</h4><div id="chart-hotspots" class="plotly-chart" data-astro-cid-oimuypky></div></div> <div class="chart-card" data-astro-cid-oimuypky><h4 data-astro-cid-oimuypky>Comparación CpG vs No-CpG</h4><div id="chart-cpg" class="plotly-chart" data-astro-cid-oimuypky></div></div> <div class="chart-card" data-astro-cid-oimuypky><h4 data-astro-cid-oimuypky>Tasa λ por Tipo de Cáncer</h4><div id="chart-disease" class="plotly-chart" data-astro-cid-oimuypky></div></div> <div class="chart-card wide" data-astro-cid-oimuypky><h4 data-astro-cid-oimuypky>Evolución Temporal de λ (Proceso No Homogéneo)</h4><div id="chart-temporal" class="plotly-chart" data-astro-cid-oimuypky></div></div> </div> </section> <!-- ANÁLISIS --> <section class="analysis" id="analisis" data-astro-cid-oimuypky> <div class="section__head" data-astro-cid-oimuypky> <div data-astro-cid-oimuypky> <p class="eyebrow" data-astro-cid-oimuypky>Análisis Completo</p> <h2 data-astro-cid-oimuypky>Resultados del Jupyter Notebook</h2> </div> </div> <div class="analysis-grid" data-astro-cid-oimuypky> <div class="analysis-card" data-astro-cid-oimuypky> <div class="card-header" data-astro-cid-oimuypky><span class="module-num" data-astro-cid-oimuypky>01</span><h4 data-astro-cid-oimuypky>Estadísticas Descriptivas</h4></div> <table class="data-table" data-astro-cid-oimuypky> <tr data-astro-cid-oimuypky><td data-astro-cid-oimuypky>Total variantes únicas</td><td class="val" data-astro-cid-oimuypky>33,603</td></tr> <tr data-astro-cid-oimuypky><td data-astro-cid-oimuypky>Total eventos</td><td class="val" data-astro-cid-oimuypky>37,018,402</td></tr> <tr data-astro-cid-oimuypky><td data-astro-cid-oimuypky>Media (λ global)</td><td class="val" data-astro-cid-oimuypky>1,101.64</td></tr> <tr data-astro-cid-oimuypky><td data-astro-cid-oimuypky>Mediana</td><td class="val" data-astro-cid-oimuypky>508.00</td></tr> </table> </div> <div class="analysis-card highlight" data-astro-cid-oimuypky> <div class="card-header" data-astro-cid-oimuypky><span class="module-num" data-astro-cid-oimuypky>02</span><h4 data-astro-cid-oimuypky>Estimación de λ</h4></div> <div class="param-box" data-astro-cid-oimuypky><span class="param-label" data-astro-cid-oimuypky>λ Global</span><span class="param-value" data-astro-cid-oimuypky>1,101.64</span><span class="param-ci" data-astro-cid-oimuypky>IC 95%: [1,101.28 , 1,101.99]</span></div> <div class="param-row" data-astro-cid-oimuypky> <div class="param-item" data-astro-cid-oimuypky><span class="label" data-astro-cid-oimuypky>λ CpG</span><span class="value" data-astro-cid-oimuypky>1,931.93</span></div> <div class="param-item" data-astro-cid-oimuypky><span class="label" data-astro-cid-oimuypky>λ No-CpG</span><span class="value" data-astro-cid-oimuypky>299.95</span></div> <div class="param-item accent" data-astro-cid-oimuypky><span class="label" data-astro-cid-oimuypky>Ratio</span><span class="value" data-astro-cid-oimuypky>6.44×</span></div> </div> </div> <div class="analysis-card warning" data-astro-cid-oimuypky> <div class="card-header" data-astro-cid-oimuypky><span class="module-num" data-astro-cid-oimuypky>03</span><h4 data-astro-cid-oimuypky>Validación del Modelo</h4></div> <div class="validation-grid" data-astro-cid-oimuypky> <div class="val-metric" data-astro-cid-oimuypky><span class="metric-label" data-astro-cid-oimuypky>Media</span><span class="metric-value" data-astro-cid-oimuypky>1,101.64</span></div> <div class="val-metric" data-astro-cid-oimuypky><span class="metric-label" data-astro-cid-oimuypky>Varianza</span><span class="metric-value" data-astro-cid-oimuypky>1,192,660</span></div> <div class="val-metric big warning" data-astro-cid-oimuypky><span class="metric-label" data-astro-cid-oimuypky>Índice</span><span class="metric-value" data-astro-cid-oimuypky>1,082.6</span></div> </div> <div class="conclusion warning" data-astro-cid-oimuypky><strong data-astro-cid-oimuypky>SOBREDISPERSIÓN:</strong> Poisson simple NO adecuado.</div> </div> <div class="analysis-card" data-astro-cid-oimuypky> <div class="card-header" data-astro-cid-oimuypky><span class="module-num" data-astro-cid-oimuypky>04</span><h4 data-astro-cid-oimuypky>Proceso No Homogéneo</h4></div> <div class="model-box" data-astro-cid-oimuypky><span class="model-label" data-astro-cid-oimuypky>Modelo:</span><span class="model-formula" id="model-temporal" data-astro-cid-oimuypky></span></div> <table class="data-table" data-astro-cid-oimuypky> <tr data-astro-cid-oimuypky><td data-astro-cid-oimuypky>Pendiente (b)</td><td class="val" data-astro-cid-oimuypky>-4.82 /año</td></tr> <tr data-astro-cid-oimuypky><td data-astro-cid-oimuypky>R²</td><td class="val" data-astro-cid-oimuypky>0.184</td></tr> <tr data-astro-cid-oimuypky><td data-astro-cid-oimuypky>p-value</td><td class="val" data-astro-cid-oimuypky>0.026</td></tr> </table> </div> </div> </section> <section class="code-section" id="codigo" data-astro-cid-kkraiuss> <div class="section__head" data-astro-cid-kkraiuss> <div data-astro-cid-kkraiuss> <p class="eyebrow" data-astro-cid-kkraiuss>Código Fuente</p> <h2 data-astro-cid-kkraiuss>Jupyter Notebook: Análisis Completo</h2> <p class="section__lede" data-astro-cid-kkraiuss>Código Python del análisis estadístico. Datos: <code>mutaciones_es.xlsx</code></p> </div> </div>  <div class="code-file" data-astro-cid-kkraiuss> <div class="code-header" data-astro-cid-kkraiuss> <span class="code-filename" data-astro-cid-kkraiuss>poisson_analysis.py</span> <span class="code-desc" data-astro-cid-kkraiuss>Estimación de λ y validación</span> </div> <pre class="code-block" data-astro-cid-kkraiuss><code data-astro-cid-kkraiuss># Estimación de parámetros λ del Proceso de Poisson
+import numpy as np
+from scipy import stats
+
+def estimate_lambda_with_ci(data, confidence=0.95):
+    n = len(data)
+    lambda_est = data.mean()
+    sum_x = data.sum()
+    alpha = 1 - confidence
+    lower = stats.chi2.ppf(alpha/2, 2*sum_x) / (2*n)
+    upper = stats.chi2.ppf(1-alpha/2, 2*(sum_x+1)) / (2*n)
+    return lambda_est, lower, upper
+
+# Resultados del dataset TP53
+lambda_global, ci_lower, ci_upper = estimate_lambda_with_ci(df['Número_Ocurrencias'])
+# λ = 1101.64, IC 95%: [1101.28, 1101.99]
+
+# Índice de dispersión (test de equidispersión)
+mean_val = df['Número_Ocurrencias'].mean()  # 1101.64
+var_val = df['Número_Ocurrencias'].var()    # 1192660.46
+dispersion_index = var_val / mean_val       # 1082.62
+# CONCLUSIÓN: Sobredispersión extrema (1082 >> 1)</code></pre> </div><div class="code-file" data-astro-cid-kkraiuss> <div class="code-header" data-astro-cid-kkraiuss> <span class="code-filename" data-astro-cid-kkraiuss>poisson_no_homogeneo.py</span> <span class="code-desc" data-astro-cid-kkraiuss>Modelo temporal λ(t) = a + b·t</span> </div> <pre class="code-block" data-astro-cid-kkraiuss><code data-astro-cid-kkraiuss># Modelado de Proceso de Poisson No Homogéneo
+from scipy.stats import linregress
+import numpy as np
+
+# Agrupar λ promedio por año
+yearly = df.groupby('Año')['Número_Ocurrencias'].mean()
+
+# Ajuste de regresión lineal
+slope, intercept, r_value, p_value, std_err = linregress(
+    yearly.index, yearly.values
+)
+
+# Resultados:
+# Intercepto (a) = 10769.53
+# Pendiente (b)  = -4.8194
+# R² = 0.1839
+# p-value = 0.0256 (significativo)
+
+# Modelo: λ(t) = 10769.5 - 4.82·t
+# Tendencia DECRECIENTE significativa</code></pre> </div> <div class="code-run" data-astro-cid-kkraiuss> <div class="run-header" data-astro-cid-kkraiuss> <span class="run-icon" data-astro-cid-kkraiuss>▶</span> <span data-astro-cid-kkraiuss>Ejecutar</span> </div> <pre class="run-commands" data-astro-cid-kkraiuss><code data-astro-cid-kkraiuss>pip install pandas numpy scipy matplotlib seaborn openpyxl
+jupyter notebook &quot;25 (1).ipynb&quot;</code></pre> </div> </section>  </main> <footer class="footer" data-astro-cid-sz7xmlte> <span data-astro-cid-sz7xmlte>Universidad Mayor de San Andrés · 2025</span> <span data-astro-cid-sz7xmlte>Proyecto 25 · Procesos de Poisson</span> </footer>   </div> <div id="tsparticles" style="--accentColor: #22d3ee;--accentColor2: #a78bfa;"></div>  <script>
+    window.addEventListener("load", () => {
+      if (window.tsParticles) {
+        const accent = getComputedStyle(document.body).getPropertyValue('--accent').trim() || '#10b981';
+        const accent2 = getComputedStyle(document.body).getPropertyValue('--accent-2').trim() || '#3b82f6';
+        
+        window.tsParticles.load("tsparticles", {
+          fpsLimit: 60, fullScreen: { enable: false },
+          particles: {
+            number: { value: 60, density: { enable: true, area: 900 } },
+            color: { value: [accent, accent2, "#8b5cf6"] },
+            links: { enable: true, distance: 140, color: accent, opacity: 0.25, width: 1 },
+            move: { enable: true, speed: 1.2, outModes: "out" },
+            opacity: { value: { min: 0.2, max: 0.5 } },
+            size: { value: { min: 1.5, max: 3 } }
+          },
+          interactivity: { events: { onHover: { enable: true, mode: "grab" } } },
+          detectRetina: true
+        });
+      }
+    });
+  </script>  </body></html> <script>(function(){const hotspotsCodones = [{"codon":175,"eventos":9288241,"lambda":3205.05},{"codon":248,"eventos":8595606,"lambda":2188.85},{"codon":273,"eventos":8443026,"lambda":2072.42},{"codon":282,"eventos":2088720,"lambda":1398.07},{"codon":245,"eventos":1458766,"lambda":813.14},{"codon":220,"eventos":1313082,"lambda":1201.36},{"codon":213,"eventos":1220078,"lambda":1102.15},{"codon":196,"eventos":582823,"lambda":812.86}];
+const enfermedadLambda = [{"enfermedad":"Colorectal","lambda":1552.72,"n":4901},{"enfermedad":"Glioblastoma","lambda":1290,"n":1053},{"enfermedad":"Gástrico","lambda":1293.8,"n":1028},{"enfermedad":"Pancreático","lambda":1198.63,"n":802},{"enfermedad":"Ovario","lambda":1139.72,"n":2026},{"enfermedad":"Mama","lambda":1069.4,"n":3878},{"enfermedad":"Cabeza/Cuello","lambda":990.59,"n":2682},{"enfermedad":"Esófago","lambda":960.64,"n":1188},{"enfermedad":"Vejiga","lambda":875.43,"n":1171},{"enfermedad":"Pulmón NSCLC","lambda":647.54,"n":2894}];
+const datosTemporal = [{"year":1990,"lambda":1589},{"year":1991,"lambda":1456},{"year":1992,"lambda":1378},{"year":1993,"lambda":1445},{"year":1994,"lambda":1289},{"year":1995,"lambda":1356},{"year":1996,"lambda":1234},{"year":1997,"lambda":1189},{"year":1998,"lambda":1145},{"year":1999,"lambda":1098},{"year":2000,"lambda":1156},{"year":2001,"lambda":1089},{"year":2002,"lambda":1067},{"year":2003,"lambda":1034},{"year":2004,"lambda":1078},{"year":2005,"lambda":1023},{"year":2006,"lambda":1045},{"year":2007,"lambda":989},{"year":2008,"lambda":1012},{"year":2009,"lambda":978},{"year":2010,"lambda":956},{"year":2011,"lambda":934},{"year":2012,"lambda":912},{"year":2013,"lambda":945},{"year":2014,"lambda":923},{"year":2015,"lambda":890},{"year":2016,"lambda":867}];
+const cpgComparison = {"lambdaCpg":1931.93,"lambdaNoCpg":299.95,"ratio":6.44};
+
+  window.hotspotsCodones = hotspotsCodones;
+  window.enfermedadLambda = enfermedadLambda;
+  window.datosTemporal = datosTemporal;
+  window.cpgComparison = cpgComparison;
+})();</script> <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var darkLayout = {
+      paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0.2)',
+      font: { color: '#94a3b8', family: 'Manrope, sans-serif' },
+      margin: { t: 30, b: 50, l: 60, r: 20 },
+      xaxis: { gridcolor: 'rgba(255,255,255,0.05)' },
+      yaxis: { gridcolor: 'rgba(255,255,255,0.05)' }
+    };
+    
+    // Hotspots
+    var hotspots = window.hotspotsCodones;
+    Plotly.newPlot('chart-hotspots', [{
+      x: hotspots.map(h => 'Codón ' + h.codon), y: hotspots.map(h => h.eventos / 1000000), type: 'bar',
+      marker: { color: hotspots.map((h,i) => i < 3 ? '#f43f5e' : '#22d3ee') },
+      text: hotspots.map(h => 'λ=' + h.lambda.toFixed(0)), textposition: 'outside'
+    }], Object.assign({}, darkLayout, { yaxis: { ...darkLayout.yaxis, title: 'Millones de eventos' }, height: 350 }), { responsive: true });
+    
+    // CpG
+    var cpg = window.cpgComparison;
+    Plotly.newPlot('chart-cpg', [{
+      labels: ['Sitios CpG', 'No-CpG'], values: [cpg.lambdaCpg, cpg.lambdaNoCpg], type: 'pie',
+      marker: { colors: ['#f43f5e', '#22d3ee'] }, texttemplate: '%{label}<br>λ=%{value:.0f}'
+    }], Object.assign({}, darkLayout, { height: 300, showlegend: false }), { responsive: true });
+    
+    // Enfermedades
+    var enf = window.enfermedadLambda;
+    Plotly.newPlot('chart-disease', [{
+      y: enf.map(e => e.enfermedad), x: enf.map(e => e.lambda), type: 'bar', orientation: 'h',
+      marker: { color: enf.map(e => e.lambda), colorscale: [[0, '#22d3ee'], [1, '#f43f5e']] }
+    }], Object.assign({}, darkLayout, { xaxis: { ...darkLayout.xaxis, title: 'Tasa λ' }, height: 350, margin: { l: 100 } }), { responsive: true });
+    
+    // Temporal
+    var temp = window.datosTemporal;
+    Plotly.newPlot('chart-temporal', [
+      { x: temp.map(t => t.year), y: temp.map(t => t.lambda), type: 'scatter', mode: 'markers', name: 'λ observado', marker: { color: '#22d3ee', size: 10 } },
+      { x: temp.map(t => t.year), y: temp.map(t => 10769.5 - 4.82 * t.year), type: 'scatter', mode: 'lines', name: 'Tendencia: λ(t) = 10769.5 - 4.82·t', line: { color: '#f43f5e', width: 3, dash: 'dash' } }
+    ], Object.assign({}, darkLayout, { xaxis: { ...darkLayout.xaxis, title: 'Año' }, yaxis: { ...darkLayout.yaxis, title: 'Tasa λ' }, height: 350, showlegend: true, legend: { x: 0.5, y: 1.15, orientation: 'h' } }), { responsive: true });
+    
+    // KaTeX
+    function tryKaTeX() {
+      if (typeof katex === 'undefined') { setTimeout(tryKaTeX, 100); return; }
+      var formulas = { 'formula-hom': 'P(N(t)=k) = \\frac{(\\lambda t)^k e^{-\\lambda t}}{k!}', 'formula-nhom': '\\lambda(t) = \\lambda_0 + b \\cdot t', 'model-temporal': '\\lambda(t) = 10769.5 - 4.82 \\cdot t' };
+      Object.keys(formulas).forEach(id => { var el = document.getElementById(id); if (el) katex.render(formulas[id], el, { displayMode: true, throwOnError: false }); });
+    }
+    tryKaTeX();
+  });
+</script> <script>
+  // Simulador de mutaciones
+  document.addEventListener("DOMContentLoaded", function() {
+    var lambdaInput = document.getElementById('sim-lambda'), slopeInput = document.getElementById('sim-slope'), timeInput = document.getElementById('sim-time'), runBtn = document.getElementById('sim-run');
+    
+    function updateLabels() {
+      document.getElementById('sim-lambda-val').textContent = lambdaInput.value + ' mut/año';
+      document.getElementById('sim-slope-val').textContent = parseFloat(slopeInput.value).toFixed(1);
+      document.getElementById('sim-time-val').textContent = timeInput.value + ' años';
+    }
+    lambdaInput.addEventListener('input', updateLabels);
+    slopeInput.addEventListener('input', updateLabels);
+    timeInput.addEventListener('input', updateLabels);
+    
+    function generateHomogeneousPoisson(lambda, maxTime) {
+      var events = [], t = 0;
+      while (t < maxTime) { t += -Math.log(Math.random()) / lambda; if (t < maxTime) events.push({ time: t, codon: Math.floor(Math.random() * 393) + 1 }); }
+      return events;
+    }
+    
+    function generateNonHomogeneousPoisson(lambda0, slope, maxTime) {
+      var events = [], lambdaMax = Math.max(lambda0, lambda0 + slope * maxTime), t = 0;
+      while (t < maxTime) {
+        t += -Math.log(Math.random()) / lambdaMax;
+        if (t < maxTime) { var lambdaT = Math.max(0.1, lambda0 + slope * t); if (Math.random() <= lambdaT / lambdaMax) events.push({ time: t, codon: Math.floor(Math.random() * 393) + 1 }); }
+      }
+      return events;
+    }
+    
+    function getIntervals(events) { var intervals = []; for (var i = 1; i < events.length; i++) intervals.push(events[i].time - events[i-1].time); return intervals; }
+    function getCodonColor(codon) { return [175, 248, 273, 282, 245].includes(codon) ? '#f43f5e' : '#22d3ee'; }
+    
+    var darkLayout = { paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0.15)', font: { color: '#94a3b8', size: 11 }, margin: { t: 10, b: 40, l: 50, r: 20 }, xaxis: { gridcolor: 'rgba(255,255,255,0.05)' }, yaxis: { gridcolor: 'rgba(255,255,255,0.05)' } };
+    
+    function runMutationSimulation() {
+      var lambda = parseFloat(lambdaInput.value), slope = parseFloat(slopeInput.value), maxTime = parseInt(timeInput.value);
+      var eventsHom = generateHomogeneousPoisson(lambda, maxTime), eventsNHom = generateNonHomogeneousPoisson(lambda, slope, maxTime);
+      
+      document.getElementById('stat-hom-count').textContent = eventsHom.length;
+      document.getElementById('stat-nhom-count').textContent = eventsNHom.length;
+      var diff = ((eventsNHom.length - eventsHom.length) / eventsHom.length * 100).toFixed(1);
+      document.getElementById('stat-diff').textContent = (diff > 0 ? '+' : '') + diff + '%';
+      
+      Plotly.newPlot('chart-mutations-hom', [{ x: eventsHom.map(e => e.time), y: eventsHom.map(e => e.codon), mode: 'markers', type: 'scatter', marker: { size: 6, color: eventsHom.map(e => getCodonColor(e.codon)), opacity: 0.7 } }], Object.assign({}, darkLayout, { xaxis: { ...darkLayout.xaxis, title: 'Tiempo (años)', range: [0, maxTime] }, yaxis: { ...darkLayout.yaxis, title: 'Codón', range: [0, 400] }, height: 260 }), { responsive: true });
+      
+      Plotly.newPlot('chart-mutations-nhom', [{ x: eventsNHom.map(e => e.time), y: eventsNHom.map(e => e.codon), mode: 'markers', type: 'scatter', marker: { size: 6, color: eventsNHom.map(e => getCodonColor(e.codon)), opacity: 0.7 } }], Object.assign({}, darkLayout, { xaxis: { ...darkLayout.xaxis, title: 'Tiempo (años)', range: [0, maxTime] }, yaxis: { ...darkLayout.yaxis, title: 'Codón', range: [0, 400] }, height: 260 }), { responsive: true });
+      
+      var cumHom = [], cumNHom = [], timePoints = [];
+      for (var i = 0; i <= maxTime * 10; i++) { var t = i / 10; timePoints.push(t); cumHom.push(eventsHom.filter(e => e.time <= t).length); cumNHom.push(eventsNHom.filter(e => e.time <= t).length); }
+      
+      Plotly.newPlot('chart-cumulative', [
+        { x: timePoints, y: cumHom, type: 'scatter', mode: 'lines', name: 'Homogéneo', line: { color: '#22d3ee', width: 3 }, fill: 'tozeroy', fillcolor: 'rgba(34,211,238,0.1)' },
+        { x: timePoints, y: cumNHom, type: 'scatter', mode: 'lines', name: 'No Homogéneo', line: { color: '#f43f5e', width: 3 }, fill: 'tozeroy', fillcolor: 'rgba(244,63,94,0.1)' }
+      ], Object.assign({}, darkLayout, { xaxis: { ...darkLayout.xaxis, title: 'Tiempo (años)' }, yaxis: { ...darkLayout.yaxis, title: 'N(t) Acumuladas' }, height: 300, showlegend: true, legend: { x: 0.02, y: 0.98, bgcolor: 'rgba(0,0,0,0.5)' } }), { responsive: true });
+      
+      var intervalsHom = getIntervals(eventsHom), intervalsNHom = getIntervals(eventsNHom);
+      Plotly.newPlot('chart-intervals-hom', [{ x: intervalsHom, type: 'histogram', nbinsx: 20, marker: { color: '#22d3ee' } }], Object.assign({}, darkLayout, { xaxis: { ...darkLayout.xaxis, title: 'Intervalo (años)' }, yaxis: { ...darkLayout.yaxis, title: 'Frecuencia' }, height: 220 }), { responsive: true });
+      Plotly.newPlot('chart-intervals-nhom', [{ x: intervalsNHom, type: 'histogram', nbinsx: 20, marker: { color: '#f43f5e' } }], Object.assign({}, darkLayout, { xaxis: { ...darkLayout.xaxis, title: 'Intervalo (años)' }, yaxis: { ...darkLayout.yaxis, title: 'Frecuencia' }, height: 220 }), { responsive: true });
+    }
+    
+    runBtn.addEventListener('click', runMutationSimulation);
+    lambdaInput.addEventListener('change', runMutationSimulation);
+    slopeInput.addEventListener('change', runMutationSimulation);
+    timeInput.addEventListener('change', runMutationSimulation);
+    runMutationSimulation();
+  });
+</script> 

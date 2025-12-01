@@ -197,95 +197,17 @@ const codeFiles = [
   {
     filename: "server.py",
     description: "Servidor Flask con cola M/M/1",
-    code: `# server.py - Servidor Flask M/M/1
-from flask import Flask
-import time, random, csv, threading, os
-
-MU = 0.82  # tasa de servicio (clientes/segundo)
-app = Flask(__name__)
-lock = threading.Lock()  # Capacidad = 1
-
-@app.route("/")
-def atender_cliente():
-    llegada = time.time()
-    
-    with lock:  # Solo un cliente a la vez
-        inicio_servicio = time.time()
-        tiempo_servicio = random.expovariate(MU)
-        time.sleep(tiempo_servicio)
-        salida = time.time()
-    
-    tiempo_en_sistema = salida - llegada
-    tiempo_espera = inicio_servicio - llegada
-    
-    return f"Servicio={tiempo_servicio:.4f}s, Espera={tiempo_espera:.4f}s"
-
-if __name__ == "__main__":
-    random.seed(123)
-    app.run(host="127.0.0.1", port=5001, threaded=True)`
+    code: "# server.py - Servidor Flask M/M/1\nfrom flask import Flask\nimport time, random, csv, threading, os\n\nMU = 0.82  # tasa de servicio (clientes/segundo)\napp = Flask(__name__)\nlock = threading.Lock()  # Capacidad = 1\n\n@app.route(\"/\")\ndef atender_cliente():\n    llegada = time.time()\n    \n    with lock:  # Solo un cliente a la vez\n        inicio_servicio = time.time()\n        tiempo_servicio = random.expovariate(MU)\n        time.sleep(tiempo_servicio)\n        salida = time.time()\n    \n    tiempo_en_sistema = salida - llegada\n    tiempo_espera = inicio_servicio - llegada\n    \n    return f\"Servicio={tiempo_servicio}s, Espera={tiempo_espera}s\"\n\nif __name__ == \"__main__\":\n    random.seed(123)\n    app.run(host=\"127.0.0.1\", port=5001, threaded=True)"
   },
   {
     filename: "client.py",
     description: "Generador de llegadas Poisson",
-    code: `# client.py - Generador de llegadas Poisson
-import requests, random, time, csv
-
-URL = "http://127.0.0.1:5001/"
-LAMBDA = 0.5  # tasa de llegadas (clientes/segundo)
-N_SOLICITUDES = 50
-
-random.seed(123)
-interarrivals = []
-
-for i in range(1, N_SOLICITUDES + 1):
-    interarrival = random.expovariate(LAMBDA)
-    interarrivals.append(interarrival)
-    time.sleep(interarrival)
-    
-    t_inicio = time.time()
-    r = requests.get(URL, timeout=10)
-    t_total = time.time() - t_inicio
-    print(f"[Req {i:03d}] Status={r.status_code}, Total={t_total:.3f}s")
-
-# λ empírico
-lambda_emp = 1.0 / (sum(interarrivals) / len(interarrivals))
-print(f"λ teórico={LAMBDA:.4f}, λ empírico≈{lambda_emp:.4f}")`
+    code: "# client.py - Generador de llegadas Poisson\nimport requests, random, time, csv\n\nURL = \"http://127.0.0.1:5001/\"\nLAMBDA = 0.5  # tasa de llegadas (clientes/segundo)\nN_SOLICITUDES = 50\n\nrandom.seed(123)\ninterarrivals = []\n\nfor i in range(1, N_SOLICITUDES + 1):\n    interarrival = random.expovariate(LAMBDA)\n    interarrivals.append(interarrival)\n    time.sleep(interarrival)\n    \n    t_inicio = time.time()\n    r = requests.get(URL, timeout=10)\n    t_total = time.time() - t_inicio\n    print(f\"[Req {i}] Status={r.status_code}, Total={t_total}s\")\n\n# lambda empirico\nlambda_emp = 1.0 / (sum(interarrivals) / len(interarrivals))\nprint(f\"lambda teorico={LAMBDA}, lambda empirico={lambda_emp}\")"
   },
   {
     filename: "sim.py",
     description: "Simulación discreta con SimPy",
-    code: `# sim.py - Simulación M/M/1 con SimPy
-import simpy, random, numpy as np
-
-LAMBDA = 0.3057  # tasa de llegadas
-MU = 0.8185      # tasa de servicio
-SIM_TIME = 2000.0
-
-tiempos_espera, tiempos_sistema = [], []
-
-def cliente(env, servidor):
-    llegada = env.now
-    with servidor.request() as req:
-        yield req
-        espera = env.now - llegada
-        tiempos_espera.append(espera)
-        
-        tiempo_servicio = random.expovariate(MU)
-        yield env.timeout(tiempo_servicio)
-        tiempos_sistema.append(env.now - llegada)
-
-def generador(env, servidor):
-    while True:
-        yield env.timeout(random.expovariate(LAMBDA))
-        env.process(cliente(env, servidor))
-
-env = simpy.Environment()
-servidor = simpy.Resource(env, capacity=1)
-env.process(generador(env, servidor))
-env.run(until=SIM_TIME)
-
-print(f"Wq simulado = {np.mean(tiempos_espera):.4f} s")
-print(f"W simulado  = {np.mean(tiempos_sistema):.4f} s")`
+    code: "# sim.py - Simulacion M/M/1 con SimPy\nimport simpy, random, numpy as np\n\nLAMBDA = 0.3057  # tasa de llegadas\nMU = 0.8185      # tasa de servicio\nSIM_TIME = 2000.0\n\ntiempos_espera, tiempos_sistema = [], []\n\ndef cliente(env, servidor):\n    llegada = env.now\n    with servidor.request() as req:\n        yield req\n        espera = env.now - llegada\n        tiempos_espera.append(espera)\n        \n        tiempo_servicio = random.expovariate(MU)\n        yield env.timeout(tiempo_servicio)\n        tiempos_sistema.append(env.now - llegada)\n\ndef generador(env, servidor):\n    while True:\n        yield env.timeout(random.expovariate(LAMBDA))\n        env.process(cliente(env, servidor))\n\nenv = simpy.Environment()\nservidor = simpy.Resource(env, capacity=1)\nenv.process(generador(env, servidor))\nenv.run(until=SIM_TIME)\n\nprint(f\"Wq simulado = {np.mean(tiempos_espera)} s\")\nprint(f\"W simulado  = {np.mean(tiempos_sistema)} s\")"
   }
 ];
 

@@ -1,1 +1,0 @@
-import"https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js";import"https://cdn.plot.ly/plotly-2.25.2.min.js";import"https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js";window.MathJax={tex:{inlineMath:[["\\(","\\)"],["$","$"]],displayMath:[["\\[","\\]"],["$$","$$"]]},svg:{fontCache:"global"}};

@@ -85,38 +85,7 @@ def run_simulation(lambda_rate, mu_rate, num_servers, sim_time=600, seed=42):
   {
     filename: "app.py",
     description: "Interfaz web con Streamlit y Plotly",
-    code: `# app.py - Cloud Queue Simulator M/M/c
-import streamlit as st
-import numpy as np
-import pandas as pd
-import plotly.express as px
-from simulator import run_simulation
-
-st.set_page_config(page_title="Cloud Queue Simulator", layout="wide")
-
-with st.sidebar:
-    lambda_rate = st.slider("Tasa de llegada (λ)", 10, 400, 120)
-    mu_rate = st.slider("Tasa de servicio (μ)", 10, 100, 30)
-    num_servers = st.slider("Servidores (c)", 1, 40, 6)
-    sim_time = st.slider("Duración (s)", 120, 1800, 600)
-    costo = st.number_input("Costo/servidor ($)", 10, 2000, 120)
-
-results = run_simulation(lambda_rate, mu_rate, num_servers, sim_time)
-
-# Métricas
-c1, c2, c3, c4 = st.columns(4)
-c1.metric("Utilización ρ", f"{results['rho']:.1%}")
-c2.metric("Tiempo en cola", f"{results['Wq_sim']:.3f} s")
-c3.metric("Cola promedio", f"{results['Lq_sim']:.1f}")
-c4.metric("Costo mensual", f"${num_servers * costo:,}")
-
-# Gráfico de cola
-df = pd.DataFrame(dict(
-    Tiempo=np.linspace(0, sim_time, len(results.get('queue_lengths', []))),
-    Cola=results.get('queue_lengths', [])
-))
-fig = px.area(df, x='Tiempo', y='Cola', template="plotly_dark")
-st.plotly_chart(fig, use_container_width=True)`
+    code: "# app.py - Cloud Queue Simulator M/M/c\nimport streamlit as st\nimport numpy as np\nimport pandas as pd\nimport plotly.express as px\nfrom simulator import run_simulation\n\nst.set_page_config(page_title=\"Cloud Queue Simulator\", layout=\"wide\")\n\nwith st.sidebar:\n    lambda_rate = st.slider(\"Tasa de llegada\", 10, 400, 120)\n    mu_rate = st.slider(\"Tasa de servicio\", 10, 100, 30)\n    num_servers = st.slider(\"Servidores (c)\", 1, 40, 6)\n    sim_time = st.slider(\"Duracion (s)\", 120, 1800, 600)\n    costo = st.number_input(\"Costo/servidor ($)\", 10, 2000, 120)\n\nresults = run_simulation(lambda_rate, mu_rate, num_servers, sim_time)\n\n# Metricas\nc1, c2, c3, c4 = st.columns(4)\nc1.metric(\"Utilizacion\", f\"{results['rho']:.1%}\")\nc2.metric(\"Tiempo en cola\", f\"{results['Wq_sim']:.3f} s\")\nc3.metric(\"Cola promedio\", f\"{results['Lq_sim']:.1f}\")\nc4.metric(\"Costo mensual\", f\"${num_servers * costo}\")\n\n# Grafico de cola\ndf = pd.DataFrame({\n    'Tiempo': np.linspace(0, sim_time, 100),\n    'Cola': results.get('queue_lengths', [])\n})\nfig = px.area(df, x='Tiempo', y='Cola', template=\"plotly_dark\")\nst.plotly_chart(fig, use_container_width=True)"
   }
 ];
 ---
