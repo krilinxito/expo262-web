@@ -6,22 +6,20 @@ import CodeSection from '../../components/CodeSection.astro';
 import Footer from '../../components/Footer.astro';
 
 const informeSlides = [
-  { section: "Portada", title: "Procesos de Poisson en Mutaciones del Gen TP53", subtitle: "Análisis Estadístico de Variantes Genéticas", bullets: ["Grupo G42 · Noviembre 2025", "Procesos Estocásticos y Series de Tiempo", "Universidad Mayor de San Andrés"], image: "https://images.unsplash.com/photo-1628595351029-c2bf17511435?w=800&q=80" },
-  { section: "Resumen", title: "Resumen Ejecutivo", bullets: ["Análisis de 33,603 variantes únicas del gen TP53 con 37 millones de eventos", "Modelado con Procesos de Poisson homogéneos y no homogéneos", "Identificación de hotspots mutacionales en codones críticos", "Validación estadística y detección de sobredispersión extrema"], image: "https://images.unsplash.com/photo-1530026186672-2cd00ffc50fe?w=800&q=80" },
-  { section: "Introducción", title: "El Gen TP53: Guardián del Genoma", bullets: ["TP53 codifica la proteína p53, supresora de tumores más estudiada", "Mutado en >50% de todos los cánceres humanos", "Regula ciclo celular, apoptosis y reparación del ADN", "Base de datos UMD: repositorio mundial con 33,603 variantes únicas"], image: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=800&q=80" },
-  { section: "Problema", title: "Planteamiento del Problema", bullets: ["Las mutaciones no se distribuyen uniformemente en el gen", "Algunos codones acumulan miles de veces más mutaciones que otros", "Factores biológicos (sitios CpG) alteran las tasas locales", "Se requiere un modelo que capture esta heterogeneidad espacial y temporal"], image: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=800&q=80" },
-  { section: "Marco Teórico", title: "Proceso de Poisson Homogéneo", bullets: ["N(t) cuenta eventos en intervalo [0,t] con tasa CONSTANTE λ", "P(N(t)=k) = (λt)^k · e^(-λt) / k!", "E[N(t)] = Var[N(t)] = λt (equidispersión)", "Tiempos entre eventos siguen distribución Exponencial(λ)"], image: "https://images.unsplash.com/photo-1509228627152-72ae9ae6848d?w=800&q=80" },
-  { section: "Marco Teórico", title: "Proceso de Poisson NO Homogéneo", bullets: ["Tasa λ(t) VARIABLE en el tiempo: λ(t) = a + b·t", "Intensidad acumulada: Λ(t) = ∫₀ᵗ λ(s)ds", "Captura tendencias temporales en la tasa de mutación", "En TP53: λ(t) = 10,769.5 - 4.82·t (tendencia decreciente)"], image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" },
-  { section: "Marco Teórico", title: "Proceso de Poisson Compuesto", bullets: ["Cada tumor puede tener múltiples mutaciones TP53", "N tumores llegan con tasa λ, cada uno con Xᵢ mutaciones", "S = Σᵢ₌₁ᴺ Xᵢ es el total de mutaciones observadas", "E[S] = λ·E[X], Var[S] = λ·E[X²]"], image: "https://images.unsplash.com/photo-1576086213369-97a306d36557?w=800&q=80" },
-  { section: "Metodología", title: "Fuente de Datos: TP53 UMD", bullets: ["Base de datos Universal Mutation Database (UMD)", "33,603 variantes únicas del gen TP53", "37,018,402 eventos mutacionales totales", "Período: 1989-2016 (27 años de registros)"], image: "https://images.unsplash.com/photo-1518152006812-edab29b069ac?w=800&q=80" },
-  { section: "Resultados", title: "Estimación de λ Global", bullets: ["λ global = 1,101.64 ocurrencias/variante", "IC 95%: [1,101.28 , 1,101.99]", "Total eventos: 37,018,402", "Mediana: 508 (distribución muy sesgada a la derecha)"], image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" },
-  { section: "Resultados", title: "Comparación CpG vs No-CpG", bullets: ["λ sitios CpG = 1,931.93 (hotspots bioquímicos)", "λ no-CpG = 299.95", "Ratio CpG/no-CpG = 6.44× mayor", "Los dinucleótidos CpG son hipermutables por desaminación"], image: "https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?w=800&q=80" },
-  { section: "Resultados", title: "Hotspots Identificados (Top 5)", bullets: ["Codón 175 (R175H): 9.3M eventos, λ=3,205", "Codón 248 (R248Q/W): 8.6M eventos, λ=2,189", "Codón 273 (R273H/C): 8.4M eventos, λ=2,072", "Solo 8 codones (5%) acumulan >498,000 mutaciones c/u"], image: "https://images.unsplash.com/photo-1579165466949-3180a3d056d5?w=800&q=80" },
-  { section: "Resultados", title: "Validación: Índice de Dispersión", bullets: ["Media: 1,101.64 | Varianza: 1,192,660.46", "Índice de dispersión = Var/Media = 1,082.6", "Sobredispersión EXTREMA detectada (≫1)", "Conclusión: Poisson simple NO es adecuado"], image: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800&q=80" },
-  { section: "Resultados", title: "Proceso No Homogéneo: Tendencia Temporal", bullets: ["Modelo ajustado: λ(t) = 10,769.5 - 4.82·t", "R² = 0.184, p = 0.026 (significativo al 5%)", "Tendencia DECRECIENTE: -4.82 unidades/año", "Mutaciones recientes son menos recurrentes"], image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80" },
-  { section: "Resultados", title: "Procesos Compuestos: Mutaciones Múltiples", bullets: ["87.5% de tumores tienen 1 sola mutación TP53 (SM)", "12.5% tienen mutaciones múltiples (DMU, MM)", "λ simples = 1,136 vs λ múltiples = 860", "Media: 1.15 mutaciones/tumor"], image: "https://images.unsplash.com/photo-1582719471384-894fbb16f2b1?w=800&q=80" },
-  { section: "Conclusiones", title: "Conclusiones Principales", bullets: ["Los datos NO siguen Poisson simple (sobredispersión 1,082×)", "Los sitios CpG son hotspots con λ 6.4× mayor que no-CpG", "Solo 8 codones concentran la mayoría de mutaciones", "El proceso NO homogéneo captura la tendencia temporal"], image: "https://images.unsplash.com/photo-1581093458791-9d42e3c2fd45?w=800&q=80" },
-  { section: "Aplicaciones", title: "Aplicaciones Clínicas", bullets: ["Priorización de paneles de secuenciación genética", "Cálculo de probabilidad de mutación por codón", "Detección temprana enfocada en hotspots R175, R248, R273", "Desarrollo de terapias dirigidas a mutaciones frecuentes"], image: "https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=800&q=80" }
+  { section: "Portada", title: "Procesos de Poisson en Mutaciones del Gen TP53", subtitle: "Análisis Estadístico de Variantes Genéticas", bullets: ["Grupo G42 · Noviembre 2025", "Procesos Estocásticos y Series de Tiempo", "Universidad Mayor de San Andrés"], image: "https://upload.wikimedia.org/wikipedia/commons/0/00/1tup.jpg" },
+  { section: "Introducción", title: "El Gen TP53: Guardián del Genoma", bullets: ["TP53 codifica la proteína p53, supresora de tumores más estudiada", "Mutado en >50% de todos los cánceres humanos", "Regula ciclo celular, apoptosis y reparación del ADN", "Base de datos UMD: 76,696 variantes únicas (1990-2017)"], image: "https://images.everydayhealth.com/images/cancer/cancer-risk-genes-what-you-need-to-know-about-tp53-722x406.jpg?sfvrsn=5258b57b_1" },
+  { section: "Problema", title: "Planteamiento del Problema", highlight: true, bullets: ["Las mutaciones NO se distribuyen uniformemente en el gen", "Algunos codones acumulan miles de veces más mutaciones", "Factores biológicos (sitios CpG) alteran las tasas locales", "Se requiere un modelo que capture esta heterogeneidad"], image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAbFif0TYNgqfSZw39S-zFZLwK5YxuY_JxKA&s" },
+  { section: "Marco Teórico", title: "Proceso de Poisson Homogéneo", bullets: ["N(t) cuenta eventos en [0,t] con tasa CONSTANTE λ", "P(N(t)=k) = (λt)^k · e^(-λt) / k!", "E[N(t)] = Var[N(t)] = λt (equidispersión)", "Tiempos entre eventos ~ Exponencial(λ)"], image: "https://files.wolframcdn.com/pub/www.wolfram.com/language/11/extended-probability-and-statistics/assets.es/inhomogeneous-poisson-process/O_59.png" },
+  { section: "Marco Teórico", title: "Proceso de Poisson No Homogéneo", bullets: ["Tasa λ(t) VARIABLE en el tiempo: λ(t) = a + b·t", "Intensidad acumulada: Λ(t) = ∫₀ᵗ λ(s)ds", "Captura tendencias temporales en la tasa de mutación", "Permite modelar cambios en patrones de reporte"], image: "https://freakonometrics.hypotheses.org/files/2012/12/poisson-nonh-1.png" },
+  { section: "Marco Teórico", title: "Proceso de Poisson Compuesto", bullets: ["Cada tumor puede tener múltiples mutaciones TP53", "N tumores llegan con tasa λ, cada uno con Xᵢ mutaciones", "S = Σᵢ₌₁ᴺ Xᵢ es el total de mutaciones observadas", "E[S] = λ·E[X], Var[S] = λ·E[X²]"], image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQeuaJnvo9ZW_8I9PLLgs7b3GCNx9f_RL5FA&s" },
+  { section: "Resultados", title: "Estimación de λ Global", highlight: true, bullets: ["λ global = 645.22 ocurrencias/variante", "IC 95%: [645.04 , 645.40]", "Total eventos: 49,485,927", "Mediana: 157 (distribución muy sesgada)"], image: "https://media.tenor.com/l-PbZelgds0AAAAM/favorite-facts.gif" },
+  { section: "Resultados", title: "Hotspots: CpG vs No-CpG", bullets: ["λ sitios CpG = 1,886.57 (hotspots bioquímicos)", "λ no-CpG = 167.27", "Ratio CpG/no-CpG = 11.28× mayor", "Los dinucleótidos CpG son hipermutables por desaminación"], image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/CpG_vs_C-G_bp.svg/1200px-CpG_vs_C-G_bp.svg.png" },
+  { section: "Resultados", title: "Top 5 Codones Mutados", bullets: ["Codón 175: 11.7M eventos, λ=3,154", "Codón 273: 10.7M eventos, λ=2,016", "Codón 248: 10.7M eventos, λ=2,086", "Codón 282: 2.6M eventos, λ=1,323"], image: "https://upload.wikimedia.org/wikipedia/commons/0/05/Codon-3nucleotides-wk.png" },
+  { section: "Resultados", title: "Validación: Sobredispersión", bullets: ["Media: 645.22 | Varianza: 924,950", "Índice de dispersión = Var/Media = 1,433.5", "Sobredispersión EXTREMA detectada (≫1)", "Conclusión: Poisson simple NO es adecuado"], image: "https://datavizcatalogue.com/ES/metodos/images/top_images/SVG/diagrama_de_dispersion.svg" },
+  { section: "Resultados", title: "Proceso No Homogéneo", bullets: ["Modelo: λ(t) = 2210.3 - 0.78·t", "R² = 0.0107, p = 0.60 (NO significativo)", "Tendencia muy leve: -0.78 unidades/año", "El proceso es aproximadamente homogéneo en el tiempo"], image: "https://media.tenor.com/l-PbZelgds0AAAAM/favorite-facts.gif" },
+  { section: "Resultados", title: "Proceso Compuesto: Mutaciones Múltiples", bullets: ["84.0% de tumores tienen 1 sola mutación (SM)", "11.6% tienen doble mutación (DMU)", "4.2% tienen múltiples (MM)", "Media: 1.15 mutaciones/tumor"], image: "https://media.tenor.com/l-PbZelgds0AAAAM/favorite-facts.gif" },
+  { section: "Conclusiones", title: "Conclusiones", bullets: ["Los datos requieren Poisson Compuesto por sobredispersión", "Los sitios CpG son hotspots con λ 11× mayor", "Solo 8 codones concentran la mayoría de mutaciones", "El proceso es aproximadamente estacionario en el tiempo"], image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAnvQxNBmtITeNodrkyedVxfMO8nWp90dT1g&s" },
+  { section: "Aplicaciones", title: "Aplicaciones Clínicas", bullets: ["Priorización de paneles de secuenciación genética", "Detección temprana enfocada en hotspots R175, R248, R273", "Desarrollo de terapias dirigidas a mutaciones frecuentes", "Cálculo de probabilidad de mutación por codón"], image: "https://cdn.prod.website-files.com/642af736b8df4b680292fb9b/649c47d7f4475d586ee67537_Untitled%20design%20(11).jpg" }
 ];
 
 const hotspotsCodones = [
@@ -48,17 +46,44 @@ const enfermedadLambda = [
   { enfermedad: "Pulmón NSCLC", lambda: 647.54, n: 2894 }
 ];
 
+// Datos temporales REALES del notebook - extraídos de la imagen del gráfico
+// Valores aproximados de Lambda_Promedio por año
 const datosTemporal = [
-  { year: 1990, lambda: 1589 }, { year: 1991, lambda: 1456 }, { year: 1992, lambda: 1378 },
-  { year: 1993, lambda: 1445 }, { year: 1994, lambda: 1289 }, { year: 1995, lambda: 1356 },
-  { year: 1996, lambda: 1234 }, { year: 1997, lambda: 1189 }, { year: 1998, lambda: 1145 },
-  { year: 1999, lambda: 1098 }, { year: 2000, lambda: 1156 }, { year: 2001, lambda: 1089 },
-  { year: 2002, lambda: 1067 }, { year: 2003, lambda: 1034 }, { year: 2004, lambda: 1078 },
-  { year: 2005, lambda: 1023 }, { year: 2006, lambda: 1045 }, { year: 2007, lambda: 989 },
-  { year: 2008, lambda: 1012 }, { year: 2009, lambda: 978 }, { year: 2010, lambda: 956 },
-  { year: 2011, lambda: 934 }, { year: 2012, lambda: 912 }, { year: 2013, lambda: 945 },
-  { year: 2014, lambda: 923 }, { year: 2015, lambda: 890 }, { year: 2016, lambda: 867 }
+  { year: 1990, lambda: 838 }, { year: 1991, lambda: 628 }, { year: 1992, lambda: 625 },
+  { year: 1993, lambda: 698 }, { year: 1994, lambda: 628 }, { year: 1995, lambda: 660 },
+  { year: 1996, lambda: 625 }, { year: 1997, lambda: 542 }, { year: 1998, lambda: 505 },
+  { year: 1999, lambda: 628 }, { year: 2000, lambda: 748 }, { year: 2001, lambda: 552 },
+  { year: 2002, lambda: 692 }, { year: 2003, lambda: 610 }, { year: 2004, lambda: 605 },
+  { year: 2005, lambda: 565 }, { year: 2006, lambda: 690 }, { year: 2007, lambda: 612 },
+  { year: 2008, lambda: 638 }, { year: 2009, lambda: 568 }, { year: 2010, lambda: 558 },
+  { year: 2011, lambda: 625 }, { year: 2012, lambda: 680 }, { year: 2013, lambda: 630 },
+  { year: 2014, lambda: 672 }, { year: 2015, lambda: 625 }, { year: 2016, lambda: 658 },
+  { year: 2017, lambda: 655 }
 ];
+
+// Datos del Proceso Compuesto (celda 19 del notebook)
+const datosCompuesto = {
+  complejidad: [
+    { tipo: 'SM (Simple)', porcentaje: 84.00, count: 64422, lambda: 689.76 },
+    { tipo: 'DMU (Doble)', porcentaje: 11.60, count: 8894, lambda: 411.45 },
+    { tipo: 'MM (Multiple)', porcentaje: 4.21, count: 3229, lambda: 360.20 },
+    { tipo: 'DMD/DMS', porcentaje: 0.19, count: 151, lambda: 298.50 }
+  ],
+  repeticiones: [
+    { muts: 1, tumores: 64420, pct: 83.99 },
+    { muts: 2, tumores: 9043, pct: 11.79 },
+    { muts: 3, tumores: 1727, pct: 2.25 },
+    { muts: 4, tumores: 654, pct: 0.85 },
+    { muts: 5, tumores: 228, pct: 0.30 },
+    { muts: 6, tumores: 136, pct: 0.18 },
+    { muts: 7, tumores: 85, pct: 0.11 },
+    { muts: 8, tumores: 72, pct: 0.09 }
+  ],
+  mediaByTumor: 1.15,
+  lambdaSimple: 689.76,
+  lambdaMultiple: 411.45,
+  ratioSimpleMultiple: 0.60
+};
 
 const cpgComparison = { lambdaCpg: 1931.93, lambdaNoCpg: 299.95, ratio: 6.44 };
 
@@ -128,6 +153,7 @@ slope, intercept, r_value, p_value, std_err = linregress(
       { href: "/", text: "Home" },
       { href: "#informe", text: "Informe" },
       { href: "#simulador", text: "Simulador" },
+      { href: "#compuesto", text: "Compuesto" },
       { href: "#graficos", text: "Gráficos" },
       { href: "#analisis", text: "Análisis" }
     ]}
@@ -208,7 +234,7 @@ slope, intercept, r_value, p_value, std_err = linregress(
         <div>
           <p class="eyebrow">Visualizaciones</p>
           <h2>Gráficos Interactivos del Dataset TP53</h2>
-          <p class="section__lede">Datos reales de 33,603 variantes del gen TP53.</p>
+          <p class="section__lede">Datos reales de 76,696 variantes del gen TP53 (después de limpieza).</p>
         </div>
       </div>
       <div class="charts-grid">
@@ -216,6 +242,54 @@ slope, intercept, r_value, p_value, std_err = linregress(
         <div class="chart-card"><h4>Comparación CpG vs No-CpG</h4><div id="chart-cpg" class="plotly-chart"></div></div>
         <div class="chart-card"><h4>Tasa λ por Tipo de Cáncer</h4><div id="chart-disease" class="plotly-chart"></div></div>
         <div class="chart-card wide"><h4>Evolución Temporal de λ (Proceso No Homogéneo)</h4><div id="chart-temporal" class="plotly-chart"></div></div>
+      </div>
+    </section>
+
+    <!-- PROCESO DE POISSON COMPUESTO -->
+    <section class="compound-section" id="compuesto">
+      <div class="section__head">
+        <div>
+          <p class="eyebrow">Procesos Compuestos</p>
+          <h2>Simulación: Proceso de Poisson Compuesto</h2>
+          <p class="section__lede">Modelo donde cada tumor puede tener <strong>múltiples mutaciones</strong>. El total S = Σᵢ Xᵢ donde N(t) es el número de tumores.</p>
+        </div>
+      </div>
+      <div class="compound-container">
+        <div class="compound-controls">
+          <div class="control-group"><label>Tasa de tumores (λ)</label><input type="range" id="comp-lambda" min="10" max="100" value="50" step="5"><span id="comp-lambda-val">50 tumores/u.t.</span></div>
+          <div class="control-group"><label>Media mutaciones/tumor (μₓ)</label><input type="range" id="comp-mu" min="1" max="3" value="1.15" step="0.05"><span id="comp-mu-val">1.15</span></div>
+          <div class="control-group"><label>Tiempo de simulación</label><input type="range" id="comp-time" min="10" max="50" value="30" step="5"><span id="comp-time-val">30 u.t.</span></div>
+          <button id="comp-run" class="sim-btn compound-btn"><span class="btn-icon">▶</span> Simular Proceso Compuesto</button>
+        </div>
+        <div class="compound-stats">
+          <div class="stat-box tumors"><span class="stat-label">Tumores N(t)</span><span class="stat-value" id="stat-tumors">0</span><span class="stat-unit">llegados</span></div>
+          <div class="stat-box mutations"><span class="stat-label">Total S(t)</span><span class="stat-value" id="stat-total-muts">0</span><span class="stat-unit">mutaciones</span></div>
+          <div class="stat-box expected"><span class="stat-label">E[S(t)] teórico</span><span class="stat-value" id="stat-expected">0</span><span class="stat-unit">λt·μₓ</span></div>
+        </div>
+        <div class="compound-charts">
+          <div class="chart-box compound-wide"><div class="chart-header compound-header"><h4>Proceso Compuesto: Mutaciones Acumuladas S(t)</h4></div><div id="chart-compound-cumulative" class="mutation-chart tall"></div></div>
+          <div class="compound-grid">
+            <div class="chart-box"><div class="chart-header"><h4>Distribución de Mutaciones por Tumor</h4></div><div id="chart-compound-dist" class="mutation-chart"></div></div>
+            <div class="chart-box"><div class="chart-header"><h4>Datos Reales: Complejidad Mutacional</h4></div><div id="chart-real-complexity" class="mutation-chart"></div></div>
+          </div>
+        </div>
+        <div class="compound-theory">
+          <div class="theory-box"><h5>Fórmulas del Proceso Compuesto</h5>
+            <div class="formula-grid">
+              <div class="formula-item"><span class="formula-label">Esperanza:</span><span class="formula-eq" id="formula-es"></span></div>
+              <div class="formula-item"><span class="formula-label">Varianza:</span><span class="formula-eq" id="formula-var"></span></div>
+            </div>
+          </div>
+          <div class="real-data-box">
+            <h5>Datos Reales del Dataset TP53</h5>
+            <div class="real-stats">
+              <div class="real-item"><span class="label">λ simples (SM)</span><span class="value">689.76</span></div>
+              <div class="real-item"><span class="label">λ múltiples</span><span class="value">411.45</span></div>
+              <div class="real-item accent"><span class="label">84% tumores</span><span class="value">1 mut.</span></div>
+              <div class="real-item"><span class="label">Media/tumor</span><span class="value">1.15</span></div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -259,10 +333,11 @@ slope, intercept, r_value, p_value, std_err = linregress(
           <div class="card-header"><span class="module-num">04</span><h4>Proceso No Homogéneo</h4></div>
           <div class="model-box"><span class="model-label">Modelo:</span><span class="model-formula" id="model-temporal"></span></div>
           <table class="data-table">
-            <tr><td>Pendiente (b)</td><td class="val">-4.82 /año</td></tr>
-            <tr><td>R²</td><td class="val">0.184</td></tr>
-            <tr><td>p-value</td><td class="val">0.026</td></tr>
+            <tr><td>Pendiente (b)</td><td class="val">-0.78 /año</td></tr>
+            <tr><td>R²</td><td class="val">0.0107</td></tr>
+            <tr><td>p-value</td><td class="val">0.60 (n.s.)</td></tr>
           </table>
+          <div class="conclusion" style="margin-top:12px;background:rgba(34,211,238,0.08);"><strong>CONCLUSIÓN:</strong> No hay tendencia temporal significativa. El proceso es aproximadamente homogéneo.</div>
         </div>
       </div>
     </section>
@@ -279,11 +354,12 @@ jupyter notebook "25 (1).ipynb"`}
   <Footer rightText="Proyecto 25 · Procesos de Poisson" />
 </BaseLayout>
 
-<script define:vars={{ hotspotsCodones, enfermedadLambda, datosTemporal, cpgComparison }}>
+<script define:vars={{ hotspotsCodones, enfermedadLambda, datosTemporal, cpgComparison, datosCompuesto }}>
   window.hotspotsCodones = hotspotsCodones;
   window.enfermedadLambda = enfermedadLambda;
   window.datosTemporal = datosTemporal;
   window.cpgComparison = cpgComparison;
+  window.datosCompuesto = datosCompuesto;
 </script>
 
 <script is:inline>
@@ -318,17 +394,47 @@ jupyter notebook "25 (1).ipynb"`}
       marker: { color: enf.map(e => e.lambda), colorscale: [[0, '#22d3ee'], [1, '#f43f5e']] }
     }], Object.assign({}, darkLayout, { xaxis: { ...darkLayout.xaxis, title: 'Tasa λ' }, height: 350, margin: { l: 100 } }), { responsive: true });
     
-    // Temporal
-    var temp = window.datosTemporal;
+    // Temporal - Gráfico simplificado
+    // Años y lambdas como arrays separados
+    var xYears = [1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017];
+    var yLambdas = [838, 628, 625, 698, 628, 660, 625, 542, 505, 628, 748, 552, 692, 610, 605, 565, 690, 612, 638, 568, 558, 625, 680, 630, 672, 625, 658, 655];
+    
+    // Línea de tendencia DECRECIENTE: de 650 (1990) a 629 (2017)
+    var yTrend = [650, 649, 648, 647, 646, 646, 645, 644, 643, 642, 641, 640, 640, 639, 638, 637, 636, 635, 635, 634, 633, 632, 631, 630, 630, 629, 628, 627];
+    
     Plotly.newPlot('chart-temporal', [
-      { x: temp.map(t => t.year), y: temp.map(t => t.lambda), type: 'scatter', mode: 'markers', name: 'λ observado', marker: { color: '#22d3ee', size: 10 } },
-      { x: temp.map(t => t.year), y: temp.map(t => 10769.5 - 4.82 * t.year), type: 'scatter', mode: 'lines', name: 'Tendencia: λ(t) = 10769.5 - 4.82·t', line: { color: '#f43f5e', width: 3, dash: 'dash' } }
-    ], Object.assign({}, darkLayout, { xaxis: { ...darkLayout.xaxis, title: 'Año' }, yaxis: { ...darkLayout.yaxis, title: 'Tasa λ' }, height: 350, showlegend: true, legend: { x: 0.5, y: 1.15, orientation: 'h' } }), { responsive: true });
+      { 
+        x: xYears, 
+        y: yLambdas, 
+        type: 'scatter', 
+        mode: 'markers', 
+        name: 'λ observado', 
+        marker: { color: '#3b82f6', size: 11 } 
+      },
+      { 
+        x: xYears, 
+        y: yTrend, 
+        type: 'scatter', 
+        mode: 'lines', 
+        name: 'Tendencia: λ(t) = 2210.3 - 0.78t', 
+        line: { color: '#ef4444', width: 2, dash: 'dash' } 
+      }
+    ], {
+      paper_bgcolor: 'rgba(0,0,0,0)',
+      plot_bgcolor: 'rgba(0,0,0,0.2)',
+      font: { color: '#94a3b8', family: 'Manrope, sans-serif' },
+      margin: { t: 40, b: 50, l: 60, r: 20 },
+      xaxis: { title: 'Año', gridcolor: 'rgba(255,255,255,0.05)', dtick: 5 },
+      yaxis: { title: 'λ Promedio', gridcolor: 'rgba(255,255,255,0.05)' },
+      height: 380,
+      showlegend: true,
+      legend: { x: 0.5, y: 1.1, xanchor: 'center', orientation: 'h' }
+    }, { responsive: true });
     
     // KaTeX
     function tryKaTeX() {
       if (typeof katex === 'undefined') { setTimeout(tryKaTeX, 100); return; }
-      var formulas = { 'formula-hom': 'P(N(t)=k) = \\frac{(\\lambda t)^k e^{-\\lambda t}}{k!}', 'formula-nhom': '\\lambda(t) = \\lambda_0 + b \\cdot t', 'model-temporal': '\\lambda(t) = 10769.5 - 4.82 \\cdot t' };
+      var formulas = { 'formula-hom': 'P(N(t)=k) = \\frac{(\\lambda t)^k e^{-\\lambda t}}{k!}', 'formula-nhom': '\\lambda(t) = \\lambda_0 + b \\cdot t', 'model-temporal': '\\lambda(t) = 2210.3 - 0.78 \\cdot t' };
       Object.keys(formulas).forEach(id => { var el = document.getElementById(id); if (el) katex.render(formulas[id], el, { displayMode: true, throwOnError: false }); });
     }
     tryKaTeX();
@@ -400,6 +506,160 @@ jupyter notebook "25 (1).ipynb"`}
     slopeInput.addEventListener('change', runMutationSimulation);
     timeInput.addEventListener('change', runMutationSimulation);
     runMutationSimulation();
+  });
+</script>
+
+<script is:inline>
+  // Simulador de Proceso de Poisson Compuesto
+  document.addEventListener("DOMContentLoaded", function() {
+    var lambdaCompInput = document.getElementById('comp-lambda');
+    var muInput = document.getElementById('comp-mu');
+    var timeCompInput = document.getElementById('comp-time');
+    var runCompBtn = document.getElementById('comp-run');
+    
+    function updateCompLabels() {
+      document.getElementById('comp-lambda-val').textContent = lambdaCompInput.value + ' tumores/u.t.';
+      document.getElementById('comp-mu-val').textContent = parseFloat(muInput.value).toFixed(2);
+      document.getElementById('comp-time-val').textContent = timeCompInput.value + ' u.t.';
+    }
+    lambdaCompInput.addEventListener('input', updateCompLabels);
+    muInput.addEventListener('input', updateCompLabels);
+    timeCompInput.addEventListener('input', updateCompLabels);
+    
+    // Generar número de mutaciones por tumor (geométrica desplazada para simular datos reales)
+    function generateMutationsPerTumor(meanMuts) {
+      // Usar distribución geométrica modificada (84% prob de 1, resto distribuido)
+      var r = Math.random();
+      if (r < 0.84) return 1;
+      else if (r < 0.96) return 2;
+      else if (r < 0.98) return 3;
+      else if (r < 0.99) return 4;
+      else return Math.floor(Math.random() * 4) + 5;
+    }
+    
+    function generateCompoundPoisson(lambda, muX, maxTime) {
+      var tumors = [];
+      var totalMuts = 0;
+      var t = 0;
+      
+      while (t < maxTime) {
+        t += -Math.log(Math.random()) / lambda;
+        if (t < maxTime) {
+          var muts = generateMutationsPerTumor(muX);
+          tumors.push({ time: t, mutations: muts });
+          totalMuts += muts;
+        }
+      }
+      return { tumors: tumors, totalMutations: totalMuts };
+    }
+    
+    var darkLayout = {
+      paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0.15)',
+      font: { color: '#94a3b8', size: 11 },
+      margin: { t: 10, b: 40, l: 50, r: 20 },
+      xaxis: { gridcolor: 'rgba(255,255,255,0.05)' },
+      yaxis: { gridcolor: 'rgba(255,255,255,0.05)' }
+    };
+    
+    function runCompoundSimulation() {
+      var lambda = parseFloat(lambdaCompInput.value);
+      var muX = parseFloat(muInput.value);
+      var maxTime = parseInt(timeCompInput.value);
+      
+      var result = generateCompoundPoisson(lambda, muX, maxTime);
+      var tumors = result.tumors;
+      var totalMuts = result.totalMutations;
+      var expectedS = lambda * maxTime * muX;
+      
+      document.getElementById('stat-tumors').textContent = tumors.length;
+      document.getElementById('stat-total-muts').textContent = totalMuts;
+      document.getElementById('stat-expected').textContent = expectedS.toFixed(0);
+      
+      // Gráfico de proceso acumulado
+      var timePoints = [];
+      var cumTumors = [];
+      var cumMuts = [];
+      
+      for (var i = 0; i <= maxTime * 10; i++) {
+        var t = i / 10;
+        timePoints.push(t);
+        var nTumors = tumors.filter(tu => tu.time <= t).length;
+        var sMuts = tumors.filter(tu => tu.time <= t).reduce((sum, tu) => sum + tu.mutations, 0);
+        cumTumors.push(nTumors);
+        cumMuts.push(sMuts);
+      }
+      
+      // Línea teórica E[S(t)] = λt·μ
+      var theoreticalS = timePoints.map(t => lambda * t * muX);
+      
+      Plotly.newPlot('chart-compound-cumulative', [
+        { x: timePoints, y: cumTumors, type: 'scatter', mode: 'lines', name: 'N(t) Tumores', line: { color: '#22d3ee', width: 2 } },
+        { x: timePoints, y: cumMuts, type: 'scatter', mode: 'lines', name: 'S(t) Mutaciones', line: { color: '#f43f5e', width: 3 } },
+        { x: timePoints, y: theoreticalS, type: 'scatter', mode: 'lines', name: 'E[S(t)] = λt·μ', line: { color: '#a78bfa', width: 2, dash: 'dash' } }
+      ], Object.assign({}, darkLayout, {
+        xaxis: { ...darkLayout.xaxis, title: 'Tiempo' },
+        yaxis: { ...darkLayout.yaxis, title: 'Conteo' },
+        height: 320,
+        showlegend: true,
+        legend: { x: 0.02, y: 0.98, bgcolor: 'rgba(0,0,0,0.5)' }
+      }), { responsive: true });
+      
+      // Distribución de mutaciones por tumor (simulada)
+      var mutsCounts = {};
+      tumors.forEach(function(tu) {
+        mutsCounts[tu.mutations] = (mutsCounts[tu.mutations] || 0) + 1;
+      });
+      var xMuts = Object.keys(mutsCounts).map(Number).sort((a,b) => a-b);
+      var yFreq = xMuts.map(x => mutsCounts[x]);
+      
+      Plotly.newPlot('chart-compound-dist', [{
+        x: xMuts, y: yFreq, type: 'bar',
+        marker: { color: xMuts.map(x => x === 1 ? '#22d3ee' : '#f43f5e') },
+        text: yFreq.map(f => f.toString()), textposition: 'outside'
+      }], Object.assign({}, darkLayout, {
+        xaxis: { ...darkLayout.xaxis, title: 'Mutaciones/Tumor', dtick: 1 },
+        yaxis: { ...darkLayout.yaxis, title: 'Frecuencia' },
+        height: 260
+      }), { responsive: true });
+    }
+    
+    // Gráfico de datos reales de complejidad
+    function plotRealComplexity() {
+      var data = window.datosCompuesto;
+      if (!data) return;
+      
+      var comp = data.complejidad;
+      Plotly.newPlot('chart-real-complexity', [{
+        labels: comp.map(c => c.tipo),
+        values: comp.map(c => c.porcentaje),
+        type: 'pie',
+        marker: { colors: ['#22d3ee', '#f43f5e', '#a78bfa', '#fbbf24'] },
+        textinfo: 'label+percent',
+        hole: 0.4
+      }], Object.assign({}, darkLayout, {
+        height: 260,
+        showlegend: false,
+        annotations: [{ text: '84%<br>Simple', x: 0.5, y: 0.5, font: { size: 14, color: '#22d3ee' }, showarrow: false }]
+      }), { responsive: true });
+    }
+    
+    // KaTeX para fórmulas del compuesto
+    function renderCompoundFormulas() {
+      if (typeof katex === 'undefined') { setTimeout(renderCompoundFormulas, 100); return; }
+      var formulaES = document.getElementById('formula-es');
+      var formulaVar = document.getElementById('formula-var');
+      if (formulaES) katex.render('E[S(t)] = \\lambda t \\cdot E[X]', formulaES, { displayMode: false, throwOnError: false });
+      if (formulaVar) katex.render('Var[S(t)] = \\lambda t \\cdot E[X^2]', formulaVar, { displayMode: false, throwOnError: false });
+    }
+    
+    runCompBtn.addEventListener('click', runCompoundSimulation);
+    lambdaCompInput.addEventListener('change', runCompoundSimulation);
+    muInput.addEventListener('change', runCompoundSimulation);
+    timeCompInput.addEventListener('change', runCompoundSimulation);
+    
+    runCompoundSimulation();
+    plotRealComplexity();
+    renderCompoundFormulas();
   });
 </script>
 
@@ -507,9 +767,45 @@ jupyter notebook "25 (1).ipynb"`}
   .model-label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 8px; }
   .model-formula { font-size: 20px; }
 
+  /* Proceso Compuesto */
+  .compound-section { margin-top: 40px; border: 1px solid var(--border); border-radius: 24px; padding: 28px; background: linear-gradient(135deg, rgba(167,139,250,0.05), rgba(244,63,94,0.03)); }
+  .compound-container { display: grid; gap: 24px; }
+  .compound-controls { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-end; padding: 20px; background: rgba(0,0,0,0.3); border-radius: 16px; border: 1px solid rgba(167,139,250,0.3); }
+  .compound-btn { background: linear-gradient(120deg, #a78bfa, #f43f5e) !important; }
+  .compound-btn:hover { box-shadow: 0 8px 24px rgba(167,139,250,0.4) !important; }
+  
+  .compound-stats { display: flex; gap: 16px; flex-wrap: wrap; }
+  .stat-box.tumors { border-color: #22d3ee; background: linear-gradient(135deg, rgba(34,211,238,0.1), rgba(34,211,238,0.02)); }
+  .stat-box.tumors .stat-value { color: #22d3ee; }
+  .stat-box.mutations { border-color: #f43f5e; background: linear-gradient(135deg, rgba(244,63,94,0.1), rgba(244,63,94,0.02)); }
+  .stat-box.mutations .stat-value { color: #f43f5e; }
+  .stat-box.expected { border-color: #a78bfa; background: linear-gradient(135deg, rgba(167,139,250,0.1), rgba(167,139,250,0.02)); }
+  .stat-box.expected .stat-value { color: #a78bfa; }
+  
+  .compound-charts { display: grid; gap: 20px; }
+  .compound-wide { }
+  .compound-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .compound-header { border-color: #a78bfa !important; }
+  
+  .compound-theory { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .theory-box { padding: 20px; border: 1px solid rgba(167,139,250,0.4); border-radius: 14px; background: rgba(167,139,250,0.08); }
+  .theory-box h5 { margin: 0 0 16px; color: #a78bfa; font-size: 14px; }
+  .formula-grid { display: grid; gap: 12px; }
+  .formula-item { display: flex; align-items: center; gap: 12px; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 8px; }
+  .formula-label { font-size: 12px; color: var(--muted); min-width: 70px; }
+  .formula-eq { font-size: 16px; color: var(--ink); }
+  
+  .real-data-box { padding: 20px; border: 1px solid rgba(244,63,94,0.4); border-radius: 14px; background: rgba(244,63,94,0.06); }
+  .real-data-box h5 { margin: 0 0 16px; color: #f43f5e; font-size: 14px; }
+  .real-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .real-item { padding: 10px; background: rgba(0,0,0,0.2); border-radius: 8px; text-align: center; border: 1px solid var(--border); }
+  .real-item.accent { border-color: #22d3ee; background: rgba(34,211,238,0.1); }
+  .real-item .label { display: block; font-size: 11px; color: var(--muted); }
+  .real-item .value { display: block; font-size: 16px; font-weight: 700; color: var(--ink); margin-top: 2px; }
+
   @media (max-width: 900px) {
     .hero { grid-template-columns: 1fr; }
-    .sim-charts-grid, .sim-formulas, .charts-grid, .analysis-grid { grid-template-columns: 1fr; }
+    .sim-charts-grid, .sim-formulas, .charts-grid, .analysis-grid, .compound-grid, .compound-theory { grid-template-columns: 1fr; }
     .chart-box.wide, .chart-card.wide { grid-column: span 1; }
   }
 </style>

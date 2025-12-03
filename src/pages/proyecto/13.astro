@@ -7,30 +7,15 @@ import CodeSection from '../../components/CodeSection.astro';
 import Footer from '../../components/Footer.astro';
 
 const informeSlides = [
-  { section: "Portada", title: "Modelos de Colas M/M/c en la Nube", subtitle: "Evaluación de Rendimiento y Asignación de Recursos", bullets: ["Grupo G42 · Noviembre 2025", "Procesos Estocásticos y Series de Tiempo", "Universidad Mayor de San Andrés"], image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&q=80" },
-  { section: "Resumen", title: "Resumen Ejecutivo", bullets: ["Análisis de simulación de modelos de colas M/M/c aplicados a servicios cloud", "Evaluación de rendimiento y asignación óptima de recursos", "Simulación discreta en Python con interfaz web interactiva en Streamlit", "Comparación de resultados teóricos vs simulados con visualizaciones"], image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" },
-  { section: "Introducción", title: "Contexto del Problema", bullets: ["AWS, Azure y Google Cloud han transformado la gestión de infraestructuras", "Durante eventos como Black Friday, las peticiones aumentan exponencialmente", "Colas largas causan tiempos de respuesta lentos y abandono de carritos", "Pérdidas económicas estimadas en miles de millones de dólares anuales"], image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80" },
-  { section: "Introducción", title: "Teoría de Colas en Cloud", bullets: ["Modela sistemas donde entidades llegan aleatoriamente y son procesadas", "Aplicaciones: microservicios en Kubernetes, funciones serverless en AWS Lambda", "Mal dimensionamiento → sobreprovisionamiento (costos) o subprovisionamiento (degradación)", "M/M/c simula escenarios para evaluar trade-offs costo vs eficiencia"], image: "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=800&q=80" },
-  { section: "Problema", title: "Planteamiento del Problema", bullets: ["Incertidumbre: llegadas siguen patrones estocásticos (horarios pico, campañas)", "Con c servidores (tasa μ) y tasa llegada λ: utilización ρ = λ/(cμ) debe ser < 1", "Variaciones en λ (100 a 500 req/s) requieren autoscaling dinámico", "Escenarios reales: Netflix en estrenos, Uber Eats en horas pico"], image: "https://images.unsplash.com/photo-1573164713988-8665fc963095?w=800&q=80" },
-  { section: "Problema", title: "Pregunta de Investigación", highlight: true, bullets: ["¿Cómo determinar el número óptimo de instancias virtuales (servidores)?", "Minimizar tiempo en cola Wq y longitud de cola Lq", "Controlar costo operativo simultáneamente", "Considerando distribuciones Poisson para llegadas y Exponenciales para servicios"], image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80" },
-  { section: "Objetivos", title: "Objetivo General", bullets: ["Evaluar el rendimiento y asignación de recursos en sistemas M/M/c", "Aplicado a servicios en la nube", "Mediante simulación discreta y modelado interactivo", "Con análisis visual de resultados"], image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" },
-  { section: "Objetivos", title: "Objetivos Específicos", bullets: ["Desarrollar simulador interactivo en Python con interfaz web Streamlit", "Analizar métricas: Wq, Lq, ρ y probabilidad de espera", "Identificar trade-offs costo-rendimiento mediante curvas de sensibilidad", "Comparar resultados simulados vs teóricos para validar el modelo"], image: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800&q=80" },
-  { section: "Justificación", title: "Justificación Práctica", bullets: ["Gasto en cloud: $591 mil millones en 2023 (Gartner)", "Desperdicio estimado: 30-35% por ineficiencias en asignación de recursos", "Modelos M/M/c permiten optimizar sin interrupciones en producción", "Mejora experiencia del usuario (SLA 99.9% uptime)"], image: "https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=800&q=80" },
-  { section: "Justificación", title: "Justificación Académica", bullets: ["Herramientas interactivas promueven aprendizaje activo", "Experimentación con parámetros reales de procesos estocásticos", "Aplicaciones en fintech, healthcare donde colas impactan tiempos críticos", "Prevención de fallos costosos en sistemas de misión crítica"], image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=80" },
-  { section: "Marco Teórico", title: "Proceso de Poisson", bullets: ["Proceso de conteo {N(t), t ≥ 0} donde N(t) = número de eventos hasta t", "Propiedades: incrementos independientes, estacionarios, sin memoria", "Inter-llegada exponencial con parámetro λ", "Aplicación: modela peticiones HTTP asumiendo independencia"], image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&q=80" },
-  { section: "Marco Teórico", title: "Distribución Exponencial", bullets: ['Tiempo entre eventos T ~ Exp(μ), densidad f(t) = μe^{-μt}', 'Propiedad sin memoria: P(T > t+s | T > s) = P(T > t)', "En colas: representa tiempos de servicio variables pero predecibles", "Fundamental para modelar servicios en sistemas de colas"], image: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800&q=80" },
-  { section: "Marco Teórico", title: "Cadenas de Markov", bullets: ['Estado S(t) = número de peticiones en el sistema', 'Matriz de tasas Q: q_{n,n+1} = λ, q_{n,n-1} = min(n,c)·μ', 'En equilibrio: πQ = 0 con Σπᵢ = 1', "Base matemática para el análisis del modelo M/M/c"], image: "https://images.unsplash.com/photo-1527474305487-b87b222841cc?w=800&q=80" },
-  { section: "Marco Teórico", title: "Modelo M/M/c · Fórmulas Principales", highlight: true, isFormula: true, bullets: ['ρ = λ/(cμ) < 1 → condición de estabilidad', 'P₀ = [Σ(r^k/k!) + r^c/(c!(1-ρ))]⁻¹, donde r = λ/μ', 'Lq = P₀·r^c·ρ / (c!(1-ρ)²) → longitud de cola', 'Wq = Lq/λ ; W = Wq + 1/μ ; L = λW'], image: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=800&q=80" },
-  { section: "Marco Teórico", title: "Ejemplo Numérico", bullets: ['Parámetros: λ = 100, μ = 20, c = 6 servidores', 'Utilización: ρ = 100/(6×20) = 0.833 (sistema estable)', 'Longitud de cola: Lq ≈ 2.5 peticiones esperando', "Múltiples servidores mitigan significativamente las colas"], image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80" },
-  { section: "Metodología", title: "Diseño Metodológico", bullets: ["Tipo: Simulación discreta de eventos + cálculos analíticos", "Python 3.12 con SimPy para simulación de eventos", "Streamlit para interfaz web interactiva", "NumPy/Pandas para datos, Plotly para visualizaciones"], image: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=800&q=80" },
-  { section: "Metodología", title: "Escenarios de Simulación", bullets: ["Base: λ=120, μ=30, c=1..20, tiempo=600s, semilla fija", "Pico: λ aumenta ×3 para simular sobrecargas", "Sensibilidad: variar λ (50-300), μ (10-50), costos ($100-500/servidor)", "1000+ corridas por escenario para promedios estables"], image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" },
-  { section: "Metodología", title: "Modelo de Simulación", code: true, bullets: ["<code>env = Environment()</code> → entorno SimPy", "<code>servidores = Resource(env, capacity=c)</code> → pool de servidores", "<code>generar_llegadas(env, servidores, λ)</code> → proceso de llegadas Poisson", "<code>env.run(until=tiempo)</code> → ejecutar simulación"], image: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=800&q=80" },
-  { section: "Resultados", title: "Resultados Preliminares", bullets: ['c=4: ρ=1.00 (inestable), Lq → ∞, cola creciente', 'c=6: ρ=0.67, Lq ≈ 0.15, Wq ≈ 0.001s → estable', 'c=8: ρ=0.50, Lq ≈ 0.003, Wq ≈ 0.00003s → muy holgado', 'Punto óptimo: c=7-8 donde Wq < 0.01s con costo razonable'], image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" },
-  { section: "Resultados", title: "Análisis de Sensibilidad", bullets: ['Para c < 5: sistema inestable (ρ ≥ 1), colas crecientes', "Simulación aproxima bien la teoría en sistemas estables", "Discrepancias mínimas por varianza finita de la simulación", 'En picos, aumentar c dinámicamente reduce Lq en 85%'], image: "https://images.unsplash.com/photo-1543286386-713bdd548da4?w=800&q=80" },
-  { section: "Conclusiones", title: "Conclusiones", bullets: ["M/M/c es robusto para optimizar recursos cloud", 'Mantener ρ < 0.8 para resiliencia ante picos', "Visualizaciones interactivas mejoran comprensión", 'Trade-off costo-rendimiento muestra diminishing returns más allá de cierto c'], image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80" },
-  { section: "Aplicaciones", title: "Aplicaciones Prácticas", bullets: ["AWS CloudWatch para autoscaling predictivo", "Laboratorios educativos de procesos estocásticos", "E-commerce: modelar tráfico estacional (Black Friday)", "IoT: manejar colas de sensores en tiempo real"], image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80" },
-  { section: "Futuro", title: "Extensiones Futuras", bullets: ["Colas finitas: modelo M/M/c/K", "Sistemas con prioridades (urgencia diferenciada)", "Integración con métricas reales de producción", "Machine Learning para predicción de λ dinámico"], image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80" },
-  { section: "Bibliografía", title: "Referencias", bullets: ["Kleinrock, L. (1975). Queueing Systems: Volume 1 - Theory. Wiley.", "Gross, D. et al. (2008). Fundamentals of Queueing Theory. Wiley.", "Hillier, F. & Lieberman, G. (2010). Intro to Operations Research. McGraw-Hill.", "Gartner (2023). Cloud Computing Trends Report."], image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&q=80" }
+  { section: "Portada", title: "Modelos de Colas M/M/c en la Nube", subtitle: "Evaluación de Rendimiento y Asignación de Recursos", bullets: ["Grupo G42 · Noviembre 2025", "Procesos Estocásticos y Series de Tiempo", "Universidad Mayor de San Andrés"], image: "https://bernardmarr.com/img/The%205%20Biggest%20Cloud%20Computing%20Trends%20In%202021.jpg" },
+  { section: "Introducción", title: "Contexto del Problema", bullets: ["AWS, Azure y Google Cloud: $591 mil millones en 2023", "Black Friday: peticiones aumentan exponencialmente", "Colas largas → tiempos lentos → abandono de carritos", "M/M/c simula escenarios para optimizar costo vs eficiencia"], image: "https://www.megaport.com/images/blog/covers/aws-azure-google-cloud-the-big-three-compared_hu_11573b93c75ecdd9.webp" },
+  { section: "Problema", title: "Pregunta de Investigación", highlight: true, bullets: ["¿Cómo determinar el número óptimo de instancias virtuales?", "Minimizar Wq (tiempo en cola) y Lq (longitud de cola)", "Controlar costo operativo simultáneamente", "Con llegadas Poisson(λ) y servicios Exp(μ)"], image: "https://www.shutterstock.com/image-vector/trendy-halftone-collage-problem-solving-600nw-2610919851.jpg" },
+  { section: "Marco Teórico", title: "Proceso de Poisson y Exponencial", bullets: ["N(t) = eventos hasta tiempo t, incremens", "Inter-llegada ~ Exp(λ), tiempo servicio ~ Exp(μ)", "Propiedad sin memoria: P(T > t+s | T > s) = P(T > t)", "Base para modelar llegadas HTTP y tiempos de procesamiento"], image: "https://www.scribbr.nl/wp-content/uploads/2022/08/Poisson-distribution-graph.webp" },
+  { section: "Marco Teórico", title: "Modelo M/M/c · Fórmulas", highlight: true, isFormula: true, bullets: ["ρ = λ/(cμ) < 1 → condición de estabilidad", "P₀ = [Σ(r^k/k!) + r^c/(c!(1-ρ))]⁻¹", "Lq = P₀·r^c·ρ / (c!(1-ρ)²)", "Wq = Lq/λ ; W = Wq + 1/μ ; L = λW"], image: "https://upload.wikimedia.org/wikipedia/commons/d/de/M-m-c_queue.png" },
+  { section: "Metodología", title: "Diseño del Experimento", bullets: ["Python + SimPy para simulación discreta de eventos", "Streamlit para interfaz web interactiva", "Base: λ=120, μ=30, c=1..20, tiempo=600s", "Sensibilidad: variar λ, μ, costos para análisis de trade-offs"], image: "https://i.ytimg.com/vi/GQ85Gc1s_Fg/maxresdefault.jpg" },
+  { section: "Resultados", title: "Resultados de Simulación", bullets: ["c=4: ρ=1.00 (inestable), Lq → ∞", "c=6: ρ=0.67, Lq ≈ 0.15, Wq ≈ 0.001s → estable", "c=8: ρ=0.50, muy holgado pero costoso", "Punto óptimo: c=5-6 donde Wq < 0.01s"], image: "https://media.tenor.com/l-PbZelgds0AAAAM/favorite-facts.gif" },
+  { section: "Conclusiones", title: "Conclusiones", bullets: ["M/M/c es robusto para optimizar recursos cloud", "Mantener ρ < 0.8 para resiliencia ante picos", "Trade-off costo-rendimiento: diminishing returns con más servidores", "Simulación valida bien la teoría en sistemas estables"], image: "https://cdn.prod.website-files.com/643d2eea03135260bdaca209/6585cea39ae01230757b9f31_QuantumCloud.webp" },
+  { section: "Aplicaciones", title: "Aplicaciones Prácticas", bullets: ["AWS CloudWatch para autoscaling predictivo", "E-commerce: modelar tráfico Black Friday", "IoT: manejar colas de sensores en tiempo real", "Fintech/Healthcare: donde colas impactan tiempos críticos"], image: "https://cdn.prod.website-files.com/62fec8041edae129b05e72ac/659e054b003ea5f343dec334_Blog-HeroImage-Optimizing-Images-for-Page-Speed-1600x900px.png" }
 ];
 
 const codeFiles = [
@@ -125,36 +110,36 @@ def run_simulation(lambda_rate, mu_rate, num_servers, sim_time=600, seed=42):
 
     <InformeCarousel slides={informeSlides} id="informe" />
 
-    <!-- SIMULADOR M/M/c -->
-    <section class="sim" id="sim">
-      <div class="section__head">
-        <div>
-          <p class="eyebrow">Interactivo</p>
-          <h2>Simulador M/M/c con JavaScript</h2>
-          <p class="section__lede">Ajusta parámetros, ejecuta la simulación real en el navegador y analiza escalabilidad y costo.</p>
-        </div>
-      </div>
+        <!-- SIMULADOR M/M/c -->
+        <section class="sim" id="sim">
+          <div class="section__head">
+            <div>
+              <p class="eyebrow">Interactivo</p>
+              <h2>Simulador M/M/c con JavaScript</h2>
+              <p class="section__lede">Ajusta parámetros, ejecuta la simulación real en el navegador y analiza escalabilidad y costo.</p>
+            </div>
+          </div>
 
-      <div class="sim-grid">
-        <div class="controls">
+          <div class="sim-grid">
+            <div class="controls">
           <label>λ (llegadas/s)<input type="range" id="lambda" min="10" max="400" step="10" value="120" /><span class="value" id="lambda-value">120</span></label>
           <label>μ (servicio por servidor)<input type="range" id="mu" min="5" max="120" step="5" value="30" /><span class="value" id="mu-value">30</span></label>
           <label>c (servidores)<input type="range" id="servers" min="1" max="40" step="1" value="6" /><span class="value" id="servers-value">6</span></label>
           <label>Tiempo de simulación (s)<input type="range" id="time" min="100" max="2000" step="50" value="600" /><span class="value" id="time-value">600</span></label>
           <label>Costo/servidor (USD/mes)<input type="range" id="cost" min="50" max="1500" value="300" /><span class="value" id="cost-value">300</span></label>
-        </div>
+            </div>
 
-        <div class="metrics">
+            <div class="metrics">
           <div class="metric"><p>Utilización ρ</p><h3 id="rho-out">0.00</h3><small id="stable-out">—</small></div>
           <div class="metric"><p>Wq (s) · Tiempo en cola</p><h3 id="wq-out">0.00</h3></div>
           <div class="metric"><p>Lq · Cola promedio</p><h3 id="lq-out">0.00</h3></div>
           <div class="metric"><p>Costo mensual (USD)</p><h3 id="cost-out">0</h3></div>
-        </div>
+            </div>
 
-        <div class="actions">
-          <button id="run-sim" class="primary">Ejecutar simulación</button>
-          <button id="analyze" class="ghost">Analizar escalabilidad</button>
-        </div>
+            <div class="actions">
+              <button id="run-sim" class="primary">Ejecutar simulación</button>
+              <button id="analyze" class="ghost">Analizar escalabilidad</button>
+            </div>
 
         <div class="charts"><div id="queue-chart" style="width:100%;height:400px;"></div></div>
 
@@ -175,7 +160,7 @@ def run_simulation(lambda_rate, mu_rate, num_servers, sim_time=600, seed=42):
               <div id="analysis-optimum" class="analysis-optimum"></div>
             </div>
           </div>
-        </div>
+            </div>
 
         <div class="formula">
           <p class="eyebrow">Fórmulas clave</p>
@@ -185,9 +170,9 @@ def run_simulation(lambda_rate, mu_rate, num_servers, sim_time=600, seed=42):
             <div class="formula-item"><span class="formula-label">Longitud de cola:</span><span class="formula-math" id="f3"></span></div>
             <div class="formula-item"><span class="formula-label">Tiempos y relaciones:</span><span class="formula-math" id="f4"></span></div>
           </div>
-        </div>
-      </div>
-    </section>
+            </div>
+          </div>
+        </section>
 
     <CodeSection
       title="Simulador Python · Streamlit + SimPy"
@@ -201,63 +186,63 @@ pip install streamlit simpy numpy pandas plotly
 cd "proy 13 (python)"
 streamlit run app.py`}
     />
-  </main>
+      </main>
 
   <Footer rightText="Proyecto 13 · Modelos de colas M/M/c" />
 </BaseLayout>
 
-<script is:inline>
-  // === Simulador M/M/c en JavaScript ===
+  <script is:inline>
+    // === Simulador M/M/c en JavaScript ===
   function factorial(n) { let r = 1; for (let i = 2; i <= n; i++) r *= i; return r; }
   function randExp(rate) { return -Math.log(1 - Math.random()) / rate; }
 
-  function simulate(lambda, mu, c, simTime) {
+    function simulate(lambda, mu, c, simTime) {
     let t = 0, nextArrival = randExp(lambda), serviceEndTimes = [], queue = [], waitTimes = [], timeline = [[0, 0]];
-    while (true) {
-      const nextService = serviceEndTimes.length > 0 ? serviceEndTimes[0] : Infinity;
-      if (nextArrival <= nextService && nextArrival <= simTime) {
-        t = nextArrival;
+      while (true) {
+        const nextService = serviceEndTimes.length > 0 ? serviceEndTimes[0] : Infinity;
+        if (nextArrival <= nextService && nextArrival <= simTime) {
+          t = nextArrival;
         if (serviceEndTimes.length < c) { serviceEndTimes.push(t + randExp(mu)); serviceEndTimes.sort((a, b) => a - b); waitTimes.push(0); }
         else { queue.push(t); }
-        nextArrival += randExp(lambda);
-        timeline.push([t, queue.length]);
+          nextArrival += randExp(lambda);
+          timeline.push([t, queue.length]);
       } else if (nextService < nextArrival && nextService <= simTime) {
         t = nextService; serviceEndTimes.shift();
         if (queue.length > 0) { waitTimes.push(t - queue.shift()); serviceEndTimes.push(t + randExp(mu)); serviceEndTimes.sort((a, b) => a - b); }
-        timeline.push([t, queue.length]);
+          timeline.push([t, queue.length]);
       } else { break; }
-      if (t > simTime) break;
-    }
+        if (t > simTime) break;
+      }
     if (timeline[timeline.length - 1][0] < simTime) timeline.push([simTime, timeline[timeline.length - 1][1]]);
     
     let area = 0; for (let i = 0; i < timeline.length - 1; i++) area += timeline[i][1] * (timeline[i + 1][0] - timeline[i][0]);
     const rho = lambda / (c * mu), stable = rho < 1, r = lambda / mu;
     let Lq_theory = NaN, Wq_theory = NaN;
-    if (stable && lambda > 0 && mu > 0) {
+      if (stable && lambda > 0 && mu > 0) {
       let sumTerm = 0; for (let k = 0; k < c; k++) sumTerm += Math.pow(r, k) / factorial(k);
       const P0 = 1 / (sumTerm + Math.pow(r, c) / (factorial(c) * (1 - rho)));
-      Lq_theory = P0 * Math.pow(r, c) * rho / (factorial(c) * Math.pow(1 - rho, 2));
-      Wq_theory = Lq_theory / lambda;
+        Lq_theory = P0 * Math.pow(r, c) * rho / (factorial(c) * Math.pow(1 - rho, 2));
+        Wq_theory = Lq_theory / lambda;
     }
     return { timeline, waitTimes, Lq_sim: area / simTime, Wq_sim: waitTimes.length > 0 ? waitTimes.reduce((a, b) => a + b, 0) / waitTimes.length : 0, rho, stable, Lq_theory, Wq_theory };
   }
 
-  function bindSliders() {
+    function bindSliders() {
     ["lambda", "mu", "servers", "time", "cost"].forEach(id => {
       const input = document.getElementById(id), valueEl = document.getElementById(`${id}-value`);
       input.addEventListener("input", () => valueEl.textContent = input.value);
     });
   }
 
-  async function runSimulation() {
+    async function runSimulation() {
     const lambda = +document.getElementById("lambda").value, mu = +document.getElementById("mu").value;
     const servers = +document.getElementById("servers").value, simTime = +document.getElementById("time").value, cost = +document.getElementById("cost").value;
-    const res = simulate(lambda, mu, servers, simTime);
+      const res = simulate(lambda, mu, servers, simTime);
     
-    document.getElementById("rho-out").textContent = res.rho.toFixed(3);
+      document.getElementById("rho-out").textContent = res.rho.toFixed(3);
     document.getElementById("stable-out").textContent = res.stable ? "Estable (ρ < 1)" : "Inestable";
-    document.getElementById("wq-out").textContent = res.Wq_sim.toFixed(3);
-    document.getElementById("lq-out").textContent = res.Lq_sim.toFixed(3);
+      document.getElementById("wq-out").textContent = res.Wq_sim.toFixed(3);
+      document.getElementById("lq-out").textContent = res.Lq_sim.toFixed(3);
     document.getElementById("cost-out").textContent = "$" + (servers * cost).toLocaleString();
 
     Plotly.newPlot("queue-chart", [{ x: res.timeline.map(p => p[0]), y: res.timeline.map(p => p[1]), type: "scatter", mode: "lines", fill: "tozeroy", name: "Cola", line: { color: "#8ad6ff" } }], {
@@ -266,7 +251,7 @@ streamlit run app.py`}
     }, { responsive: true });
   }
 
-  async function analyze() {
+    async function analyze() {
     const wrapper = document.getElementById("analysis-wrapper"), loading = document.getElementById("analysis-loading"), content = document.getElementById("analysis-content"), loadingBar = document.getElementById("loading-bar");
     wrapper.classList.add("visible"); loading.classList.add("active"); content.classList.remove("visible"); loadingBar.style.width = "0%";
     wrapper.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -276,8 +261,8 @@ streamlit run app.py`}
     const simTime = Math.min(+document.getElementById("time").value, 400);
     const minServers = Math.max(1, Math.floor(lambda / mu) - 2), maxServers = serversCurrent + 15, results = [];
     
-    for (let c = minServers; c <= maxServers; c++) {
-      const res = simulate(lambda, mu, c, simTime);
+      for (let c = minServers; c <= maxServers; c++) {
+        const res = simulate(lambda, mu, c, simTime);
       results.push({ servers: c, Wq: res.Wq_sim, Lq: res.Lq_sim, rho: res.rho, cost: c * costPerServer });
       loadingBar.style.width = ((c - minServers + 1) / (maxServers - minServers + 1)) * 100 + "%";
       await new Promise(r => setTimeout(r, 30));
@@ -299,10 +284,10 @@ streamlit run app.py`}
   }
 
   window.addEventListener("load", () => {
-    bindSliders();
-    document.getElementById("run-sim").addEventListener("click", runSimulation);
-    document.getElementById("analyze").addEventListener("click", analyze);
-    runSimulation();
+      bindSliders();
+      document.getElementById("run-sim").addEventListener("click", runSimulation);
+      document.getElementById("analyze").addEventListener("click", analyze);
+      runSimulation();
     
     // KaTeX
     function tryKaTeX() {
@@ -312,9 +297,9 @@ streamlit run app.py`}
     }
     tryKaTeX();
   });
-</script>
+  </script>
 
-<style>
+  <style>
   .sim { margin-top: 40px; border: 1px solid var(--border); border-radius: 20px; padding: 20px; background: rgba(255,255,255,0.02); box-shadow: var(--shadow); }
   .sim-grid { display: grid; gap: 18px; }
   .controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
@@ -359,4 +344,4 @@ streamlit run app.py`}
   .analysis-optimum strong { color: var(--accent); }
 
   @media (max-width: 900px) { .analysis-charts { grid-template-columns: 1fr; } }
-</style>
+  </style>
