@@ -86,12 +86,13 @@ def run_simulation(lambda_rate, mu_rate, num_servers, sim_time=600, seed=42):
     links={[
       { href: "/", text: "Home" },
       { href: "#informe", text: "Informe" },
+      { href: "#animacion", text: "Animación" },
       { href: "#sim", text: "Simulador" },
       { href: "#codigo", text: "Código Python" }
     ]}
   />
 
-  <main>
+      <main>
     <Hero
       eyebrow="Tema 13"
       title="Modelos de colas en servicios en la nube (M/M/c)"
@@ -109,6 +110,49 @@ def run_simulation(lambda_rate, mu_rate, num_servers, sim_time=600, seed=42):
     />
 
     <InformeCarousel slides={informeSlides} id="informe" />
+
+    <!-- ANIMACIÓN VISUAL M/M/c -->
+    <section class="anim-section" id="animacion">
+      <div class="section__head">
+        <div>
+          <p class="eyebrow">Visualización Interactiva</p>
+          <h2>Modelo M/M/c</h2>
+          <p class="section__lede">Observa cómo múltiples servidores atienden clientes en paralelo.</p>
+            </div>
+            </div>
+
+      <div class="anim-wrapper">
+        <div class="anim-params">
+          <span id="anim-params-text">λ = 2.00, μ = 1.00, c = 3, ρ = 0.67</span>
+          </div>
+        
+        <canvas id="mmc-canvas" width="750" height="380"></canvas>
+        
+        <div class="anim-controls">
+          <div class="slider-group">
+            <label>
+              <span>λ (llegadas/s)</span>
+              <input type="range" id="anim-lambda" min="0.5" max="5" step="0.25" value="2" />
+              <span class="slider-val" id="anim-lambda-val">2.00</span>
+            </label>
+            <label>
+              <span>μ (servicio/s)</span>
+              <input type="range" id="anim-mu" min="0.3" max="2" step="0.1" value="1" />
+              <span class="slider-val" id="anim-mu-val">1.00</span>
+            </label>
+            <label>
+              <span>c (servidores)</span>
+              <input type="range" id="anim-servers" min="1" max="6" step="1" value="3" />
+              <span class="slider-val" id="anim-servers-val">3</span>
+            </label>
+            </div>
+          <div class="anim-btns">
+            <button id="anim-start" class="btn-start">▶ Iniciar</button>
+            <button id="anim-reset" class="btn-reset">↺ Reset</button>
+              </div>
+              </div>
+          </div>
+        </section>
 
         <!-- SIMULADOR M/M/c -->
         <section class="sim" id="sim">
@@ -148,19 +192,19 @@ def run_simulation(lambda_rate, mu_rate, num_servers, sim_time=600, seed=42):
             <div class="loading-ring"><div></div><div></div><div></div><div></div></div>
             <p>Simulando configuraciones...</p>
             <div class="loading-progress"><div id="loading-bar" class="loading-bar"></div></div>
-          </div>
+            </div>
           <div id="analysis-content" class="analysis-content">
             <div class="analysis-charts">
               <div class="analysis-chart-box"><h4>Impacto del Número de Servidores</h4><div id="scalability-chart"></div></div>
               <div class="analysis-chart-box"><h4>Trade-off: Costo vs Rendimiento</h4><div id="tradeoff-chart"></div></div>
-            </div>
+          </div>
             <div class="analysis-results">
               <h4>Resultados Detallados</h4>
               <div id="analysis-table" class="analysis-table"></div>
               <div id="analysis-optimum" class="analysis-optimum"></div>
             </div>
-          </div>
             </div>
+          </div>
 
         <div class="formula">
           <p class="eyebrow">Fórmulas clave</p>
@@ -169,7 +213,7 @@ def run_simulation(lambda_rate, mu_rate, num_servers, sim_time=600, seed=42):
             <div class="formula-item"><span class="formula-label">Probabilidad sistema vacío:</span><span class="formula-math" id="f2"></span></div>
             <div class="formula-item"><span class="formula-label">Longitud de cola:</span><span class="formula-math" id="f3"></span></div>
             <div class="formula-item"><span class="formula-label">Tiempos y relaciones:</span><span class="formula-math" id="f4"></span></div>
-          </div>
+            </div>
             </div>
           </div>
         </section>
@@ -190,6 +234,387 @@ streamlit run app.py`}
 
   <Footer rightText="Proyecto 13 · Modelos de colas M/M/c" />
 </BaseLayout>
+
+  <script is:inline>
+// Animación M/M/c estilo Manim
+(function() {
+  const canvas = document.getElementById('mmc-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  
+  let lambda = 2, mu = 1, numServers = 3;
+  let running = false;
+  let balls = [];
+  let servers = []; // { busy: false, ball: null }
+  let served = 0;
+  let nextArrival = 0;
+  let simTime = 0;
+  
+  // Layout base
+  const L = {
+    queueX: 140,
+    queueTopY: 80,
+    queueSpacing: 40,
+    serversStartX: 380,
+    serversSpacingY: 85,
+    serverW: 80,
+    serverH: 65,
+    exitX: 700,
+    ballR: 15,
+    arriveFromX: -40,
+    arriveY: 80
+  };
+  
+  function resizeCanvas() {
+    // Calcular altura necesaria según número de servidores
+    const minHeight = 350;
+    const heightPerServer = L.serversSpacingY;
+    const padding = 120;
+    const neededHeight = Math.max(minHeight, numServers * heightPerServer + padding);
+    canvas.height = neededHeight;
+  }
+  
+  const colors = {
+    bg: '#0d1117',
+    grid: 'rgba(255,255,255,0.03)',
+    text: '#8b949e',
+    textBright: '#c9d1d9',
+    ball: '#8ad6ff',
+    serving: '#72f0d5',
+    server: '#58a6ff',
+    serverFill: 'rgba(88,166,255,0.1)',
+    serverBusy: '#f0883e',
+    exit: '#a371f7'
+  };
+  
+    function randExp(rate) {
+      return -Math.log(1 - Math.random()) / rate;
+    }
+  
+  function lerp(a, b, t) {
+    return a + (b - a) * Math.min(1, t);
+  }
+  
+  function initServers() {
+    servers = [];
+    for (let i = 0; i < numServers; i++) {
+      servers.push({ busy: false, ball: null });
+    }
+    resizeCanvas();
+  }
+  
+  function getServerY(index) {
+    const totalHeight = (numServers - 1) * L.serversSpacingY;
+    const startY = (canvas.height - totalHeight) / 2;
+    return startY + index * L.serversSpacingY;
+  }
+  
+  function drawScene() {
+    ctx.fillStyle = colors.bg;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    // Grid sutil
+    ctx.strokeStyle = colors.grid;
+    ctx.lineWidth = 1;
+    for (let x = 0; x < canvas.width; x += 40) {
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+    }
+    for (let y = 0; y < canvas.height; y += 40) {
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+    }
+    
+    // Línea de cola (vertical)
+    ctx.strokeStyle = 'rgba(138,214,255,0.3)';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([6, 4]);
+    ctx.beginPath();
+    ctx.moveTo(L.queueX, L.queueTopY - 20);
+    ctx.lineTo(L.queueX, L.queueTopY + 9 * L.queueSpacing);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    
+    // Etiqueta cola
+    ctx.fillStyle = colors.text;
+    ctx.font = '11px Manrope, system-ui, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('COLA', L.queueX, L.queueTopY - 35);
+    
+    // Dibujar servidores
+    for (let i = 0; i < numServers; i++) {
+      const y = getServerY(i);
+      const isBusy = servers[i] && servers[i].busy;
+      
+      // Línea de conexión cola -> servidor
+      ctx.strokeStyle = 'rgba(138,214,255,0.15)';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(L.queueX + 30, L.queueTopY);
+      ctx.lineTo(L.serversStartX - L.serverW/2, y);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      
+      // Servidor
+      ctx.strokeStyle = isBusy ? colors.serverBusy : colors.server;
+      ctx.lineWidth = 2;
+      ctx.strokeRect(L.serversStartX - L.serverW/2, y - L.serverH/2, L.serverW, L.serverH);
+      ctx.fillStyle = isBusy ? 'rgba(240,136,62,0.1)' : colors.serverFill;
+      ctx.fillRect(L.serversStartX - L.serverW/2, y - L.serverH/2, L.serverW, L.serverH);
+      
+      // Etiqueta servidor
+      ctx.fillStyle = colors.text;
+      ctx.font = '10px Manrope, system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(`S${i + 1}`, L.serversStartX, y + L.serverH/2 + 15);
+      
+      // Estado
+      ctx.font = 'bold 9px Manrope, system-ui, sans-serif';
+      ctx.fillStyle = isBusy ? colors.serverBusy : colors.server;
+      ctx.fillText(isBusy ? 'OCUPADO' : 'LIBRE', L.serversStartX, y - L.serverH/2 - 8);
+    }
+    
+    // Contador atendidos
+    ctx.font = '12px Manrope, system-ui, sans-serif';
+    ctx.fillStyle = colors.textBright;
+    ctx.textAlign = 'right';
+    ctx.fillText(`Atendidos: ${served}`, canvas.width - 15, canvas.height - 15);
+    
+    // Cantidad en cola
+    const inQueue = balls.filter(b => b.state === 'queue').length;
+    ctx.textAlign = 'left';
+    ctx.fillText(`En cola: ${inQueue}`, 15, canvas.height - 15);
+    
+    // Servidores ocupados
+    const busyCount = servers.filter(s => s.busy).length;
+    ctx.textAlign = 'center';
+    ctx.fillText(`Servidores ocupados: ${busyCount}/${numServers}`, canvas.width / 2, canvas.height - 15);
+  }
+  
+  function drawBall(b) {
+    ctx.beginPath();
+    ctx.arc(b.x, b.y, L.ballR, 0, Math.PI * 2);
+    
+    let color = colors.ball;
+    if (b.state === 'serving') color = colors.serving;
+    if (b.state === 'exiting') color = colors.exit;
+    
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    
+    // Progreso de servicio
+    if (b.state === 'serving' && b.serviceProgress > 0) {
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, L.ballR + 4, -Math.PI/2, -Math.PI/2 + b.serviceProgress * Math.PI * 2);
+      ctx.strokeStyle = colors.server;
+      ctx.lineWidth = 3;
+      ctx.stroke();
+    }
+  }
+  
+  function updateBalls(dt) {
+    balls.forEach(b => {
+      if (b.state === 'arriving') {
+        b.x = lerp(b.x, b.targetX, dt * 5);
+        b.y = lerp(b.y, b.targetY, dt * 5);
+        if (Math.abs(b.x - b.targetX) < 2 && Math.abs(b.y - b.targetY) < 2) {
+          b.x = b.targetX;
+          b.y = b.targetY;
+          b.state = 'queue';
+        }
+      }
+      
+      if (b.state === 'queue') {
+        b.targetY = L.queueTopY + b.queueIndex * L.queueSpacing;
+        b.y = lerp(b.y, b.targetY, dt * 8);
+      }
+      
+      if (b.state === 'toServer') {
+        const serverY = getServerY(b.serverIndex);
+        b.x = lerp(b.x, L.serversStartX, dt * 5);
+        b.y = lerp(b.y, serverY, dt * 5);
+        if (Math.abs(b.x - L.serversStartX) < 3 && Math.abs(b.y - serverY) < 3) {
+          b.x = L.serversStartX;
+          b.y = serverY;
+          b.state = 'serving';
+          b.serviceProgress = 0;
+          b.serviceDuration = randExp(mu);
+          servers[b.serverIndex].busy = true;
+          servers[b.serverIndex].ball = b;
+        }
+      }
+      
+      if (b.state === 'serving') {
+        b.serviceProgress += dt / b.serviceDuration;
+        if (b.serviceProgress >= 1) {
+          b.state = 'exiting';
+          b.serviceProgress = 1;
+          servers[b.serverIndex].busy = false;
+          servers[b.serverIndex].ball = null;
+          served++;
+        }
+      }
+      
+      if (b.state === 'exiting') {
+        b.x = lerp(b.x, L.exitX + 100, dt * 4);
+      }
+    });
+    
+    // Remover bolitas que salieron
+    balls = balls.filter(b => b.state !== 'exiting' || b.x < canvas.width + 50);
+    
+    // Recalcular índices de cola
+    let idx = 0;
+    balls.filter(b => b.state === 'queue').forEach(b => {
+      b.queueIndex = idx++;
+    });
+    
+    // Mover bolitas de la cola a servidores libres
+    const firstInQueue = balls.find(b => b.state === 'queue' && b.queueIndex === 0);
+    if (firstInQueue) {
+      // Buscar servidor libre que no tenga a nadie yendo
+      const someoneGoingToServer = (idx) => balls.some(b => b.state === 'toServer' && b.serverIndex === idx);
+      
+      for (let i = 0; i < servers.length; i++) {
+        if (!servers[i].busy && !someoneGoingToServer(i)) {
+          firstInQueue.state = 'toServer';
+          firstInQueue.serverIndex = i;
+          break;
+        }
+      }
+    }
+  }
+  
+  function spawnBall() {
+    // Buscar servidor libre
+    const freeServerIndex = servers.findIndex(s => !s.busy);
+    const someoneGoingToThatServer = (idx) => balls.some(b => b.state === 'toServer' && b.serverIndex === idx);
+    
+    // Encontrar un servidor que esté libre Y que nadie esté yendo a él
+    let targetServer = -1;
+    for (let i = 0; i < servers.length; i++) {
+      if (!servers[i].busy && !someoneGoingToThatServer(i)) {
+        targetServer = i;
+        break;
+      }
+    }
+    
+    if (targetServer !== -1) {
+      // Ir directo al servidor
+      balls.push({
+        state: 'toServer',
+        x: L.arriveFromX,
+        y: L.arriveY,
+        targetX: L.serversStartX,
+        targetY: getServerY(targetServer),
+        queueIndex: -1,
+        serverIndex: targetServer,
+        serviceProgress: 0,
+        serviceDuration: 0
+      });
+    } else {
+      // Todos ocupados, ir a la cola
+      const queueCount = balls.filter(b => b.state === 'queue' || b.state === 'arriving').length;
+      balls.push({
+        state: 'arriving',
+        x: L.arriveFromX,
+        y: L.arriveY,
+        targetX: L.queueX,
+        targetY: L.queueTopY + queueCount * L.queueSpacing,
+        queueIndex: queueCount,
+        serverIndex: -1,
+        serviceProgress: 0,
+        serviceDuration: 0
+      });
+    }
+  }
+  
+  let lastTime = 0;
+  function loop(timestamp) {
+    if (!running) return;
+    
+    const dt = lastTime ? (timestamp - lastTime) / 1000 : 0.016;
+    lastTime = timestamp;
+    
+    simTime += dt;
+    
+    // Llegadas
+    if (simTime >= nextArrival) {
+      spawnBall();
+      nextArrival = simTime + randExp(lambda);
+    }
+    
+    updateBalls(dt);
+    drawScene();
+    balls.forEach(drawBall);
+    
+    requestAnimationFrame(loop);
+  }
+  
+  function reset() {
+    balls = [];
+    served = 0;
+    simTime = 0;
+    nextArrival = randExp(lambda);
+    lastTime = 0;
+    initServers();
+    drawScene();
+  }
+  
+  function updateParamsText() {
+    const rho = (lambda / (numServers * mu)).toFixed(2);
+    document.getElementById('anim-params-text').textContent = 
+      `λ = ${lambda.toFixed(2)}, μ = ${mu.toFixed(2)}, c = ${numServers}, ρ = ${rho}`;
+  }
+  
+  // Event listeners
+  document.getElementById('anim-lambda').addEventListener('input', function(e) {
+    lambda = parseFloat(e.target.value);
+    document.getElementById('anim-lambda-val').textContent = lambda.toFixed(2);
+    updateParamsText();
+  });
+  
+  document.getElementById('anim-mu').addEventListener('input', function(e) {
+    mu = parseFloat(e.target.value);
+    document.getElementById('anim-mu-val').textContent = mu.toFixed(2);
+    updateParamsText();
+  });
+  
+  document.getElementById('anim-servers').addEventListener('input', function(e) {
+    numServers = parseInt(e.target.value);
+    document.getElementById('anim-servers-val').textContent = numServers;
+    initServers();
+    updateParamsText();
+    if (!running) {
+      reset();
+    }
+  });
+  
+  document.getElementById('anim-start').addEventListener('click', function() {
+    running = !running;
+    this.textContent = running ? '⏸ Pausar' : '▶ Iniciar';
+    this.classList.toggle('active', running);
+    if (running) {
+      lastTime = 0;
+      requestAnimationFrame(loop);
+    }
+  });
+  
+  document.getElementById('anim-reset').addEventListener('click', function() {
+    running = false;
+    document.getElementById('anim-start').textContent = '▶ Iniciar';
+    document.getElementById('anim-start').classList.remove('active');
+    reset();
+  });
+  
+  // Init
+  initServers();
+  reset();
+  updateParamsText();
+})();
+</script>
 
   <script is:inline>
     // === Simulador M/M/c en JavaScript ===
@@ -300,6 +725,136 @@ streamlit run app.py`}
   </script>
 
   <style>
+  /* Animación M/M/c */
+  .anim-section {
+    margin-top: 40px;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 28px;
+    background: linear-gradient(135deg, rgba(138,214,255,0.03), rgba(114,240,213,0.02));
+  }
+  
+  .anim-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .anim-params {
+    text-align: center;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 15px;
+      color: var(--muted);
+    padding: 10px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  
+  #mmc-canvas {
+    display: block;
+    width: 100%;
+    max-width: 750px;
+    margin: 0 auto;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    transition: height 0.3s ease;
+  }
+  
+  .anim-controls {
+      display: flex;
+      justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .slider-group {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  
+  .slider-group label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  
+  .slider-group input[type="range"] {
+    width: 80px;
+    accent-color: #8ad6ff;
+  }
+  
+  .slider-val {
+    font-weight: 700;
+    color: #8ad6ff;
+    font-family: 'JetBrains Mono', monospace;
+    min-width: 35px;
+    text-align: right;
+  }
+  
+  .anim-btns {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .btn-start {
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    background: #58a6ff;
+    color: #000;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+  }
+  
+  .btn-start:hover {
+    background: #79b8ff;
+    box-shadow: 0 4px 15px rgba(88,166,255,0.3);
+  }
+  
+  .btn-start.active {
+    background: #f0883e;
+  }
+  
+  .btn-reset {
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: transparent;
+      color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+      font-size: 14px;
+  }
+  
+  .btn-reset:hover {
+    border-color: #8ad6ff;
+    color: #8ad6ff;
+  }
+  
+  @media (max-width: 700px) {
+    .anim-controls {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .slider-group {
+      flex-direction: column;
+    }
+    .anim-btns {
+      justify-content: center;
+    }
+  }
+
   .sim { margin-top: 40px; border: 1px solid var(--border); border-radius: 20px; padding: 20px; background: rgba(255,255,255,0.02); box-shadow: var(--shadow); }
   .sim-grid { display: grid; gap: 18px; }
   .controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }

@@ -152,10 +152,10 @@ slope, intercept, r_value, p_value, std_err = linregress(
     links={[
       { href: "/", text: "Home" },
       { href: "#informe", text: "Informe" },
+      { href: "#animacion", text: "Animación" },
       { href: "#simulador", text: "Simulador" },
       { href: "#compuesto", text: "Compuesto" },
-      { href: "#graficos", text: "Gráficos" },
-      { href: "#analisis", text: "Análisis" }
+      { href: "#graficos", text: "Gráficos" }
     ]}
   />
 
@@ -190,6 +190,57 @@ slope, intercept, r_value, p_value, std_err = linregress(
     </section>
 
     <InformeCarousel slides={informeSlides} id="informe" />
+
+    <!-- ANIMACIÓN: GEN TP53 CON MUTACIONES -->
+    <section class="gene-anim-section" id="animacion">
+      <div class="section__head">
+        <div>
+          <p class="eyebrow">Visualización Interactiva</p>
+          <h2>Mutaciones en el Gen TP53</h2>
+          <p class="section__lede">Observa cómo las mutaciones caen sobre los codones del gen. Los <strong>hotspots</strong> (CpG) atraen más mutaciones.</p>
+        </div>
+      </div>
+
+      <div class="gene-anim-wrapper">
+        <div class="gene-params">
+          <span id="gene-params-text">λ = 15.0 mut/s · Hotspot ratio: 11×</span>
+        </div>
+        
+        <canvas id="gene-canvas" width="900" height="450"></canvas>
+        
+        <div class="gene-legend">
+          <div class="legend-item"><span class="legend-dot hotspot"></span> Hotspot (CpG) - λ alto</div>
+          <div class="legend-item"><span class="legend-dot normal"></span> Codón normal - λ bajo</div>
+          <div class="legend-item"><span class="legend-dot mutation"></span> Mutación</div>
+        </div>
+        
+        <div class="gene-controls">
+          <div class="slider-group">
+            <label>
+              <span>λ base (mut/s)</span>
+              <input type="range" id="gene-lambda" min="5" max="40" step="1" value="15" />
+              <span class="slider-val" id="gene-lambda-val">15</span>
+            </label>
+            <label>
+              <span>Ratio CpG/Normal</span>
+              <input type="range" id="gene-ratio" min="2" max="15" step="1" value="11" />
+              <span class="slider-val" id="gene-ratio-val">11×</span>
+            </label>
+          </div>
+          <div class="gene-btns">
+            <button id="gene-start" class="btn-start">▶ Iniciar</button>
+            <button id="gene-reset" class="btn-reset">↺ Reset</button>
+          </div>
+        </div>
+        
+        <div class="gene-stats">
+          <div class="gstat"><span class="gstat-label">Total mutaciones</span><span class="gstat-value" id="gstat-total">0</span></div>
+          <div class="gstat hotspot"><span class="gstat-label">En hotspots</span><span class="gstat-value" id="gstat-hotspot">0</span></div>
+          <div class="gstat"><span class="gstat-label">En normales</span><span class="gstat-value" id="gstat-normal">0</span></div>
+          <div class="gstat"><span class="gstat-label">Top codón</span><span class="gstat-value" id="gstat-top">—</span></div>
+        </div>
+      </div>
+    </section>
 
     <!-- SIMULADOR INTERACTIVO -->
     <section class="simulator" id="simulador">
@@ -360,6 +411,352 @@ jupyter notebook "25 (1).ipynb"`}
   window.datosTemporal = datosTemporal;
   window.cpgComparison = cpgComparison;
   window.datosCompuesto = datosCompuesto;
+</script>
+
+<script is:inline>
+// Animación Gen TP53 con mutaciones
+(function() {
+  const canvas = document.getElementById('gene-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  
+  let lambdaBase = 15, hotspotRatio = 11;
+  let running = false;
+  let mutations = []; // { x, y, targetCodon, falling, landed }
+  let codons = []; // { x, y, isHotspot, name, mutationCount, balls }
+  let totalMutations = 0, hotspotMutations = 0, normalMutations = 0;
+  let nextMutation = 0;
+  let simTime = 0;
+  
+  const colors = {
+    bg: '#0d1117',
+    grid: 'rgba(255,255,255,0.02)',
+    chain: '#1e3a5f',
+    codonNormal: '#3b82f6',
+    codonHotspot: '#f43f5e',
+    mutation: '#22d3ee',
+    mutationHotspot: '#fbbf24',
+    text: '#64748b',
+    textBright: '#e2e8f0'
+  };
+  
+  // Codones del gen TP53 (simplificado)
+  const codonData = [
+    { name: '72', isHotspot: false },
+    { name: '175', isHotspot: true },  // R175H - hotspot
+    { name: '196', isHotspot: false },
+    { name: '213', isHotspot: false },
+    { name: '220', isHotspot: false },
+    { name: '245', isHotspot: true },  // G245S - hotspot
+    { name: '248', isHotspot: true },  // R248Q - hotspot MAJOR
+    { name: '249', isHotspot: false },
+    { name: '273', isHotspot: true },  // R273H - hotspot MAJOR
+    { name: '275', isHotspot: false },
+    { name: '282', isHotspot: true },  // R282W - hotspot
+    { name: '306', isHotspot: false }
+  ];
+  
+  function initCodons() {
+    codons = [];
+    const startX = 80;
+    const spacing = 68;
+    const y = canvas.height - 120;
+    
+    codonData.forEach((c, i) => {
+      codons.push({
+        x: startX + i * spacing,
+        y: y,
+        isHotspot: c.isHotspot,
+        name: c.name,
+        mutationCount: 0,
+        balls: [] // pequeñas bolitas del codón
+      });
+    });
+    
+    // Crear bolitas para cada codón (representación del gen)
+    codons.forEach(codon => {
+      const numBalls = 5;
+      for (let i = 0; i < numBalls; i++) {
+        const angle = (i / numBalls) * Math.PI * 2;
+        const r = 18;
+        codon.balls.push({
+          ox: Math.cos(angle) * r,
+          oy: Math.sin(angle) * r * 0.6
+        });
+      }
+    });
+  }
+  
+  function randExp(rate) {
+    return -Math.log(1 - Math.random()) / rate;
+  }
+  
+  function lerp(a, b, t) {
+    return a + (b - a) * Math.min(1, t);
+  }
+  
+  function drawBackground() {
+    ctx.fillStyle = colors.bg;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    // Grid
+    ctx.strokeStyle = colors.grid;
+    ctx.lineWidth = 1;
+    for (let x = 0; x < canvas.width; x += 50) {
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+    }
+    for (let y = 0; y < canvas.height; y += 50) {
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+    }
+    
+    // Título
+    ctx.fillStyle = colors.textBright;
+    ctx.font = 'bold 14px Manrope, system-ui, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('Gen TP53 - Codones Principales', canvas.width / 2, 30);
+  }
+  
+  function drawChain() {
+    // Línea de conexión (cadena del gen)
+    ctx.strokeStyle = colors.chain;
+    ctx.lineWidth = 8;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(codons[0].x - 40, codons[0].y);
+    codons.forEach(c => {
+      ctx.lineTo(c.x, c.y);
+    });
+    ctx.lineTo(codons[codons.length - 1].x + 40, codons[codons.length - 1].y);
+    ctx.stroke();
+    
+    // Dibujar cada codón como grupo de bolitas
+    codons.forEach(codon => {
+      const baseColor = codon.isHotspot ? colors.codonHotspot : colors.codonNormal;
+      const glowColor = codon.isHotspot ? 'rgba(244,63,94,0.3)' : 'rgba(59,130,246,0.2)';
+      
+      // Glow para hotspots
+      if (codon.isHotspot) {
+        ctx.beginPath();
+        ctx.arc(codon.x, codon.y, 35, 0, Math.PI * 2);
+        ctx.fillStyle = glowColor;
+        ctx.fill();
+      }
+      
+      // Bolitas del codón
+      codon.balls.forEach(ball => {
+        ctx.beginPath();
+        ctx.arc(codon.x + ball.ox, codon.y + ball.oy, 8, 0, Math.PI * 2);
+        ctx.fillStyle = baseColor;
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      });
+      
+      // Centro del codón
+      ctx.beginPath();
+      ctx.arc(codon.x, codon.y, 10, 0, Math.PI * 2);
+      ctx.fillStyle = baseColor;
+      ctx.fill();
+      
+      // Etiqueta
+      ctx.fillStyle = colors.text;
+      ctx.font = '11px Manrope, system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(codon.name, codon.x, codon.y + 50);
+      
+      // Contador de mutaciones
+      if (codon.mutationCount > 0) {
+        ctx.fillStyle = codon.isHotspot ? colors.mutationHotspot : colors.mutation;
+        ctx.font = 'bold 12px Manrope, system-ui, sans-serif';
+        ctx.fillText(codon.mutationCount, codon.x, codon.y - 45);
+      }
+    });
+  }
+  
+  function drawMutations() {
+    mutations.forEach(m => {
+      if (!m.landed) {
+        // Mutación cayendo
+        ctx.beginPath();
+        ctx.arc(m.x, m.y, 6, 0, Math.PI * 2);
+        ctx.fillStyle = colors.mutation;
+        ctx.fill();
+        
+        // Estela
+        ctx.beginPath();
+        ctx.moveTo(m.x, m.y - 5);
+        ctx.lineTo(m.x, m.y - 20);
+        ctx.strokeStyle = 'rgba(34,211,238,0.4)';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+      }
+    });
+    
+    // Dibujar mutaciones acumuladas en codones
+    codons.forEach(codon => {
+      const landed = mutations.filter(m => m.landed && m.targetCodon === codon.name);
+      landed.forEach((m, i) => {
+        const row = Math.floor(i / 5);
+        const col = i % 5;
+        const px = codon.x - 12 + col * 6;
+        const py = codon.y - 60 - row * 6;
+        
+        ctx.beginPath();
+        ctx.arc(px, py, 3, 0, Math.PI * 2);
+        ctx.fillStyle = codon.isHotspot ? colors.mutationHotspot : colors.mutation;
+        ctx.fill();
+      });
+    });
+  }
+  
+  function spawnMutation() {
+    // Calcular probabilidades basadas en si es hotspot
+    const weights = codons.map(c => c.isHotspot ? hotspotRatio : 1);
+    const totalWeight = weights.reduce((a, b) => a + b, 0);
+    
+    let rand = Math.random() * totalWeight;
+    let targetCodon = codons[0];
+    for (let i = 0; i < codons.length; i++) {
+      rand -= weights[i];
+      if (rand <= 0) {
+        targetCodon = codons[i];
+        break;
+      }
+    }
+    
+    mutations.push({
+      x: targetCodon.x + (Math.random() - 0.5) * 20,
+      y: -10,
+      targetX: targetCodon.x,
+      targetY: targetCodon.y - 30,
+      targetCodon: targetCodon.name,
+      falling: true,
+      landed: false,
+      speed: 150 + Math.random() * 100
+    });
+  }
+  
+  function updateMutations(dt) {
+    mutations.forEach(m => {
+      if (m.falling && !m.landed) {
+        m.y += m.speed * dt;
+        
+        // Ajustar x hacia el objetivo
+        m.x = lerp(m.x, m.targetX, dt * 3);
+        
+        if (m.y >= m.targetY) {
+          m.y = m.targetY;
+          m.falling = false;
+          m.landed = true;
+          
+          // Incrementar contador del codón
+          const codon = codons.find(c => c.name === m.targetCodon);
+          if (codon) {
+            codon.mutationCount++;
+            totalMutations++;
+            if (codon.isHotspot) hotspotMutations++;
+            else normalMutations++;
+          }
+        }
+      }
+    });
+    
+    // Limitar mutaciones visibles
+    if (mutations.length > 300) {
+      mutations = mutations.slice(-300);
+    }
+  }
+  
+  function updateStats() {
+    document.getElementById('gstat-total').textContent = totalMutations;
+    document.getElementById('gstat-hotspot').textContent = hotspotMutations;
+    document.getElementById('gstat-normal').textContent = normalMutations;
+    
+    // Encontrar top codón
+    const topCodon = codons.reduce((max, c) => c.mutationCount > max.mutationCount ? c : max, codons[0]);
+    document.getElementById('gstat-top').textContent = topCodon.mutationCount > 0 ? `${topCodon.name} (${topCodon.mutationCount})` : '—';
+  }
+  
+  function updateParamsText() {
+    document.getElementById('gene-params-text').textContent = 
+      `λ = ${lambdaBase.toFixed(1)} mut/s · Hotspot ratio: ${hotspotRatio}×`;
+  }
+  
+  let lastTime = 0;
+  function loop(timestamp) {
+    if (!running) return;
+    
+    const dt = lastTime ? (timestamp - lastTime) / 1000 : 0.016;
+    lastTime = timestamp;
+    
+    simTime += dt;
+    
+    // Generar mutaciones
+    if (simTime >= nextMutation) {
+      spawnMutation();
+      nextMutation = simTime + randExp(lambdaBase);
+    }
+    
+    updateMutations(dt);
+    
+    drawBackground();
+    drawChain();
+    drawMutations();
+    updateStats();
+    
+    requestAnimationFrame(loop);
+  }
+  
+  function reset() {
+    mutations = [];
+    totalMutations = 0;
+    hotspotMutations = 0;
+    normalMutations = 0;
+    simTime = 0;
+    nextMutation = randExp(lambdaBase);
+    lastTime = 0;
+    initCodons();
+    drawBackground();
+    drawChain();
+    updateStats();
+  }
+  
+  // Event listeners
+  document.getElementById('gene-lambda').addEventListener('input', function(e) {
+    lambdaBase = parseFloat(e.target.value);
+    document.getElementById('gene-lambda-val').textContent = lambdaBase;
+    updateParamsText();
+  });
+  
+  document.getElementById('gene-ratio').addEventListener('input', function(e) {
+    hotspotRatio = parseInt(e.target.value);
+    document.getElementById('gene-ratio-val').textContent = hotspotRatio + '×';
+    updateParamsText();
+  });
+  
+  document.getElementById('gene-start').addEventListener('click', function() {
+    running = !running;
+    this.textContent = running ? '⏸ Pausar' : '▶ Iniciar';
+    this.classList.toggle('active', running);
+    if (running) {
+      lastTime = 0;
+      requestAnimationFrame(loop);
+    }
+  });
+  
+  document.getElementById('gene-reset').addEventListener('click', function() {
+    running = false;
+    document.getElementById('gene-start').textContent = '▶ Iniciar';
+    document.getElementById('gene-start').classList.remove('active');
+    reset();
+  });
+  
+  // Init
+  initCodons();
+  reset();
+  updateParamsText();
+})();
 </script>
 
 <script is:inline>
@@ -664,6 +1061,204 @@ jupyter notebook "25 (1).ipynb"`}
 </script>
 
 <style>
+  /* Animación Gen TP53 */
+  .gene-anim-section {
+    margin-top: 40px;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 28px;
+    background: linear-gradient(135deg, rgba(34,211,238,0.03), rgba(167,139,250,0.02));
+  }
+  
+  .gene-anim-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .gene-params {
+    text-align: center;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 15px;
+    color: var(--muted);
+    padding: 10px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  
+  #gene-canvas {
+    display: block;
+    width: 100%;
+    max-width: 900px;
+    height: auto;
+    margin: 0 auto;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+  }
+  
+  .gene-legend {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+  
+  .legend-dot.hotspot { background: #f43f5e; }
+  .legend-dot.normal { background: #3b82f6; }
+  .legend-dot.mutation { background: #22d3ee; }
+  
+  .gene-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .gene-controls .slider-group {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  
+  .gene-controls .slider-group label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  
+  .gene-controls .slider-group input[type="range"] {
+    width: 80px;
+    accent-color: #22d3ee;
+  }
+  
+  .gene-controls .slider-val {
+    font-weight: 700;
+    color: #22d3ee;
+    font-family: 'JetBrains Mono', monospace;
+    min-width: 35px;
+    text-align: right;
+  }
+  
+  .gene-btns {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .gene-btns .btn-start {
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    background: #22d3ee;
+    color: #000;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+  }
+  
+  .gene-btns .btn-start:hover {
+    background: #67e8f9;
+    box-shadow: 0 4px 15px rgba(34,211,238,0.3);
+  }
+  
+  .gene-btns .btn-start.active {
+    background: #f43f5e;
+  }
+  
+  .gene-btns .btn-reset {
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+  }
+  
+  .gene-btns .btn-reset:hover {
+    border-color: #22d3ee;
+    color: #22d3ee;
+  }
+  
+  .gene-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  
+  .gstat {
+    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    text-align: center;
+  }
+  
+  .gstat.hotspot {
+    border-color: rgba(244,63,94,0.3);
+    background: rgba(244,63,94,0.05);
+  }
+  
+  .gstat-label {
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  
+  .gstat-value {
+    display: block;
+    font-size: 20px;
+    font-weight: 700;
+    color: #22d3ee;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  
+  .gstat.hotspot .gstat-value {
+    color: #f43f5e;
+  }
+  
+  @media (max-width: 800px) {
+    .gene-controls {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .gene-controls .slider-group {
+      flex-direction: column;
+    }
+    .gene-btns {
+      justify-content: center;
+    }
+    .gene-stats {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
   .hero { margin-top: 40px; padding: clamp(24px,5vw,48px); border: 1px solid var(--border); border-radius: 24px; background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)); display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(20px,4vw,32px); box-shadow: var(--shadow); }
   .hero__copy h1 { font-size: clamp(26px,3.5vw,38px); margin-top: 8px; }
   .hero__copy .lede { margin: 12px 0 18px; max-width: 600px; color: var(--muted); }

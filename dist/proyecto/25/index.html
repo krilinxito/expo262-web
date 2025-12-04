@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="es" style="--accentColor: #22d3ee;--accentColor2: #a78bfa;"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Proyecto 25 · Mutaciones TP53 con Procesos de Poisson</title><meta name="description" content="Análisis de mutaciones del gen TP53 usando Procesos de Poisson homogéneos y no homogéneos."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script><script src="https://cdn.plot.ly/plotly-2.27.0.min.js" charset="utf-8"></script><link rel="stylesheet" href="/_astro/13.DWWRR54o.css">
-<link rel="stylesheet" href="/_astro/25.CnDeobAH.css"><script type="module" src="/_astro/hoisted.QOdwnJaL.js"></script></head> <body style="--accent: #22d3ee; --accent-2: #a78bfa;; --accentColor: #22d3ee;--accentColor2: #a78bfa;"> <div class="page" style="--accentColor: #22d3ee;--accentColor2: #a78bfa;">  <header class="topbar" data-astro-cid-axxsutmj> <div class="brand" data-astro-cid-axxsutmj> <div class="dot" data-astro-cid-axxsutmj></div> <span data-astro-cid-axxsutmj>Proyecto 25 · TP53 Mutations</span> </div> <nav data-astro-cid-axxsutmj> <a href="/" data-astro-cid-axxsutmj>Home</a><a href="#informe" data-astro-cid-axxsutmj>Informe</a><a href="#simulador" data-astro-cid-axxsutmj>Simulador</a><a href="#compuesto" data-astro-cid-axxsutmj>Compuesto</a><a href="#graficos" data-astro-cid-axxsutmj>Gráficos</a><a href="#analisis" data-astro-cid-axxsutmj>Análisis</a> </nav> </header>  <main data-astro-cid-oimuypky> <!-- HERO PERSONALIZADO --> <section class="hero" data-astro-cid-oimuypky> <div class="hero__copy" data-astro-cid-oimuypky> <p class="eyebrow" data-astro-cid-oimuypky>Tema 25</p> <h1 data-astro-cid-oimuypky>Procesos de Poisson en Mutaciones del Gen TP53</h1> <p class="lede" data-astro-cid-oimuypky>Análisis estadístico del gen supresor de tumores más importante. Modelado con procesos de Poisson <strong data-astro-cid-oimuypky>homogéneos</strong> y <strong data-astro-cid-oimuypky>no homogéneos</strong> para identificar hotspots mutacionales y tendencias temporales.</p> <div class="tags" data-astro-cid-oimuypky> <span data-astro-cid-oimuypky>Gen TP53 · p53</span> <span data-astro-cid-oimuypky>Poisson Homogéneo</span> <span data-astro-cid-oimuypky>Poisson No Homogéneo</span> <span data-astro-cid-oimuypky>Bioinformática</span> </div> <div class="cta" data-astro-cid-oimuypky> <a class="primary" href="#simulador" data-astro-cid-oimuypky>Simulador Interactivo</a> <a class="ghost" href="#graficos" data-astro-cid-oimuypky>Ver Gráficos</a> </div> </div> <div class="hero__panel" data-astro-cid-oimuypky> <div class="panel__header" data-astro-cid-oimuypky><span class="chip" data-astro-cid-oimuypky>Dataset Real</span><span class="status" data-astro-cid-oimuypky>TP53 UMD</span></div> <div class="panel__list" data-astro-cid-oimuypky> <div class="panel__item" data-astro-cid-oimuypky><span class="label" data-astro-cid-oimuypky>Variantes únicas</span><p data-astro-cid-oimuypky>33,603 mutaciones</p></div> <div class="panel__item" data-astro-cid-oimuypky><span class="label" data-astro-cid-oimuypky>Total de eventos</span><p data-astro-cid-oimuypky>37,018,402 ocurrencias</p></div> <div class="panel__item" data-astro-cid-oimuypky><span class="label" data-astro-cid-oimuypky>Tasa λ global</span><p data-astro-cid-oimuypky>1,101.64 /variante</p></div> <div class="panel__item" data-astro-cid-oimuypky><span class="label" data-astro-cid-oimuypky>Índice Dispersión</span><p class="warning" data-astro-cid-oimuypky>1,082.6 (sobredispersión)</p></div> </div> <div class="panel__footer" data-astro-cid-oimuypky><span class="bubble ghost" data-astro-cid-oimuypky>1989-2016</span><span class="bubble" data-astro-cid-oimuypky>CpG 6.44× más</span></div> </div> </section> <section class="informe-carousel" id="informe" data-astro-cid-n5etzuft> <div class="section__head" data-astro-cid-n5etzuft> <div data-astro-cid-n5etzuft> <p class="eyebrow" data-astro-cid-n5etzuft>Informe</p> <h2 data-astro-cid-n5etzuft>Presentación del Proyecto</h2> <p class="section__lede" data-astro-cid-n5etzuft>Navegá a través de las slides del análisis completo.</p> </div> <div class="slide-nav-info" data-astro-cid-n5etzuft> <span class="slide-progress" data-astro-cid-n5etzuft>1 / 14</span> <span class="current-section" data-astro-cid-n5etzuft>Portada</span> </div> </div> <div class="informe-slider" data-astro-cid-n5etzuft> <div class="informe-slide" data-astro-cid-n5etzuft> <div class="slide-content" data-astro-cid-n5etzuft> <div class="slide-text" data-astro-cid-n5etzuft> <p class="slide-section" data-astro-cid-n5etzuft>Portada</p> <h3 class="slide-title" data-astro-cid-n5etzuft>Procesos de Poisson en Mutaciones del Gen TP53</h3> <p class="slide-subtitle" data-astro-cid-n5etzuft>Análisis Estadístico de Variantes Genéticas</p> <ul class="slide-bullets" data-astro-cid-n5etzuft> <li data-astro-cid-n5etzuft>Grupo G42 · Noviembre 2025</li><li data-astro-cid-n5etzuft>Procesos Estocásticos y Series de Tiempo</li><li data-astro-cid-n5etzuft>Universidad Mayor de San Andrés</li> </ul> </div> <div class="slide-image" data-astro-cid-n5etzuft> <img src="https://upload.wikimedia.org/wikipedia/commons/0/00/1tup.jpg" alt="" data-astro-cid-n5etzuft> </div> </div> </div> <div class="informe-controls" data-astro-cid-n5etzuft> <button class="nav-btn prev-btn" data-astro-cid-n5etzuft><span class="nav-icon" data-astro-cid-n5etzuft>←</span><span class="nav-text" data-astro-cid-n5etzuft>Anterior</span></button> <div class="slide-dots" data-astro-cid-n5etzuft> <button class="dot active" data-index="0" data-astro-cid-n5etzuft></button><button class="dot " data-index="1" data-astro-cid-n5etzuft></button><button class="dot " data-index="2" data-astro-cid-n5etzuft></button><button class="dot " data-index="3" data-astro-cid-n5etzuft></button><button class="dot " data-index="4" data-astro-cid-n5etzuft></button><button class="dot " data-index="5" data-astro-cid-n5etzuft></button><button class="dot " data-index="6" data-astro-cid-n5etzuft></button><button class="dot " data-index="7" data-astro-cid-n5etzuft></button><button class="dot " data-index="8" data-astro-cid-n5etzuft></button><button class="dot " data-index="9" data-astro-cid-n5etzuft></button><button class="dot " data-index="10" data-astro-cid-n5etzuft></button><button class="dot " data-index="11" data-astro-cid-n5etzuft></button><button class="dot " data-index="12" data-astro-cid-n5etzuft></button><button class="dot " data-index="13" data-astro-cid-n5etzuft></button> </div> <button class="nav-btn next-btn" data-astro-cid-n5etzuft><span class="nav-text" data-astro-cid-n5etzuft>Siguiente</span><span class="nav-icon" data-astro-cid-n5etzuft>→</span></button> </div> <div class="keyboard-hint" data-astro-cid-n5etzuft><kbd data-astro-cid-n5etzuft>←</kbd> <kbd data-astro-cid-n5etzuft>→</kbd> para navegar</div> </div> </section> <script>(function(){const slidesJson = "[{\"section\":\"Portada\",\"title\":\"Procesos de Poisson en Mutaciones del Gen TP53\",\"subtitle\":\"Análisis Estadístico de Variantes Genéticas\",\"bullets\":[\"Grupo G42 · Noviembre 2025\",\"Procesos Estocásticos y Series de Tiempo\",\"Universidad Mayor de San Andrés\"],\"image\":\"https://upload.wikimedia.org/wikipedia/commons/0/00/1tup.jpg\"},{\"section\":\"Introducción\",\"title\":\"El Gen TP53: Guardián del Genoma\",\"bullets\":[\"TP53 codifica la proteína p53, supresora de tumores más estudiada\",\"Mutado en >50% de todos los cánceres humanos\",\"Regula ciclo celular, apoptosis y reparación del ADN\",\"Base de datos UMD: 76,696 variantes únicas (1990-2017)\"],\"image\":\"https://images.everydayhealth.com/images/cancer/cancer-risk-genes-what-you-need-to-know-about-tp53-722x406.jpg?sfvrsn=5258b57b_1\"},{\"section\":\"Problema\",\"title\":\"Planteamiento del Problema\",\"highlight\":true,\"bullets\":[\"Las mutaciones NO se distribuyen uniformemente en el gen\",\"Algunos codones acumulan miles de veces más mutaciones\",\"Factores biológicos (sitios CpG) alteran las tasas locales\",\"Se requiere un modelo que capture esta heterogeneidad\"],\"image\":\"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAbFif0TYNgqfSZw39S-zFZLwK5YxuY_JxKA&s\"},{\"section\":\"Marco Teórico\",\"title\":\"Proceso de Poisson Homogéneo\",\"bullets\":[\"N(t) cuenta eventos en [0,t] con tasa CONSTANTE λ\",\"P(N(t)=k) = (λt)^k · e^(-λt) / k!\",\"E[N(t)] = Var[N(t)] = λt (equidispersión)\",\"Tiempos entre eventos ~ Exponencial(λ)\"],\"image\":\"https://files.wolframcdn.com/pub/www.wolfram.com/language/11/extended-probability-and-statistics/assets.es/inhomogeneous-poisson-process/O_59.png\"},{\"section\":\"Marco Teórico\",\"title\":\"Proceso de Poisson No Homogéneo\",\"bullets\":[\"Tasa λ(t) VARIABLE en el tiempo: λ(t) = a + b·t\",\"Intensidad acumulada: Λ(t) = ∫₀ᵗ λ(s)ds\",\"Captura tendencias temporales en la tasa de mutación\",\"Permite modelar cambios en patrones de reporte\"],\"image\":\"https://freakonometrics.hypotheses.org/files/2012/12/poisson-nonh-1.png\"},{\"section\":\"Marco Teórico\",\"title\":\"Proceso de Poisson Compuesto\",\"bullets\":[\"Cada tumor puede tener múltiples mutaciones TP53\",\"N tumores llegan con tasa λ, cada uno con Xᵢ mutaciones\",\"S = Σᵢ₌₁ᴺ Xᵢ es el total de mutaciones observadas\",\"E[S] = λ·E[X], Var[S] = λ·E[X²]\"],\"image\":\"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQeuaJnvo9ZW_8I9PLLgs7b3GCNx9f_RL5FA&s\"},{\"section\":\"Resultados\",\"title\":\"Estimación de λ Global\",\"highlight\":true,\"bullets\":[\"λ global = 645.22 ocurrencias/variante\",\"IC 95%: [645.04 , 645.40]\",\"Total eventos: 49,485,927\",\"Mediana: 157 (distribución muy sesgada)\"],\"image\":\"https://media.tenor.com/l-PbZelgds0AAAAM/favorite-facts.gif\"},{\"section\":\"Resultados\",\"title\":\"Hotspots: CpG vs No-CpG\",\"bullets\":[\"λ sitios CpG = 1,886.57 (hotspots bioquímicos)\",\"λ no-CpG = 167.27\",\"Ratio CpG/no-CpG = 11.28× mayor\",\"Los dinucleótidos CpG son hipermutables por desaminación\"],\"image\":\"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/CpG_vs_C-G_bp.svg/1200px-CpG_vs_C-G_bp.svg.png\"},{\"section\":\"Resultados\",\"title\":\"Top 5 Codones Mutados\",\"bullets\":[\"Codón 175: 11.7M eventos, λ=3,154\",\"Codón 273: 10.7M eventos, λ=2,016\",\"Codón 248: 10.7M eventos, λ=2,086\",\"Codón 282: 2.6M eventos, λ=1,323\"],\"image\":\"https://upload.wikimedia.org/wikipedia/commons/0/05/Codon-3nucleotides-wk.png\"},{\"section\":\"Resultados\",\"title\":\"Validación: Sobredispersión\",\"bullets\":[\"Media: 645.22 | Varianza: 924,950\",\"Índice de dispersión = Var/Media = 1,433.5\",\"Sobredispersión EXTREMA detectada (≫1)\",\"Conclusión: Poisson simple NO es adecuado\"],\"image\":\"https://datavizcatalogue.com/ES/metodos/images/top_images/SVG/diagrama_de_dispersion.svg\"},{\"section\":\"Resultados\",\"title\":\"Proceso No Homogéneo\",\"bullets\":[\"Modelo: λ(t) = 2210.3 - 0.78·t\",\"R² = 0.0107, p = 0.60 (NO significativo)\",\"Tendencia muy leve: -0.78 unidades/año\",\"El proceso es aproximadamente homogéneo en el tiempo\"],\"image\":\"https://media.tenor.com/l-PbZelgds0AAAAM/favorite-facts.gif\"},{\"section\":\"Resultados\",\"title\":\"Proceso Compuesto: Mutaciones Múltiples\",\"bullets\":[\"84.0% de tumores tienen 1 sola mutación (SM)\",\"11.6% tienen doble mutación (DMU)\",\"4.2% tienen múltiples (MM)\",\"Media: 1.15 mutaciones/tumor\"],\"image\":\"https://media.tenor.com/l-PbZelgds0AAAAM/favorite-facts.gif\"},{\"section\":\"Conclusiones\",\"title\":\"Conclusiones\",\"bullets\":[\"Los datos requieren Poisson Compuesto por sobredispersión\",\"Los sitios CpG son hotspots con λ 11× mayor\",\"Solo 8 codones concentran la mayoría de mutaciones\",\"El proceso es aproximadamente estacionario en el tiempo\"],\"image\":\"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAnvQxNBmtITeNodrkyedVxfMO8nWp90dT1g&s\"},{\"section\":\"Aplicaciones\",\"title\":\"Aplicaciones Clínicas\",\"bullets\":[\"Priorización de paneles de secuenciación genética\",\"Detección temprana enfocada en hotspots R175, R248, R273\",\"Desarrollo de terapias dirigidas a mutaciones frecuentes\",\"Cálculo de probabilidad de mutación por codón\"],\"image\":\"https://cdn.prod.website-files.com/642af736b8df4b680292fb9b/649c47d7f4475d586ee67537_Untitled%20design%20(11).jpg\"}]";
+<link rel="stylesheet" href="/_astro/25.B7dGIaNX.css"><script type="module" src="/_astro/hoisted.QOdwnJaL.js"></script></head> <body style="--accent: #22d3ee; --accent-2: #a78bfa;; --accentColor: #22d3ee;--accentColor2: #a78bfa;"> <div class="page" style="--accentColor: #22d3ee;--accentColor2: #a78bfa;">  <header class="topbar" data-astro-cid-axxsutmj> <div class="brand" data-astro-cid-axxsutmj> <div class="dot" data-astro-cid-axxsutmj></div> <span data-astro-cid-axxsutmj>Proyecto 25 · TP53 Mutations</span> </div> <nav data-astro-cid-axxsutmj> <a href="/" data-astro-cid-axxsutmj>Home</a><a href="#informe" data-astro-cid-axxsutmj>Informe</a><a href="#animacion" data-astro-cid-axxsutmj>Animación</a><a href="#simulador" data-astro-cid-axxsutmj>Simulador</a><a href="#compuesto" data-astro-cid-axxsutmj>Compuesto</a><a href="#graficos" data-astro-cid-axxsutmj>Gráficos</a> </nav> </header>  <main data-astro-cid-oimuypky> <!-- HERO PERSONALIZADO --> <section class="hero" data-astro-cid-oimuypky> <div class="hero__copy" data-astro-cid-oimuypky> <p class="eyebrow" data-astro-cid-oimuypky>Tema 25</p> <h1 data-astro-cid-oimuypky>Procesos de Poisson en Mutaciones del Gen TP53</h1> <p class="lede" data-astro-cid-oimuypky>Análisis estadístico del gen supresor de tumores más importante. Modelado con procesos de Poisson <strong data-astro-cid-oimuypky>homogéneos</strong> y <strong data-astro-cid-oimuypky>no homogéneos</strong> para identificar hotspots mutacionales y tendencias temporales.</p> <div class="tags" data-astro-cid-oimuypky> <span data-astro-cid-oimuypky>Gen TP53 · p53</span> <span data-astro-cid-oimuypky>Poisson Homogéneo</span> <span data-astro-cid-oimuypky>Poisson No Homogéneo</span> <span data-astro-cid-oimuypky>Bioinformática</span> </div> <div class="cta" data-astro-cid-oimuypky> <a class="primary" href="#simulador" data-astro-cid-oimuypky>Simulador Interactivo</a> <a class="ghost" href="#graficos" data-astro-cid-oimuypky>Ver Gráficos</a> </div> </div> <div class="hero__panel" data-astro-cid-oimuypky> <div class="panel__header" data-astro-cid-oimuypky><span class="chip" data-astro-cid-oimuypky>Dataset Real</span><span class="status" data-astro-cid-oimuypky>TP53 UMD</span></div> <div class="panel__list" data-astro-cid-oimuypky> <div class="panel__item" data-astro-cid-oimuypky><span class="label" data-astro-cid-oimuypky>Variantes únicas</span><p data-astro-cid-oimuypky>33,603 mutaciones</p></div> <div class="panel__item" data-astro-cid-oimuypky><span class="label" data-astro-cid-oimuypky>Total de eventos</span><p data-astro-cid-oimuypky>37,018,402 ocurrencias</p></div> <div class="panel__item" data-astro-cid-oimuypky><span class="label" data-astro-cid-oimuypky>Tasa λ global</span><p data-astro-cid-oimuypky>1,101.64 /variante</p></div> <div class="panel__item" data-astro-cid-oimuypky><span class="label" data-astro-cid-oimuypky>Índice Dispersión</span><p class="warning" data-astro-cid-oimuypky>1,082.6 (sobredispersión)</p></div> </div> <div class="panel__footer" data-astro-cid-oimuypky><span class="bubble ghost" data-astro-cid-oimuypky>1989-2016</span><span class="bubble" data-astro-cid-oimuypky>CpG 6.44× más</span></div> </div> </section> <section class="informe-carousel" id="informe" data-astro-cid-n5etzuft> <div class="section__head" data-astro-cid-n5etzuft> <div data-astro-cid-n5etzuft> <p class="eyebrow" data-astro-cid-n5etzuft>Informe</p> <h2 data-astro-cid-n5etzuft>Presentación del Proyecto</h2> <p class="section__lede" data-astro-cid-n5etzuft>Navegá a través de las slides del análisis completo.</p> </div> <div class="slide-nav-info" data-astro-cid-n5etzuft> <span class="slide-progress" data-astro-cid-n5etzuft>1 / 14</span> <span class="current-section" data-astro-cid-n5etzuft>Portada</span> </div> </div> <div class="informe-slider" data-astro-cid-n5etzuft> <div class="informe-slide" data-astro-cid-n5etzuft> <div class="slide-content" data-astro-cid-n5etzuft> <div class="slide-text" data-astro-cid-n5etzuft> <p class="slide-section" data-astro-cid-n5etzuft>Portada</p> <h3 class="slide-title" data-astro-cid-n5etzuft>Procesos de Poisson en Mutaciones del Gen TP53</h3> <p class="slide-subtitle" data-astro-cid-n5etzuft>Análisis Estadístico de Variantes Genéticas</p> <ul class="slide-bullets" data-astro-cid-n5etzuft> <li data-astro-cid-n5etzuft>Grupo G42 · Noviembre 2025</li><li data-astro-cid-n5etzuft>Procesos Estocásticos y Series de Tiempo</li><li data-astro-cid-n5etzuft>Universidad Mayor de San Andrés</li> </ul> </div> <div class="slide-image" data-astro-cid-n5etzuft> <img src="https://upload.wikimedia.org/wikipedia/commons/0/00/1tup.jpg" alt="" data-astro-cid-n5etzuft> </div> </div> </div> <div class="informe-controls" data-astro-cid-n5etzuft> <button class="nav-btn prev-btn" data-astro-cid-n5etzuft><span class="nav-icon" data-astro-cid-n5etzuft>←</span><span class="nav-text" data-astro-cid-n5etzuft>Anterior</span></button> <div class="slide-dots" data-astro-cid-n5etzuft> <button class="dot active" data-index="0" data-astro-cid-n5etzuft></button><button class="dot " data-index="1" data-astro-cid-n5etzuft></button><button class="dot " data-index="2" data-astro-cid-n5etzuft></button><button class="dot " data-index="3" data-astro-cid-n5etzuft></button><button class="dot " data-index="4" data-astro-cid-n5etzuft></button><button class="dot " data-index="5" data-astro-cid-n5etzuft></button><button class="dot " data-index="6" data-astro-cid-n5etzuft></button><button class="dot " data-index="7" data-astro-cid-n5etzuft></button><button class="dot " data-index="8" data-astro-cid-n5etzuft></button><button class="dot " data-index="9" data-astro-cid-n5etzuft></button><button class="dot " data-index="10" data-astro-cid-n5etzuft></button><button class="dot " data-index="11" data-astro-cid-n5etzuft></button><button class="dot " data-index="12" data-astro-cid-n5etzuft></button><button class="dot " data-index="13" data-astro-cid-n5etzuft></button> </div> <button class="nav-btn next-btn" data-astro-cid-n5etzuft><span class="nav-text" data-astro-cid-n5etzuft>Siguiente</span><span class="nav-icon" data-astro-cid-n5etzuft>→</span></button> </div> <div class="keyboard-hint" data-astro-cid-n5etzuft><kbd data-astro-cid-n5etzuft>←</kbd> <kbd data-astro-cid-n5etzuft>→</kbd> para navegar</div> </div> </section> <script>(function(){const slidesJson = "[{\"section\":\"Portada\",\"title\":\"Procesos de Poisson en Mutaciones del Gen TP53\",\"subtitle\":\"Análisis Estadístico de Variantes Genéticas\",\"bullets\":[\"Grupo G42 · Noviembre 2025\",\"Procesos Estocásticos y Series de Tiempo\",\"Universidad Mayor de San Andrés\"],\"image\":\"https://upload.wikimedia.org/wikipedia/commons/0/00/1tup.jpg\"},{\"section\":\"Introducción\",\"title\":\"El Gen TP53: Guardián del Genoma\",\"bullets\":[\"TP53 codifica la proteína p53, supresora de tumores más estudiada\",\"Mutado en >50% de todos los cánceres humanos\",\"Regula ciclo celular, apoptosis y reparación del ADN\",\"Base de datos UMD: 76,696 variantes únicas (1990-2017)\"],\"image\":\"https://images.everydayhealth.com/images/cancer/cancer-risk-genes-what-you-need-to-know-about-tp53-722x406.jpg?sfvrsn=5258b57b_1\"},{\"section\":\"Problema\",\"title\":\"Planteamiento del Problema\",\"highlight\":true,\"bullets\":[\"Las mutaciones NO se distribuyen uniformemente en el gen\",\"Algunos codones acumulan miles de veces más mutaciones\",\"Factores biológicos (sitios CpG) alteran las tasas locales\",\"Se requiere un modelo que capture esta heterogeneidad\"],\"image\":\"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAbFif0TYNgqfSZw39S-zFZLwK5YxuY_JxKA&s\"},{\"section\":\"Marco Teórico\",\"title\":\"Proceso de Poisson Homogéneo\",\"bullets\":[\"N(t) cuenta eventos en [0,t] con tasa CONSTANTE λ\",\"P(N(t)=k) = (λt)^k · e^(-λt) / k!\",\"E[N(t)] = Var[N(t)] = λt (equidispersión)\",\"Tiempos entre eventos ~ Exponencial(λ)\"],\"image\":\"https://files.wolframcdn.com/pub/www.wolfram.com/language/11/extended-probability-and-statistics/assets.es/inhomogeneous-poisson-process/O_59.png\"},{\"section\":\"Marco Teórico\",\"title\":\"Proceso de Poisson No Homogéneo\",\"bullets\":[\"Tasa λ(t) VARIABLE en el tiempo: λ(t) = a + b·t\",\"Intensidad acumulada: Λ(t) = ∫₀ᵗ λ(s)ds\",\"Captura tendencias temporales en la tasa de mutación\",\"Permite modelar cambios en patrones de reporte\"],\"image\":\"https://freakonometrics.hypotheses.org/files/2012/12/poisson-nonh-1.png\"},{\"section\":\"Marco Teórico\",\"title\":\"Proceso de Poisson Compuesto\",\"bullets\":[\"Cada tumor puede tener múltiples mutaciones TP53\",\"N tumores llegan con tasa λ, cada uno con Xᵢ mutaciones\",\"S = Σᵢ₌₁ᴺ Xᵢ es el total de mutaciones observadas\",\"E[S] = λ·E[X], Var[S] = λ·E[X²]\"],\"image\":\"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQeuaJnvo9ZW_8I9PLLgs7b3GCNx9f_RL5FA&s\"},{\"section\":\"Resultados\",\"title\":\"Estimación de λ Global\",\"highlight\":true,\"bullets\":[\"λ global = 645.22 ocurrencias/variante\",\"IC 95%: [645.04 , 645.40]\",\"Total eventos: 49,485,927\",\"Mediana: 157 (distribución muy sesgada)\"],\"image\":\"https://media.tenor.com/l-PbZelgds0AAAAM/favorite-facts.gif\"},{\"section\":\"Resultados\",\"title\":\"Hotspots: CpG vs No-CpG\",\"bullets\":[\"λ sitios CpG = 1,886.57 (hotspots bioquímicos)\",\"λ no-CpG = 167.27\",\"Ratio CpG/no-CpG = 11.28× mayor\",\"Los dinucleótidos CpG son hipermutables por desaminación\"],\"image\":\"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/CpG_vs_C-G_bp.svg/1200px-CpG_vs_C-G_bp.svg.png\"},{\"section\":\"Resultados\",\"title\":\"Top 5 Codones Mutados\",\"bullets\":[\"Codón 175: 11.7M eventos, λ=3,154\",\"Codón 273: 10.7M eventos, λ=2,016\",\"Codón 248: 10.7M eventos, λ=2,086\",\"Codón 282: 2.6M eventos, λ=1,323\"],\"image\":\"https://upload.wikimedia.org/wikipedia/commons/0/05/Codon-3nucleotides-wk.png\"},{\"section\":\"Resultados\",\"title\":\"Validación: Sobredispersión\",\"bullets\":[\"Media: 645.22 | Varianza: 924,950\",\"Índice de dispersión = Var/Media = 1,433.5\",\"Sobredispersión EXTREMA detectada (≫1)\",\"Conclusión: Poisson simple NO es adecuado\"],\"image\":\"https://datavizcatalogue.com/ES/metodos/images/top_images/SVG/diagrama_de_dispersion.svg\"},{\"section\":\"Resultados\",\"title\":\"Proceso No Homogéneo\",\"bullets\":[\"Modelo: λ(t) = 2210.3 - 0.78·t\",\"R² = 0.0107, p = 0.60 (NO significativo)\",\"Tendencia muy leve: -0.78 unidades/año\",\"El proceso es aproximadamente homogéneo en el tiempo\"],\"image\":\"https://media.tenor.com/l-PbZelgds0AAAAM/favorite-facts.gif\"},{\"section\":\"Resultados\",\"title\":\"Proceso Compuesto: Mutaciones Múltiples\",\"bullets\":[\"84.0% de tumores tienen 1 sola mutación (SM)\",\"11.6% tienen doble mutación (DMU)\",\"4.2% tienen múltiples (MM)\",\"Media: 1.15 mutaciones/tumor\"],\"image\":\"https://media.tenor.com/l-PbZelgds0AAAAM/favorite-facts.gif\"},{\"section\":\"Conclusiones\",\"title\":\"Conclusiones\",\"bullets\":[\"Los datos requieren Poisson Compuesto por sobredispersión\",\"Los sitios CpG son hotspots con λ 11× mayor\",\"Solo 8 codones concentran la mayoría de mutaciones\",\"El proceso es aproximadamente estacionario en el tiempo\"],\"image\":\"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAnvQxNBmtITeNodrkyedVxfMO8nWp90dT1g&s\"},{\"section\":\"Aplicaciones\",\"title\":\"Aplicaciones Clínicas\",\"bullets\":[\"Priorización de paneles de secuenciación genética\",\"Detección temprana enfocada en hotspots R175, R248, R273\",\"Desarrollo de terapias dirigidas a mutaciones frecuentes\",\"Cálculo de probabilidad de mutación por codón\"],\"image\":\"https://cdn.prod.website-files.com/642af736b8df4b680292fb9b/649c47d7f4475d586ee67537_Untitled%20design%20(11).jpg\"}]";
 const id = "informe";
 
   const slides = JSON.parse(slidesJson);
@@ -72,7 +72,7 @@ const id = "informe";
       if (e.key === "ArrowRight") { idx = (idx + 1) % slides.length; renderSlide(); }
     });
   }
-})();</script>  <!-- SIMULADOR INTERACTIVO --> <section class="simulator" id="simulador" data-astro-cid-oimuypky> <div class="section__head" data-astro-cid-oimuypky> <div data-astro-cid-oimuypky> <p class="eyebrow" data-astro-cid-oimuypky>Simulación de Mutaciones</p> <h2 data-astro-cid-oimuypky>Visualización: Poisson Homogéneo vs No Homogéneo</h2> <p class="section__lede" data-astro-cid-oimuypky>Observá cómo las <strong data-astro-cid-oimuypky>mutaciones</strong> ocurren aleatoriamente. Compará un proceso con tasa constante vs uno con tasa decreciente.</p> </div> </div> <div class="sim-container" data-astro-cid-oimuypky> <div class="sim-controls" data-astro-cid-oimuypky> <div class="control-group" data-astro-cid-oimuypky><label data-astro-cid-oimuypky>Tasa de mutación λ</label><input type="range" id="sim-lambda" min="5" max="50" value="20" step="1" data-astro-cid-oimuypky><span id="sim-lambda-val" data-astro-cid-oimuypky>20 mut/año</span></div> <div class="control-group" data-astro-cid-oimuypky><label data-astro-cid-oimuypky>Pendiente temporal (b)</label><input type="range" id="sim-slope" min="-2" max="2" value="-0.5" step="0.1" data-astro-cid-oimuypky><span id="sim-slope-val" data-astro-cid-oimuypky>-0.5</span></div> <div class="control-group" data-astro-cid-oimuypky><label data-astro-cid-oimuypky>Tiempo (años)</label><input type="range" id="sim-time" min="5" max="30" value="20" step="1" data-astro-cid-oimuypky><span id="sim-time-val" data-astro-cid-oimuypky>20 años</span></div> <button id="sim-run" class="sim-btn pulse" data-astro-cid-oimuypky><span class="btn-icon" data-astro-cid-oimuypky>▶</span> Generar Mutaciones</button> </div> <div class="sim-stats" data-astro-cid-oimuypky> <div class="stat-box hom" data-astro-cid-oimuypky><span class="stat-label" data-astro-cid-oimuypky>Homogéneo</span><span class="stat-value" id="stat-hom-count" data-astro-cid-oimuypky>0</span><span class="stat-unit" data-astro-cid-oimuypky>mutaciones</span></div> <div class="stat-box nhom" data-astro-cid-oimuypky><span class="stat-label" data-astro-cid-oimuypky>No Homogéneo</span><span class="stat-value" id="stat-nhom-count" data-astro-cid-oimuypky>0</span><span class="stat-unit" data-astro-cid-oimuypky>mutaciones</span></div> <div class="stat-box diff" data-astro-cid-oimuypky><span class="stat-label" data-astro-cid-oimuypky>Diferencia</span><span class="stat-value" id="stat-diff" data-astro-cid-oimuypky>0%</span><span class="stat-unit" data-astro-cid-oimuypky>más/menos</span></div> </div> <div class="sim-charts-grid" data-astro-cid-oimuypky> <div class="chart-box" data-astro-cid-oimuypky><div class="chart-header hom" data-astro-cid-oimuypky><span class="chart-dot" data-astro-cid-oimuypky></span><h4 data-astro-cid-oimuypky>Poisson Homogéneo (λ constante)</h4></div><div id="chart-mutations-hom" class="mutation-chart" data-astro-cid-oimuypky></div></div> <div class="chart-box" data-astro-cid-oimuypky><div class="chart-header nhom" data-astro-cid-oimuypky><span class="chart-dot" data-astro-cid-oimuypky></span><h4 data-astro-cid-oimuypky>Poisson No Homogéneo (λ(t) decreciente)</h4></div><div id="chart-mutations-nhom" class="mutation-chart" data-astro-cid-oimuypky></div></div> </div> <div class="chart-box wide" data-astro-cid-oimuypky><div class="chart-header comparison" data-astro-cid-oimuypky><span class="chart-icon" data-astro-cid-oimuypky>≡</span><h4 data-astro-cid-oimuypky>Comparación: Mutaciones Acumuladas N(t)</h4></div><div id="chart-cumulative" class="mutation-chart tall" data-astro-cid-oimuypky></div></div> <div class="sim-charts-grid" data-astro-cid-oimuypky> <div class="chart-box" data-astro-cid-oimuypky><div class="chart-header hom" data-astro-cid-oimuypky><h4 data-astro-cid-oimuypky>Distribución de Intervalos (Homogéneo)</h4></div><div id="chart-intervals-hom" class="mutation-chart" data-astro-cid-oimuypky></div></div> <div class="chart-box" data-astro-cid-oimuypky><div class="chart-header nhom" data-astro-cid-oimuypky><h4 data-astro-cid-oimuypky>Distribución de Intervalos (No Homogéneo)</h4></div><div id="chart-intervals-nhom" class="mutation-chart" data-astro-cid-oimuypky></div></div> </div> <div class="sim-formulas" data-astro-cid-oimuypky> <div class="formula-box hom-box" data-astro-cid-oimuypky><h5 data-astro-cid-oimuypky>Proceso Homogéneo</h5><div class="formula-content" id="formula-hom" data-astro-cid-oimuypky></div></div> <div class="formula-box nhom-box" data-astro-cid-oimuypky><h5 data-astro-cid-oimuypky>Proceso No Homogéneo</h5><div class="formula-content" id="formula-nhom" data-astro-cid-oimuypky></div></div> </div> </div> </section> <!-- GRÁFICOS INTERACTIVOS --> <section class="charts-section" id="graficos" data-astro-cid-oimuypky> <div class="section__head" data-astro-cid-oimuypky> <div data-astro-cid-oimuypky> <p class="eyebrow" data-astro-cid-oimuypky>Visualizaciones</p> <h2 data-astro-cid-oimuypky>Gráficos Interactivos del Dataset TP53</h2> <p class="section__lede" data-astro-cid-oimuypky>Datos reales de 76,696 variantes del gen TP53 (después de limpieza).</p> </div> </div> <div class="charts-grid" data-astro-cid-oimuypky> <div class="chart-card wide" data-astro-cid-oimuypky><h4 data-astro-cid-oimuypky>Hotspots Mutacionales: Top 8 Codones</h4><div id="chart-hotspots" class="plotly-chart" data-astro-cid-oimuypky></div></div> <div class="chart-card" data-astro-cid-oimuypky><h4 data-astro-cid-oimuypky>Comparación CpG vs No-CpG</h4><div id="chart-cpg" class="plotly-chart" data-astro-cid-oimuypky></div></div> <div class="chart-card" data-astro-cid-oimuypky><h4 data-astro-cid-oimuypky>Tasa λ por Tipo de Cáncer</h4><div id="chart-disease" class="plotly-chart" data-astro-cid-oimuypky></div></div> <div class="chart-card wide" data-astro-cid-oimuypky><h4 data-astro-cid-oimuypky>Evolución Temporal de λ (Proceso No Homogéneo)</h4><div id="chart-temporal" class="plotly-chart" data-astro-cid-oimuypky></div></div> </div> </section> <!-- PROCESO DE POISSON COMPUESTO --> <section class="compound-section" id="compuesto" data-astro-cid-oimuypky> <div class="section__head" data-astro-cid-oimuypky> <div data-astro-cid-oimuypky> <p class="eyebrow" data-astro-cid-oimuypky>Procesos Compuestos</p> <h2 data-astro-cid-oimuypky>Simulación: Proceso de Poisson Compuesto</h2> <p class="section__lede" data-astro-cid-oimuypky>Modelo donde cada tumor puede tener <strong data-astro-cid-oimuypky>múltiples mutaciones</strong>. El total S = Σᵢ Xᵢ donde N(t) es el número de tumores.</p> </div> </div> <div class="compound-container" data-astro-cid-oimuypky> <div class="compound-controls" data-astro-cid-oimuypky> <div class="control-group" data-astro-cid-oimuypky><label data-astro-cid-oimuypky>Tasa de tumores (λ)</label><input type="range" id="comp-lambda" min="10" max="100" value="50" step="5" data-astro-cid-oimuypky><span id="comp-lambda-val" data-astro-cid-oimuypky>50 tumores/u.t.</span></div> <div class="control-group" data-astro-cid-oimuypky><label data-astro-cid-oimuypky>Media mutaciones/tumor (μₓ)</label><input type="range" id="comp-mu" min="1" max="3" value="1.15" step="0.05" data-astro-cid-oimuypky><span id="comp-mu-val" data-astro-cid-oimuypky>1.15</span></div> <div class="control-group" data-astro-cid-oimuypky><label data-astro-cid-oimuypky>Tiempo de simulación</label><input type="range" id="comp-time" min="10" max="50" value="30" step="5" data-astro-cid-oimuypky><span id="comp-time-val" data-astro-cid-oimuypky>30 u.t.</span></div> <button id="comp-run" class="sim-btn compound-btn" data-astro-cid-oimuypky><span class="btn-icon" data-astro-cid-oimuypky>▶</span> Simular Proceso Compuesto</button> </div> <div class="compound-stats" data-astro-cid-oimuypky> <div class="stat-box tumors" data-astro-cid-oimuypky><span class="stat-label" data-astro-cid-oimuypky>Tumores N(t)</span><span class="stat-value" id="stat-tumors" data-astro-cid-oimuypky>0</span><span class="stat-unit" data-astro-cid-oimuypky>llegados</span></div> <div class="stat-box mutations" data-astro-cid-oimuypky><span class="stat-label" data-astro-cid-oimuypky>Total S(t)</span><span class="stat-value" id="stat-total-muts" data-astro-cid-oimuypky>0</span><span class="stat-unit" data-astro-cid-oimuypky>mutaciones</span></div> <div class="stat-box expected" data-astro-cid-oimuypky><span class="stat-label" data-astro-cid-oimuypky>E[S(t)] teórico</span><span class="stat-value" id="stat-expected" data-astro-cid-oimuypky>0</span><span class="stat-unit" data-astro-cid-oimuypky>λt·μₓ</span></div> </div> <div class="compound-charts" data-astro-cid-oimuypky> <div class="chart-box compound-wide" data-astro-cid-oimuypky><div class="chart-header compound-header" data-astro-cid-oimuypky><h4 data-astro-cid-oimuypky>Proceso Compuesto: Mutaciones Acumuladas S(t)</h4></div><div id="chart-compound-cumulative" class="mutation-chart tall" data-astro-cid-oimuypky></div></div> <div class="compound-grid" data-astro-cid-oimuypky> <div class="chart-box" data-astro-cid-oimuypky><div class="chart-header" data-astro-cid-oimuypky><h4 data-astro-cid-oimuypky>Distribución de Mutaciones por Tumor</h4></div><div id="chart-compound-dist" class="mutation-chart" data-astro-cid-oimuypky></div></div> <div class="chart-box" data-astro-cid-oimuypky><div class="chart-header" data-astro-cid-oimuypky><h4 data-astro-cid-oimuypky>Datos Reales: Complejidad Mutacional</h4></div><div id="chart-real-complexity" class="mutation-chart" data-astro-cid-oimuypky></div></div> </div> </div> <div class="compound-theory" data-astro-cid-oimuypky> <div class="theory-box" data-astro-cid-oimuypky><h5 data-astro-cid-oimuypky>Fórmulas del Proceso Compuesto</h5> <div class="formula-grid" data-astro-cid-oimuypky> <div class="formula-item" data-astro-cid-oimuypky><span class="formula-label" data-astro-cid-oimuypky>Esperanza:</span><span class="formula-eq" id="formula-es" data-astro-cid-oimuypky></span></div> <div class="formula-item" data-astro-cid-oimuypky><span class="formula-label" data-astro-cid-oimuypky>Varianza:</span><span class="formula-eq" id="formula-var" data-astro-cid-oimuypky></span></div> </div> </div> <div class="real-data-box" data-astro-cid-oimuypky> <h5 data-astro-cid-oimuypky>Datos Reales del Dataset TP53</h5> <div class="real-stats" data-astro-cid-oimuypky> <div class="real-item" data-astro-cid-oimuypky><span class="label" data-astro-cid-oimuypky>λ simples (SM)</span><span class="value" data-astro-cid-oimuypky>689.76</span></div> <div class="real-item" data-astro-cid-oimuypky><span class="label" data-astro-cid-oimuypky>λ múltiples</span><span class="value" data-astro-cid-oimuypky>411.45</span></div> <div class="real-item accent" data-astro-cid-oimuypky><span class="label" data-astro-cid-oimuypky>84% tumores</span><span class="value" data-astro-cid-oimuypky>1 mut.</span></div> <div class="real-item" data-astro-cid-oimuypky><span class="label" data-astro-cid-oimuypky>Media/tumor</span><span class="value" data-astro-cid-oimuypky>1.15</span></div> </div> </div> </div> </div> </section> <!-- ANÁLISIS --> <section class="analysis" id="analisis" data-astro-cid-oimuypky> <div class="section__head" data-astro-cid-oimuypky> <div data-astro-cid-oimuypky> <p class="eyebrow" data-astro-cid-oimuypky>Análisis Completo</p> <h2 data-astro-cid-oimuypky>Resultados del Jupyter Notebook</h2> </div> </div> <div class="analysis-grid" data-astro-cid-oimuypky> <div class="analysis-card" data-astro-cid-oimuypky> <div class="card-header" data-astro-cid-oimuypky><span class="module-num" data-astro-cid-oimuypky>01</span><h4 data-astro-cid-oimuypky>Estadísticas Descriptivas</h4></div> <table class="data-table" data-astro-cid-oimuypky> <tr data-astro-cid-oimuypky><td data-astro-cid-oimuypky>Total variantes únicas</td><td class="val" data-astro-cid-oimuypky>33,603</td></tr> <tr data-astro-cid-oimuypky><td data-astro-cid-oimuypky>Total eventos</td><td class="val" data-astro-cid-oimuypky>37,018,402</td></tr> <tr data-astro-cid-oimuypky><td data-astro-cid-oimuypky>Media (λ global)</td><td class="val" data-astro-cid-oimuypky>1,101.64</td></tr> <tr data-astro-cid-oimuypky><td data-astro-cid-oimuypky>Mediana</td><td class="val" data-astro-cid-oimuypky>508.00</td></tr> </table> </div> <div class="analysis-card highlight" data-astro-cid-oimuypky> <div class="card-header" data-astro-cid-oimuypky><span class="module-num" data-astro-cid-oimuypky>02</span><h4 data-astro-cid-oimuypky>Estimación de λ</h4></div> <div class="param-box" data-astro-cid-oimuypky><span class="param-label" data-astro-cid-oimuypky>λ Global</span><span class="param-value" data-astro-cid-oimuypky>1,101.64</span><span class="param-ci" data-astro-cid-oimuypky>IC 95%: [1,101.28 , 1,101.99]</span></div> <div class="param-row" data-astro-cid-oimuypky> <div class="param-item" data-astro-cid-oimuypky><span class="label" data-astro-cid-oimuypky>λ CpG</span><span class="value" data-astro-cid-oimuypky>1,931.93</span></div> <div class="param-item" data-astro-cid-oimuypky><span class="label" data-astro-cid-oimuypky>λ No-CpG</span><span class="value" data-astro-cid-oimuypky>299.95</span></div> <div class="param-item accent" data-astro-cid-oimuypky><span class="label" data-astro-cid-oimuypky>Ratio</span><span class="value" data-astro-cid-oimuypky>6.44×</span></div> </div> </div> <div class="analysis-card warning" data-astro-cid-oimuypky> <div class="card-header" data-astro-cid-oimuypky><span class="module-num" data-astro-cid-oimuypky>03</span><h4 data-astro-cid-oimuypky>Validación del Modelo</h4></div> <div class="validation-grid" data-astro-cid-oimuypky> <div class="val-metric" data-astro-cid-oimuypky><span class="metric-label" data-astro-cid-oimuypky>Media</span><span class="metric-value" data-astro-cid-oimuypky>1,101.64</span></div> <div class="val-metric" data-astro-cid-oimuypky><span class="metric-label" data-astro-cid-oimuypky>Varianza</span><span class="metric-value" data-astro-cid-oimuypky>1,192,660</span></div> <div class="val-metric big warning" data-astro-cid-oimuypky><span class="metric-label" data-astro-cid-oimuypky>Índice</span><span class="metric-value" data-astro-cid-oimuypky>1,082.6</span></div> </div> <div class="conclusion warning" data-astro-cid-oimuypky><strong data-astro-cid-oimuypky>SOBREDISPERSIÓN:</strong> Poisson simple NO adecuado.</div> </div> <div class="analysis-card" data-astro-cid-oimuypky> <div class="card-header" data-astro-cid-oimuypky><span class="module-num" data-astro-cid-oimuypky>04</span><h4 data-astro-cid-oimuypky>Proceso No Homogéneo</h4></div> <div class="model-box" data-astro-cid-oimuypky><span class="model-label" data-astro-cid-oimuypky>Modelo:</span><span class="model-formula" id="model-temporal" data-astro-cid-oimuypky></span></div> <table class="data-table" data-astro-cid-oimuypky> <tr data-astro-cid-oimuypky><td data-astro-cid-oimuypky>Pendiente (b)</td><td class="val" data-astro-cid-oimuypky>-0.78 /año</td></tr> <tr data-astro-cid-oimuypky><td data-astro-cid-oimuypky>R²</td><td class="val" data-astro-cid-oimuypky>0.0107</td></tr> <tr data-astro-cid-oimuypky><td data-astro-cid-oimuypky>p-value</td><td class="val" data-astro-cid-oimuypky>0.60 (n.s.)</td></tr> </table> <div class="conclusion" style="margin-top:12px;background:rgba(34,211,238,0.08);" data-astro-cid-oimuypky><strong data-astro-cid-oimuypky>CONCLUSIÓN:</strong> No hay tendencia temporal significativa. El proceso es aproximadamente homogéneo.</div> </div> </div> </section> <section class="code-section" id="codigo" data-astro-cid-kkraiuss> <div class="section__head" data-astro-cid-kkraiuss> <div data-astro-cid-kkraiuss> <p class="eyebrow" data-astro-cid-kkraiuss>Código Fuente</p> <h2 data-astro-cid-kkraiuss>Jupyter Notebook: Análisis Completo</h2> <p class="section__lede" data-astro-cid-kkraiuss>Código Python del análisis estadístico. Datos: <code>mutaciones_es.xlsx</code></p> </div> </div>  <div class="code-file" data-astro-cid-kkraiuss> <div class="code-header" data-astro-cid-kkraiuss> <span class="code-filename" data-astro-cid-kkraiuss>poisson_analysis.py</span> <span class="code-desc" data-astro-cid-kkraiuss>Estimación de λ y validación</span> </div> <pre class="code-block" data-astro-cid-kkraiuss><code data-astro-cid-kkraiuss># Estimación de parámetros λ del Proceso de Poisson
+})();</script>  <!-- ANIMACIÓN: GEN TP53 CON MUTACIONES --> <section class="gene-anim-section" id="animacion" data-astro-cid-oimuypky> <div class="section__head" data-astro-cid-oimuypky> <div data-astro-cid-oimuypky> <p class="eyebrow" data-astro-cid-oimuypky>Visualización Interactiva</p> <h2 data-astro-cid-oimuypky>Mutaciones en el Gen TP53</h2> <p class="section__lede" data-astro-cid-oimuypky>Observa cómo las mutaciones caen sobre los codones del gen. Los <strong data-astro-cid-oimuypky>hotspots</strong> (CpG) atraen más mutaciones.</p> </div> </div> <div class="gene-anim-wrapper" data-astro-cid-oimuypky> <div class="gene-params" data-astro-cid-oimuypky> <span id="gene-params-text" data-astro-cid-oimuypky>λ = 15.0 mut/s · Hotspot ratio: 11×</span> </div> <canvas id="gene-canvas" width="900" height="450" data-astro-cid-oimuypky></canvas> <div class="gene-legend" data-astro-cid-oimuypky> <div class="legend-item" data-astro-cid-oimuypky><span class="legend-dot hotspot" data-astro-cid-oimuypky></span> Hotspot (CpG) - λ alto</div> <div class="legend-item" data-astro-cid-oimuypky><span class="legend-dot normal" data-astro-cid-oimuypky></span> Codón normal - λ bajo</div> <div class="legend-item" data-astro-cid-oimuypky><span class="legend-dot mutation" data-astro-cid-oimuypky></span> Mutación</div> </div> <div class="gene-controls" data-astro-cid-oimuypky> <div class="slider-group" data-astro-cid-oimuypky> <label data-astro-cid-oimuypky> <span data-astro-cid-oimuypky>λ base (mut/s)</span> <input type="range" id="gene-lambda" min="5" max="40" step="1" value="15" data-astro-cid-oimuypky> <span class="slider-val" id="gene-lambda-val" data-astro-cid-oimuypky>15</span> </label> <label data-astro-cid-oimuypky> <span data-astro-cid-oimuypky>Ratio CpG/Normal</span> <input type="range" id="gene-ratio" min="2" max="15" step="1" value="11" data-astro-cid-oimuypky> <span class="slider-val" id="gene-ratio-val" data-astro-cid-oimuypky>11×</span> </label> </div> <div class="gene-btns" data-astro-cid-oimuypky> <button id="gene-start" class="btn-start" data-astro-cid-oimuypky>▶ Iniciar</button> <button id="gene-reset" class="btn-reset" data-astro-cid-oimuypky>↺ Reset</button> </div> </div> <div class="gene-stats" data-astro-cid-oimuypky> <div class="gstat" data-astro-cid-oimuypky><span class="gstat-label" data-astro-cid-oimuypky>Total mutaciones</span><span class="gstat-value" id="gstat-total" data-astro-cid-oimuypky>0</span></div> <div class="gstat hotspot" data-astro-cid-oimuypky><span class="gstat-label" data-astro-cid-oimuypky>En hotspots</span><span class="gstat-value" id="gstat-hotspot" data-astro-cid-oimuypky>0</span></div> <div class="gstat" data-astro-cid-oimuypky><span class="gstat-label" data-astro-cid-oimuypky>En normales</span><span class="gstat-value" id="gstat-normal" data-astro-cid-oimuypky>0</span></div> <div class="gstat" data-astro-cid-oimuypky><span class="gstat-label" data-astro-cid-oimuypky>Top codón</span><span class="gstat-value" id="gstat-top" data-astro-cid-oimuypky>—</span></div> </div> </div> </section> <!-- SIMULADOR INTERACTIVO --> <section class="simulator" id="simulador" data-astro-cid-oimuypky> <div class="section__head" data-astro-cid-oimuypky> <div data-astro-cid-oimuypky> <p class="eyebrow" data-astro-cid-oimuypky>Simulación de Mutaciones</p> <h2 data-astro-cid-oimuypky>Visualización: Poisson Homogéneo vs No Homogéneo</h2> <p class="section__lede" data-astro-cid-oimuypky>Observá cómo las <strong data-astro-cid-oimuypky>mutaciones</strong> ocurren aleatoriamente. Compará un proceso con tasa constante vs uno con tasa decreciente.</p> </div> </div> <div class="sim-container" data-astro-cid-oimuypky> <div class="sim-controls" data-astro-cid-oimuypky> <div class="control-group" data-astro-cid-oimuypky><label data-astro-cid-oimuypky>Tasa de mutación λ</label><input type="range" id="sim-lambda" min="5" max="50" value="20" step="1" data-astro-cid-oimuypky><span id="sim-lambda-val" data-astro-cid-oimuypky>20 mut/año</span></div> <div class="control-group" data-astro-cid-oimuypky><label data-astro-cid-oimuypky>Pendiente temporal (b)</label><input type="range" id="sim-slope" min="-2" max="2" value="-0.5" step="0.1" data-astro-cid-oimuypky><span id="sim-slope-val" data-astro-cid-oimuypky>-0.5</span></div> <div class="control-group" data-astro-cid-oimuypky><label data-astro-cid-oimuypky>Tiempo (años)</label><input type="range" id="sim-time" min="5" max="30" value="20" step="1" data-astro-cid-oimuypky><span id="sim-time-val" data-astro-cid-oimuypky>20 años</span></div> <button id="sim-run" class="sim-btn pulse" data-astro-cid-oimuypky><span class="btn-icon" data-astro-cid-oimuypky>▶</span> Generar Mutaciones</button> </div> <div class="sim-stats" data-astro-cid-oimuypky> <div class="stat-box hom" data-astro-cid-oimuypky><span class="stat-label" data-astro-cid-oimuypky>Homogéneo</span><span class="stat-value" id="stat-hom-count" data-astro-cid-oimuypky>0</span><span class="stat-unit" data-astro-cid-oimuypky>mutaciones</span></div> <div class="stat-box nhom" data-astro-cid-oimuypky><span class="stat-label" data-astro-cid-oimuypky>No Homogéneo</span><span class="stat-value" id="stat-nhom-count" data-astro-cid-oimuypky>0</span><span class="stat-unit" data-astro-cid-oimuypky>mutaciones</span></div> <div class="stat-box diff" data-astro-cid-oimuypky><span class="stat-label" data-astro-cid-oimuypky>Diferencia</span><span class="stat-value" id="stat-diff" data-astro-cid-oimuypky>0%</span><span class="stat-unit" data-astro-cid-oimuypky>más/menos</span></div> </div> <div class="sim-charts-grid" data-astro-cid-oimuypky> <div class="chart-box" data-astro-cid-oimuypky><div class="chart-header hom" data-astro-cid-oimuypky><span class="chart-dot" data-astro-cid-oimuypky></span><h4 data-astro-cid-oimuypky>Poisson Homogéneo (λ constante)</h4></div><div id="chart-mutations-hom" class="mutation-chart" data-astro-cid-oimuypky></div></div> <div class="chart-box" data-astro-cid-oimuypky><div class="chart-header nhom" data-astro-cid-oimuypky><span class="chart-dot" data-astro-cid-oimuypky></span><h4 data-astro-cid-oimuypky>Poisson No Homogéneo (λ(t) decreciente)</h4></div><div id="chart-mutations-nhom" class="mutation-chart" data-astro-cid-oimuypky></div></div> </div> <div class="chart-box wide" data-astro-cid-oimuypky><div class="chart-header comparison" data-astro-cid-oimuypky><span class="chart-icon" data-astro-cid-oimuypky>≡</span><h4 data-astro-cid-oimuypky>Comparación: Mutaciones Acumuladas N(t)</h4></div><div id="chart-cumulative" class="mutation-chart tall" data-astro-cid-oimuypky></div></div> <div class="sim-charts-grid" data-astro-cid-oimuypky> <div class="chart-box" data-astro-cid-oimuypky><div class="chart-header hom" data-astro-cid-oimuypky><h4 data-astro-cid-oimuypky>Distribución de Intervalos (Homogéneo)</h4></div><div id="chart-intervals-hom" class="mutation-chart" data-astro-cid-oimuypky></div></div> <div class="chart-box" data-astro-cid-oimuypky><div class="chart-header nhom" data-astro-cid-oimuypky><h4 data-astro-cid-oimuypky>Distribución de Intervalos (No Homogéneo)</h4></div><div id="chart-intervals-nhom" class="mutation-chart" data-astro-cid-oimuypky></div></div> </div> <div class="sim-formulas" data-astro-cid-oimuypky> <div class="formula-box hom-box" data-astro-cid-oimuypky><h5 data-astro-cid-oimuypky>Proceso Homogéneo</h5><div class="formula-content" id="formula-hom" data-astro-cid-oimuypky></div></div> <div class="formula-box nhom-box" data-astro-cid-oimuypky><h5 data-astro-cid-oimuypky>Proceso No Homogéneo</h5><div class="formula-content" id="formula-nhom" data-astro-cid-oimuypky></div></div> </div> </div> </section> <!-- GRÁFICOS INTERACTIVOS --> <section class="charts-section" id="graficos" data-astro-cid-oimuypky> <div class="section__head" data-astro-cid-oimuypky> <div data-astro-cid-oimuypky> <p class="eyebrow" data-astro-cid-oimuypky>Visualizaciones</p> <h2 data-astro-cid-oimuypky>Gráficos Interactivos del Dataset TP53</h2> <p class="section__lede" data-astro-cid-oimuypky>Datos reales de 76,696 variantes del gen TP53 (después de limpieza).</p> </div> </div> <div class="charts-grid" data-astro-cid-oimuypky> <div class="chart-card wide" data-astro-cid-oimuypky><h4 data-astro-cid-oimuypky>Hotspots Mutacionales: Top 8 Codones</h4><div id="chart-hotspots" class="plotly-chart" data-astro-cid-oimuypky></div></div> <div class="chart-card" data-astro-cid-oimuypky><h4 data-astro-cid-oimuypky>Comparación CpG vs No-CpG</h4><div id="chart-cpg" class="plotly-chart" data-astro-cid-oimuypky></div></div> <div class="chart-card" data-astro-cid-oimuypky><h4 data-astro-cid-oimuypky>Tasa λ por Tipo de Cáncer</h4><div id="chart-disease" class="plotly-chart" data-astro-cid-oimuypky></div></div> <div class="chart-card wide" data-astro-cid-oimuypky><h4 data-astro-cid-oimuypky>Evolución Temporal de λ (Proceso No Homogéneo)</h4><div id="chart-temporal" class="plotly-chart" data-astro-cid-oimuypky></div></div> </div> </section> <!-- PROCESO DE POISSON COMPUESTO --> <section class="compound-section" id="compuesto" data-astro-cid-oimuypky> <div class="section__head" data-astro-cid-oimuypky> <div data-astro-cid-oimuypky> <p class="eyebrow" data-astro-cid-oimuypky>Procesos Compuestos</p> <h2 data-astro-cid-oimuypky>Simulación: Proceso de Poisson Compuesto</h2> <p class="section__lede" data-astro-cid-oimuypky>Modelo donde cada tumor puede tener <strong data-astro-cid-oimuypky>múltiples mutaciones</strong>. El total S = Σᵢ Xᵢ donde N(t) es el número de tumores.</p> </div> </div> <div class="compound-container" data-astro-cid-oimuypky> <div class="compound-controls" data-astro-cid-oimuypky> <div class="control-group" data-astro-cid-oimuypky><label data-astro-cid-oimuypky>Tasa de tumores (λ)</label><input type="range" id="comp-lambda" min="10" max="100" value="50" step="5" data-astro-cid-oimuypky><span id="comp-lambda-val" data-astro-cid-oimuypky>50 tumores/u.t.</span></div> <div class="control-group" data-astro-cid-oimuypky><label data-astro-cid-oimuypky>Media mutaciones/tumor (μₓ)</label><input type="range" id="comp-mu" min="1" max="3" value="1.15" step="0.05" data-astro-cid-oimuypky><span id="comp-mu-val" data-astro-cid-oimuypky>1.15</span></div> <div class="control-group" data-astro-cid-oimuypky><label data-astro-cid-oimuypky>Tiempo de simulación</label><input type="range" id="comp-time" min="10" max="50" value="30" step="5" data-astro-cid-oimuypky><span id="comp-time-val" data-astro-cid-oimuypky>30 u.t.</span></div> <button id="comp-run" class="sim-btn compound-btn" data-astro-cid-oimuypky><span class="btn-icon" data-astro-cid-oimuypky>▶</span> Simular Proceso Compuesto</button> </div> <div class="compound-stats" data-astro-cid-oimuypky> <div class="stat-box tumors" data-astro-cid-oimuypky><span class="stat-label" data-astro-cid-oimuypky>Tumores N(t)</span><span class="stat-value" id="stat-tumors" data-astro-cid-oimuypky>0</span><span class="stat-unit" data-astro-cid-oimuypky>llegados</span></div> <div class="stat-box mutations" data-astro-cid-oimuypky><span class="stat-label" data-astro-cid-oimuypky>Total S(t)</span><span class="stat-value" id="stat-total-muts" data-astro-cid-oimuypky>0</span><span class="stat-unit" data-astro-cid-oimuypky>mutaciones</span></div> <div class="stat-box expected" data-astro-cid-oimuypky><span class="stat-label" data-astro-cid-oimuypky>E[S(t)] teórico</span><span class="stat-value" id="stat-expected" data-astro-cid-oimuypky>0</span><span class="stat-unit" data-astro-cid-oimuypky>λt·μₓ</span></div> </div> <div class="compound-charts" data-astro-cid-oimuypky> <div class="chart-box compound-wide" data-astro-cid-oimuypky><div class="chart-header compound-header" data-astro-cid-oimuypky><h4 data-astro-cid-oimuypky>Proceso Compuesto: Mutaciones Acumuladas S(t)</h4></div><div id="chart-compound-cumulative" class="mutation-chart tall" data-astro-cid-oimuypky></div></div> <div class="compound-grid" data-astro-cid-oimuypky> <div class="chart-box" data-astro-cid-oimuypky><div class="chart-header" data-astro-cid-oimuypky><h4 data-astro-cid-oimuypky>Distribución de Mutaciones por Tumor</h4></div><div id="chart-compound-dist" class="mutation-chart" data-astro-cid-oimuypky></div></div> <div class="chart-box" data-astro-cid-oimuypky><div class="chart-header" data-astro-cid-oimuypky><h4 data-astro-cid-oimuypky>Datos Reales: Complejidad Mutacional</h4></div><div id="chart-real-complexity" class="mutation-chart" data-astro-cid-oimuypky></div></div> </div> </div> <div class="compound-theory" data-astro-cid-oimuypky> <div class="theory-box" data-astro-cid-oimuypky><h5 data-astro-cid-oimuypky>Fórmulas del Proceso Compuesto</h5> <div class="formula-grid" data-astro-cid-oimuypky> <div class="formula-item" data-astro-cid-oimuypky><span class="formula-label" data-astro-cid-oimuypky>Esperanza:</span><span class="formula-eq" id="formula-es" data-astro-cid-oimuypky></span></div> <div class="formula-item" data-astro-cid-oimuypky><span class="formula-label" data-astro-cid-oimuypky>Varianza:</span><span class="formula-eq" id="formula-var" data-astro-cid-oimuypky></span></div> </div> </div> <div class="real-data-box" data-astro-cid-oimuypky> <h5 data-astro-cid-oimuypky>Datos Reales del Dataset TP53</h5> <div class="real-stats" data-astro-cid-oimuypky> <div class="real-item" data-astro-cid-oimuypky><span class="label" data-astro-cid-oimuypky>λ simples (SM)</span><span class="value" data-astro-cid-oimuypky>689.76</span></div> <div class="real-item" data-astro-cid-oimuypky><span class="label" data-astro-cid-oimuypky>λ múltiples</span><span class="value" data-astro-cid-oimuypky>411.45</span></div> <div class="real-item accent" data-astro-cid-oimuypky><span class="label" data-astro-cid-oimuypky>84% tumores</span><span class="value" data-astro-cid-oimuypky>1 mut.</span></div> <div class="real-item" data-astro-cid-oimuypky><span class="label" data-astro-cid-oimuypky>Media/tumor</span><span class="value" data-astro-cid-oimuypky>1.15</span></div> </div> </div> </div> </div> </section> <!-- ANÁLISIS --> <section class="analysis" id="analisis" data-astro-cid-oimuypky> <div class="section__head" data-astro-cid-oimuypky> <div data-astro-cid-oimuypky> <p class="eyebrow" data-astro-cid-oimuypky>Análisis Completo</p> <h2 data-astro-cid-oimuypky>Resultados del Jupyter Notebook</h2> </div> </div> <div class="analysis-grid" data-astro-cid-oimuypky> <div class="analysis-card" data-astro-cid-oimuypky> <div class="card-header" data-astro-cid-oimuypky><span class="module-num" data-astro-cid-oimuypky>01</span><h4 data-astro-cid-oimuypky>Estadísticas Descriptivas</h4></div> <table class="data-table" data-astro-cid-oimuypky> <tr data-astro-cid-oimuypky><td data-astro-cid-oimuypky>Total variantes únicas</td><td class="val" data-astro-cid-oimuypky>33,603</td></tr> <tr data-astro-cid-oimuypky><td data-astro-cid-oimuypky>Total eventos</td><td class="val" data-astro-cid-oimuypky>37,018,402</td></tr> <tr data-astro-cid-oimuypky><td data-astro-cid-oimuypky>Media (λ global)</td><td class="val" data-astro-cid-oimuypky>1,101.64</td></tr> <tr data-astro-cid-oimuypky><td data-astro-cid-oimuypky>Mediana</td><td class="val" data-astro-cid-oimuypky>508.00</td></tr> </table> </div> <div class="analysis-card highlight" data-astro-cid-oimuypky> <div class="card-header" data-astro-cid-oimuypky><span class="module-num" data-astro-cid-oimuypky>02</span><h4 data-astro-cid-oimuypky>Estimación de λ</h4></div> <div class="param-box" data-astro-cid-oimuypky><span class="param-label" data-astro-cid-oimuypky>λ Global</span><span class="param-value" data-astro-cid-oimuypky>1,101.64</span><span class="param-ci" data-astro-cid-oimuypky>IC 95%: [1,101.28 , 1,101.99]</span></div> <div class="param-row" data-astro-cid-oimuypky> <div class="param-item" data-astro-cid-oimuypky><span class="label" data-astro-cid-oimuypky>λ CpG</span><span class="value" data-astro-cid-oimuypky>1,931.93</span></div> <div class="param-item" data-astro-cid-oimuypky><span class="label" data-astro-cid-oimuypky>λ No-CpG</span><span class="value" data-astro-cid-oimuypky>299.95</span></div> <div class="param-item accent" data-astro-cid-oimuypky><span class="label" data-astro-cid-oimuypky>Ratio</span><span class="value" data-astro-cid-oimuypky>6.44×</span></div> </div> </div> <div class="analysis-card warning" data-astro-cid-oimuypky> <div class="card-header" data-astro-cid-oimuypky><span class="module-num" data-astro-cid-oimuypky>03</span><h4 data-astro-cid-oimuypky>Validación del Modelo</h4></div> <div class="validation-grid" data-astro-cid-oimuypky> <div class="val-metric" data-astro-cid-oimuypky><span class="metric-label" data-astro-cid-oimuypky>Media</span><span class="metric-value" data-astro-cid-oimuypky>1,101.64</span></div> <div class="val-metric" data-astro-cid-oimuypky><span class="metric-label" data-astro-cid-oimuypky>Varianza</span><span class="metric-value" data-astro-cid-oimuypky>1,192,660</span></div> <div class="val-metric big warning" data-astro-cid-oimuypky><span class="metric-label" data-astro-cid-oimuypky>Índice</span><span class="metric-value" data-astro-cid-oimuypky>1,082.6</span></div> </div> <div class="conclusion warning" data-astro-cid-oimuypky><strong data-astro-cid-oimuypky>SOBREDISPERSIÓN:</strong> Poisson simple NO adecuado.</div> </div> <div class="analysis-card" data-astro-cid-oimuypky> <div class="card-header" data-astro-cid-oimuypky><span class="module-num" data-astro-cid-oimuypky>04</span><h4 data-astro-cid-oimuypky>Proceso No Homogéneo</h4></div> <div class="model-box" data-astro-cid-oimuypky><span class="model-label" data-astro-cid-oimuypky>Modelo:</span><span class="model-formula" id="model-temporal" data-astro-cid-oimuypky></span></div> <table class="data-table" data-astro-cid-oimuypky> <tr data-astro-cid-oimuypky><td data-astro-cid-oimuypky>Pendiente (b)</td><td class="val" data-astro-cid-oimuypky>-0.78 /año</td></tr> <tr data-astro-cid-oimuypky><td data-astro-cid-oimuypky>R²</td><td class="val" data-astro-cid-oimuypky>0.0107</td></tr> <tr data-astro-cid-oimuypky><td data-astro-cid-oimuypky>p-value</td><td class="val" data-astro-cid-oimuypky>0.60 (n.s.)</td></tr> </table> <div class="conclusion" style="margin-top:12px;background:rgba(34,211,238,0.08);" data-astro-cid-oimuypky><strong data-astro-cid-oimuypky>CONCLUSIÓN:</strong> No hay tendencia temporal significativa. El proceso es aproximadamente homogéneo.</div> </div> </div> </section> <section class="code-section" id="codigo" data-astro-cid-kkraiuss> <div class="section__head" data-astro-cid-kkraiuss> <div data-astro-cid-kkraiuss> <p class="eyebrow" data-astro-cid-kkraiuss>Código Fuente</p> <h2 data-astro-cid-kkraiuss>Jupyter Notebook: Análisis Completo</h2> <p class="section__lede" data-astro-cid-kkraiuss>Código Python del análisis estadístico. Datos: <code>mutaciones_es.xlsx</code></p> </div> </div>  <div class="code-file" data-astro-cid-kkraiuss> <div class="code-header" data-astro-cid-kkraiuss> <span class="code-filename" data-astro-cid-kkraiuss>poisson_analysis.py</span> <span class="code-desc" data-astro-cid-kkraiuss>Estimación de λ y validación</span> </div> <pre class="code-block" data-astro-cid-kkraiuss><code data-astro-cid-kkraiuss># Estimación de parámetros λ del Proceso de Poisson
 import numpy as np
 from scipy import stats
 
@@ -146,6 +146,350 @@ const datosCompuesto = {"complejidad":[{"tipo":"SM (Simple)","porcentaje":84,"co
   window.cpgComparison = cpgComparison;
   window.datosCompuesto = datosCompuesto;
 })();</script> <script>
+// Animación Gen TP53 con mutaciones
+(function() {
+  const canvas = document.getElementById('gene-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  
+  let lambdaBase = 15, hotspotRatio = 11;
+  let running = false;
+  let mutations = []; // { x, y, targetCodon, falling, landed }
+  let codons = []; // { x, y, isHotspot, name, mutationCount, balls }
+  let totalMutations = 0, hotspotMutations = 0, normalMutations = 0;
+  let nextMutation = 0;
+  let simTime = 0;
+  
+  const colors = {
+    bg: '#0d1117',
+    grid: 'rgba(255,255,255,0.02)',
+    chain: '#1e3a5f',
+    codonNormal: '#3b82f6',
+    codonHotspot: '#f43f5e',
+    mutation: '#22d3ee',
+    mutationHotspot: '#fbbf24',
+    text: '#64748b',
+    textBright: '#e2e8f0'
+  };
+  
+  // Codones del gen TP53 (simplificado)
+  const codonData = [
+    { name: '72', isHotspot: false },
+    { name: '175', isHotspot: true },  // R175H - hotspot
+    { name: '196', isHotspot: false },
+    { name: '213', isHotspot: false },
+    { name: '220', isHotspot: false },
+    { name: '245', isHotspot: true },  // G245S - hotspot
+    { name: '248', isHotspot: true },  // R248Q - hotspot MAJOR
+    { name: '249', isHotspot: false },
+    { name: '273', isHotspot: true },  // R273H - hotspot MAJOR
+    { name: '275', isHotspot: false },
+    { name: '282', isHotspot: true },  // R282W - hotspot
+    { name: '306', isHotspot: false }
+  ];
+  
+  function initCodons() {
+    codons = [];
+    const startX = 80;
+    const spacing = 68;
+    const y = canvas.height - 120;
+    
+    codonData.forEach((c, i) => {
+      codons.push({
+        x: startX + i * spacing,
+        y: y,
+        isHotspot: c.isHotspot,
+        name: c.name,
+        mutationCount: 0,
+        balls: [] // pequeñas bolitas del codón
+      });
+    });
+    
+    // Crear bolitas para cada codón (representación del gen)
+    codons.forEach(codon => {
+      const numBalls = 5;
+      for (let i = 0; i < numBalls; i++) {
+        const angle = (i / numBalls) * Math.PI * 2;
+        const r = 18;
+        codon.balls.push({
+          ox: Math.cos(angle) * r,
+          oy: Math.sin(angle) * r * 0.6
+        });
+      }
+    });
+  }
+  
+  function randExp(rate) {
+    return -Math.log(1 - Math.random()) / rate;
+  }
+  
+  function lerp(a, b, t) {
+    return a + (b - a) * Math.min(1, t);
+  }
+  
+  function drawBackground() {
+    ctx.fillStyle = colors.bg;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    // Grid
+    ctx.strokeStyle = colors.grid;
+    ctx.lineWidth = 1;
+    for (let x = 0; x < canvas.width; x += 50) {
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+    }
+    for (let y = 0; y < canvas.height; y += 50) {
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+    }
+    
+    // Título
+    ctx.fillStyle = colors.textBright;
+    ctx.font = 'bold 14px Manrope, system-ui, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('Gen TP53 - Codones Principales', canvas.width / 2, 30);
+  }
+  
+  function drawChain() {
+    // Línea de conexión (cadena del gen)
+    ctx.strokeStyle = colors.chain;
+    ctx.lineWidth = 8;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(codons[0].x - 40, codons[0].y);
+    codons.forEach(c => {
+      ctx.lineTo(c.x, c.y);
+    });
+    ctx.lineTo(codons[codons.length - 1].x + 40, codons[codons.length - 1].y);
+    ctx.stroke();
+    
+    // Dibujar cada codón como grupo de bolitas
+    codons.forEach(codon => {
+      const baseColor = codon.isHotspot ? colors.codonHotspot : colors.codonNormal;
+      const glowColor = codon.isHotspot ? 'rgba(244,63,94,0.3)' : 'rgba(59,130,246,0.2)';
+      
+      // Glow para hotspots
+      if (codon.isHotspot) {
+        ctx.beginPath();
+        ctx.arc(codon.x, codon.y, 35, 0, Math.PI * 2);
+        ctx.fillStyle = glowColor;
+        ctx.fill();
+      }
+      
+      // Bolitas del codón
+      codon.balls.forEach(ball => {
+        ctx.beginPath();
+        ctx.arc(codon.x + ball.ox, codon.y + ball.oy, 8, 0, Math.PI * 2);
+        ctx.fillStyle = baseColor;
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      });
+      
+      // Centro del codón
+      ctx.beginPath();
+      ctx.arc(codon.x, codon.y, 10, 0, Math.PI * 2);
+      ctx.fillStyle = baseColor;
+      ctx.fill();
+      
+      // Etiqueta
+      ctx.fillStyle = colors.text;
+      ctx.font = '11px Manrope, system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(codon.name, codon.x, codon.y + 50);
+      
+      // Contador de mutaciones
+      if (codon.mutationCount > 0) {
+        ctx.fillStyle = codon.isHotspot ? colors.mutationHotspot : colors.mutation;
+        ctx.font = 'bold 12px Manrope, system-ui, sans-serif';
+        ctx.fillText(codon.mutationCount, codon.x, codon.y - 45);
+      }
+    });
+  }
+  
+  function drawMutations() {
+    mutations.forEach(m => {
+      if (!m.landed) {
+        // Mutación cayendo
+        ctx.beginPath();
+        ctx.arc(m.x, m.y, 6, 0, Math.PI * 2);
+        ctx.fillStyle = colors.mutation;
+        ctx.fill();
+        
+        // Estela
+        ctx.beginPath();
+        ctx.moveTo(m.x, m.y - 5);
+        ctx.lineTo(m.x, m.y - 20);
+        ctx.strokeStyle = 'rgba(34,211,238,0.4)';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+      }
+    });
+    
+    // Dibujar mutaciones acumuladas en codones
+    codons.forEach(codon => {
+      const landed = mutations.filter(m => m.landed && m.targetCodon === codon.name);
+      landed.forEach((m, i) => {
+        const row = Math.floor(i / 5);
+        const col = i % 5;
+        const px = codon.x - 12 + col * 6;
+        const py = codon.y - 60 - row * 6;
+        
+        ctx.beginPath();
+        ctx.arc(px, py, 3, 0, Math.PI * 2);
+        ctx.fillStyle = codon.isHotspot ? colors.mutationHotspot : colors.mutation;
+        ctx.fill();
+      });
+    });
+  }
+  
+  function spawnMutation() {
+    // Calcular probabilidades basadas en si es hotspot
+    const weights = codons.map(c => c.isHotspot ? hotspotRatio : 1);
+    const totalWeight = weights.reduce((a, b) => a + b, 0);
+    
+    let rand = Math.random() * totalWeight;
+    let targetCodon = codons[0];
+    for (let i = 0; i < codons.length; i++) {
+      rand -= weights[i];
+      if (rand <= 0) {
+        targetCodon = codons[i];
+        break;
+      }
+    }
+    
+    mutations.push({
+      x: targetCodon.x + (Math.random() - 0.5) * 20,
+      y: -10,
+      targetX: targetCodon.x,
+      targetY: targetCodon.y - 30,
+      targetCodon: targetCodon.name,
+      falling: true,
+      landed: false,
+      speed: 150 + Math.random() * 100
+    });
+  }
+  
+  function updateMutations(dt) {
+    mutations.forEach(m => {
+      if (m.falling && !m.landed) {
+        m.y += m.speed * dt;
+        
+        // Ajustar x hacia el objetivo
+        m.x = lerp(m.x, m.targetX, dt * 3);
+        
+        if (m.y >= m.targetY) {
+          m.y = m.targetY;
+          m.falling = false;
+          m.landed = true;
+          
+          // Incrementar contador del codón
+          const codon = codons.find(c => c.name === m.targetCodon);
+          if (codon) {
+            codon.mutationCount++;
+            totalMutations++;
+            if (codon.isHotspot) hotspotMutations++;
+            else normalMutations++;
+          }
+        }
+      }
+    });
+    
+    // Limitar mutaciones visibles
+    if (mutations.length > 300) {
+      mutations = mutations.slice(-300);
+    }
+  }
+  
+  function updateStats() {
+    document.getElementById('gstat-total').textContent = totalMutations;
+    document.getElementById('gstat-hotspot').textContent = hotspotMutations;
+    document.getElementById('gstat-normal').textContent = normalMutations;
+    
+    // Encontrar top codón
+    const topCodon = codons.reduce((max, c) => c.mutationCount > max.mutationCount ? c : max, codons[0]);
+    document.getElementById('gstat-top').textContent = topCodon.mutationCount > 0 ? `${topCodon.name} (${topCodon.mutationCount})` : '—';
+  }
+  
+  function updateParamsText() {
+    document.getElementById('gene-params-text').textContent = 
+      `λ = ${lambdaBase.toFixed(1)} mut/s · Hotspot ratio: ${hotspotRatio}×`;
+  }
+  
+  let lastTime = 0;
+  function loop(timestamp) {
+    if (!running) return;
+    
+    const dt = lastTime ? (timestamp - lastTime) / 1000 : 0.016;
+    lastTime = timestamp;
+    
+    simTime += dt;
+    
+    // Generar mutaciones
+    if (simTime >= nextMutation) {
+      spawnMutation();
+      nextMutation = simTime + randExp(lambdaBase);
+    }
+    
+    updateMutations(dt);
+    
+    drawBackground();
+    drawChain();
+    drawMutations();
+    updateStats();
+    
+    requestAnimationFrame(loop);
+  }
+  
+  function reset() {
+    mutations = [];
+    totalMutations = 0;
+    hotspotMutations = 0;
+    normalMutations = 0;
+    simTime = 0;
+    nextMutation = randExp(lambdaBase);
+    lastTime = 0;
+    initCodons();
+    drawBackground();
+    drawChain();
+    updateStats();
+  }
+  
+  // Event listeners
+  document.getElementById('gene-lambda').addEventListener('input', function(e) {
+    lambdaBase = parseFloat(e.target.value);
+    document.getElementById('gene-lambda-val').textContent = lambdaBase;
+    updateParamsText();
+  });
+  
+  document.getElementById('gene-ratio').addEventListener('input', function(e) {
+    hotspotRatio = parseInt(e.target.value);
+    document.getElementById('gene-ratio-val').textContent = hotspotRatio + '×';
+    updateParamsText();
+  });
+  
+  document.getElementById('gene-start').addEventListener('click', function() {
+    running = !running;
+    this.textContent = running ? '⏸ Pausar' : '▶ Iniciar';
+    this.classList.toggle('active', running);
+    if (running) {
+      lastTime = 0;
+      requestAnimationFrame(loop);
+    }
+  });
+  
+  document.getElementById('gene-reset').addEventListener('click', function() {
+    running = false;
+    document.getElementById('gene-start').textContent = '▶ Iniciar';
+    document.getElementById('gene-start').classList.remove('active');
+    reset();
+  });
+  
+  // Init
+  initCodons();
+  reset();
+  updateParamsText();
+})();
+</script> <script>
   document.addEventListener("DOMContentLoaded", function() {
     var darkLayout = {
       paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0.2)',
