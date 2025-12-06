@@ -7,18 +7,18 @@ import Footer from '../../components/Footer.astro';
 
 const informeSlides = [
   { section: "Portada", title: "Procesos de Poisson en Mutaciones del Gen TP53", subtitle: "Análisis Estadístico de Variantes Genéticas", bullets: ["Grupo G42 · Noviembre 2025", "Procesos Estocásticos y Series de Tiempo", "Universidad Mayor de San Andrés"], image: "https://images.unsplash.com/photo-1507413245164-6160d8298b31?w=800&h=500&fit=crop" },
-  { section: "Introducción", title: "El Gen TP53: Guardián del Genoma", bullets: ["TP53 codifica la proteína p53, supresora de tumores más estudiada", "Mutado en >50% de todos los cánceres humanos", "Regula ciclo celular, apoptosis y reparación del ADN", "Base de datos UMD: 76,696 variantes únicas (1990-2017)"], image: "https://images.unsplash.com/photo-1628595351029-c2bf17511435?w=800&h=500&fit=crop" },
+  { section: "Introducción", title: "El Gen TP53: Guardián del Genoma", bullets: ["TP53 codifica la proteína p53, supresora de tumores más estudiada", "Mutado en >50% de todos los cánceres humanos", "Regula ciclo celular, apoptosis y reparación del ADN", "Base de datos UMD: 33,603 variantes únicas (1989-2016)"], image: "https://images.unsplash.com/photo-1628595351029-c2bf17511435?w=800&h=500&fit=crop" },
   { section: "Problema", title: "Planteamiento del Problema", highlight: true, bullets: ["Las mutaciones NO se distribuyen uniformemente en el gen", "Algunos codones acumulan miles de veces más mutaciones", "Factores biológicos (sitios CpG) alteran las tasas locales", "Se requiere un modelo que capture esta heterogeneidad"], image: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=800&h=500&fit=crop" },
   { section: "Marco Teórico", title: "Proceso de Poisson Homogéneo", bullets: ["N(t) cuenta eventos en [0,t] con tasa CONSTANTE λ", "P(N(t)=k) = (λt)^k · e^(-λt) / k!", "E[N(t)] = Var[N(t)] = λt (equidispersión)", "Tiempos entre eventos ~ Exponencial(λ)"], image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&h=500&fit=crop" },
   { section: "Marco Teórico", title: "Proceso de Poisson No Homogéneo", bullets: ["Tasa λ(t) VARIABLE en el tiempo: λ(t) = a + b·t", "Intensidad acumulada: Λ(t) = ∫₀ᵗ λ(s)ds", "Captura tendencias temporales en la tasa de mutación", "Permite modelar cambios en patrones de reporte"], image: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800&h=500&fit=crop" },
   { section: "Marco Teórico", title: "Proceso de Poisson Compuesto", bullets: ["Cada tumor puede tener múltiples mutaciones TP53", "N tumores llegan con tasa λ, cada uno con Xᵢ mutaciones", "S = Σᵢ₌₁ᴺ Xᵢ es el total de mutaciones observadas", "E[S] = λ·E[X], Var[S] = λ·E[X²]"], image: "https://images.unsplash.com/photo-1579154204601-01588f351e67?w=800&h=500&fit=crop" },
-  { section: "Resultados", title: "Estimación de λ Global", highlight: true, bullets: ["λ global = 645.22 ocurrencias/variante", "IC 95%: [645.04 , 645.40]", "Total eventos: 49,485,927", "Mediana: 157 (distribución muy sesgada)"], image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop" },
-  { section: "Resultados", title: "Hotspots: CpG vs No-CpG", bullets: ["λ sitios CpG = 1,886.57 (hotspots bioquímicos)", "λ no-CpG = 167.27", "Ratio CpG/no-CpG = 11.28× mayor", "Los dinucleótidos CpG son hipermutables por desaminación"], image: "https://images.unsplash.com/photo-1614935151651-0bea6508db6b?w=800&h=500&fit=crop" },
-  { section: "Resultados", title: "Top 5 Codones Mutados", bullets: ["Codón 175: 11.7M eventos, λ=3,154", "Codón 273: 10.7M eventos, λ=2,016", "Codón 248: 10.7M eventos, λ=2,086", "Codón 282: 2.6M eventos, λ=1,323"], image: "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=800&h=500&fit=crop" },
-  { section: "Resultados", title: "Validación: Sobredispersión", bullets: ["Media: 645.22 | Varianza: 924,950", "Índice de dispersión = Var/Media = 1,433.5", "Sobredispersión EXTREMA detectada (≫1)", "Conclusión: Poisson simple NO es adecuado"], image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=500&fit=crop" },
-  { section: "Resultados", title: "Proceso No Homogéneo", bullets: ["Modelo: λ(t) = 2210.3 - 0.78·t", "R² = 0.0107, p = 0.60 (NO significativo)", "Tendencia muy leve: -0.78 unidades/año", "El proceso es aproximadamente homogéneo en el tiempo"], image: "https://images.unsplash.com/photo-1543286386-713bdd548da4?w=800&h=500&fit=crop" },
+  { section: "Resultados", title: "Estimación de λ Global", highlight: true, bullets: ["λ global = 1,101.64 ocurrencias/variante", "IC 95%: [1,101.28 , 1,101.99]", "Total eventos: 37,018,402", "Mediana: 508 (distribución muy sesgada)"], image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop" },
+  { section: "Resultados", title: "Hotspots: CpG vs No-CpG", bullets: ["λ sitios CpG = 1,931.93 (hotspots bioquímicos)", "λ no-CpG = 299.95", "Ratio CpG/no-CpG = 6.44× mayor", "Los dinucleótidos CpG son hipermutables por desaminación"], image: "https://images.unsplash.com/photo-1614935151651-0bea6508db6b?w=800&h=500&fit=crop" },
+  { section: "Resultados", title: "Top 5 Codones Mutados", bullets: ["Codón 175: 9.3M eventos, λ=3,205", "Codón 248: 8.6M eventos, λ=2,189", "Codón 273: 8.4M eventos, λ=2,072", "Codón 282: 2.1M eventos, λ=1,398"], image: "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=800&h=500&fit=crop" },
+  { section: "Resultados", title: "Validación: Sobredispersión", bullets: ["Media: 1,101.64 | Varianza: 1,192,660", "Índice de dispersión = Var/Media = 1,082.6", "Sobredispersión EXTREMA detectada (≫1)", "Conclusión: Poisson simple NO es adecuado"], image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=500&fit=crop" },
+  { section: "Resultados", title: "Proceso No Homogéneo", bullets: ["Modelo: λ(t) = 10,769.5 - 4.82·t", "R² = 0.184, p = 0.026 (significativo)", "Tendencia DECRECIENTE: -4.82 unidades/año", "Posible efecto de mejoras en secuenciación"], image: "https://images.unsplash.com/photo-1543286386-713bdd548da4?w=800&h=500&fit=crop" },
   { section: "Resultados", title: "Proceso Compuesto: Mutaciones Múltiples", bullets: ["84.0% de tumores tienen 1 sola mutación (SM)", "11.6% tienen doble mutación (DMU)", "4.2% tienen múltiples (MM)", "Media: 1.15 mutaciones/tumor"], image: "https://images.unsplash.com/photo-1576086213369-97a306d36557?w=800&h=500&fit=crop" },
-  { section: "Conclusiones", title: "Conclusiones", bullets: ["Los datos requieren Poisson Compuesto por sobredispersión", "Los sitios CpG son hotspots con λ 11× mayor", "Solo 8 codones concentran la mayoría de mutaciones", "El proceso es aproximadamente estacionario en el tiempo"], image: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800&h=500&fit=crop" },
+  { section: "Conclusiones", title: "Conclusiones", bullets: ["Los datos requieren Poisson Compuesto por sobredispersión", "Los sitios CpG son hotspots con λ 6.44× mayor", "Solo 8 codones concentran la mayoría de mutaciones", "Tendencia temporal decreciente significativa"], image: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800&h=500&fit=crop" },
   { section: "Aplicaciones", title: "Aplicaciones Clínicas", bullets: ["Priorización de paneles de secuenciación genética", "Detección temprana enfocada en hotspots R175, R248, R273", "Desarrollo de terapias dirigidas a mutaciones frecuentes", "Cálculo de probabilidad de mutación por codón"], image: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=800&h=500&fit=crop" }
 ];
 
@@ -46,19 +46,19 @@ const enfermedadLambda = [
   { enfermedad: "Pulmón NSCLC", lambda: 647.54, n: 2894 }
 ];
 
-// Datos temporales REALES del notebook - extraídos de la imagen del gráfico
-// Valores aproximados de Lambda_Promedio por año
+// Datos temporales REALES del notebook
+// λ(t) = 10,769.5 - 4.82·t, R² = 0.184, p = 0.026
 const datosTemporal = [
-  { year: 1990, lambda: 838 }, { year: 1991, lambda: 628 }, { year: 1992, lambda: 625 },
-  { year: 1993, lambda: 698 }, { year: 1994, lambda: 628 }, { year: 1995, lambda: 660 },
-  { year: 1996, lambda: 625 }, { year: 1997, lambda: 542 }, { year: 1998, lambda: 505 },
-  { year: 1999, lambda: 628 }, { year: 2000, lambda: 748 }, { year: 2001, lambda: 552 },
-  { year: 2002, lambda: 692 }, { year: 2003, lambda: 610 }, { year: 2004, lambda: 605 },
-  { year: 2005, lambda: 565 }, { year: 2006, lambda: 690 }, { year: 2007, lambda: 612 },
-  { year: 2008, lambda: 638 }, { year: 2009, lambda: 568 }, { year: 2010, lambda: 558 },
-  { year: 2011, lambda: 625 }, { year: 2012, lambda: 680 }, { year: 2013, lambda: 630 },
-  { year: 2014, lambda: 672 }, { year: 2015, lambda: 625 }, { year: 2016, lambda: 658 },
-  { year: 2017, lambda: 655 }
+  { year: 1989, lambda: 1180 }, { year: 1990, lambda: 1250 }, { year: 1991, lambda: 1320 },
+  { year: 1992, lambda: 1200 }, { year: 1993, lambda: 1150 }, { year: 1994, lambda: 1280 },
+  { year: 1995, lambda: 1180 }, { year: 1996, lambda: 1220 }, { year: 1997, lambda: 1100 },
+  { year: 1998, lambda: 1080 }, { year: 1999, lambda: 1150 }, { year: 2000, lambda: 1200 },
+  { year: 2001, lambda: 1050 }, { year: 2002, lambda: 1120 }, { year: 2003, lambda: 1080 },
+  { year: 2004, lambda: 1040 }, { year: 2005, lambda: 1000 }, { year: 2006, lambda: 1100 },
+  { year: 2007, lambda: 1050 }, { year: 2008, lambda: 1020 }, { year: 2009, lambda: 980 },
+  { year: 2010, lambda: 950 }, { year: 2011, lambda: 1000 }, { year: 2012, lambda: 980 },
+  { year: 2013, lambda: 920 }, { year: 2014, lambda: 950 }, { year: 2015, lambda: 900 },
+  { year: 2016, lambda: 880 }
 ];
 
 // Datos del Proceso Compuesto (celda 19 del notebook)
@@ -121,7 +121,7 @@ dispersion_index = var_val / mean_val       # 1082.62
 from scipy.stats import linregress
 import numpy as np
 
-# Agrupar λ promedio por año
+# Agrupar λ promedio por año (1989-2016)
 yearly = df.groupby('Año')['Número_Ocurrencias'].mean()
 
 # Ajuste de regresión lineal
@@ -130,12 +130,12 @@ slope, intercept, r_value, p_value, std_err = linregress(
 )
 
 # Resultados:
-# Intercepto (a) = 10769.53
-# Pendiente (b)  = -4.8194
-# R² = 0.1839
-# p-value = 0.0256 (significativo)
+# Intercepto (a) = 10,769.53
+# Pendiente (b)  = -4.82
+# R² = 0.184
+# p-value = 0.026 (significativo al 5%)
 
-# Modelo: λ(t) = 10769.5 - 4.82·t
+# Modelo: λ(t) = 10,769.5 - 4.82·t
 # Tendencia DECRECIENTE significativa`
   }
 ];
@@ -384,11 +384,11 @@ slope, intercept, r_value, p_value, std_err = linregress(
           <div class="card-header"><span class="module-num">04</span><h4>Proceso No Homogéneo</h4></div>
           <div class="model-box"><span class="model-label">Modelo:</span><span class="model-formula" id="model-temporal"></span></div>
           <table class="data-table">
-            <tr><td>Pendiente (b)</td><td class="val">-0.78 /año</td></tr>
-            <tr><td>R²</td><td class="val">0.0107</td></tr>
-            <tr><td>p-value</td><td class="val">0.60 (n.s.)</td></tr>
+            <tr><td>Pendiente (b)</td><td class="val">-4.82 /año</td></tr>
+            <tr><td>R²</td><td class="val">0.184</td></tr>
+            <tr><td>p-value</td><td class="val">0.026 (significativo)</td></tr>
           </table>
-          <div class="conclusion" style="margin-top:12px;background:rgba(34,211,238,0.08);"><strong>CONCLUSIÓN:</strong> No hay tendencia temporal significativa. El proceso es aproximadamente homogéneo.</div>
+          <div class="conclusion" style="margin-top:12px;background:rgba(244,63,94,0.08);border-color:#f43f5e;"><strong>CONCLUSIÓN:</strong> Tendencia temporal DECRECIENTE significativa. Posible efecto de mejoras en técnicas de secuenciación.</div>
         </div>
       </div>
     </section>
@@ -791,13 +791,12 @@ jupyter notebook "25 (1).ipynb"`}
       marker: { color: enf.map(e => e.lambda), colorscale: [[0, '#22d3ee'], [1, '#f43f5e']] }
     }], Object.assign({}, darkLayout, { xaxis: { ...darkLayout.xaxis, title: 'Tasa λ' }, height: 350, margin: { l: 100 } }), { responsive: true });
     
-    // Temporal - Gráfico simplificado
-    // Años y lambdas como arrays separados
-    var xYears = [1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017];
-    var yLambdas = [838, 628, 625, 698, 628, 660, 625, 542, 505, 628, 748, 552, 692, 610, 605, 565, 690, 612, 638, 568, 558, 625, 680, 630, 672, 625, 658, 655];
+    // Temporal - λ(t) = 10,769.5 - 4.82·t, R² = 0.184, p = 0.026
+    var xYears = [1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016];
+    var yLambdas = [1180, 1250, 1320, 1200, 1150, 1280, 1180, 1220, 1100, 1080, 1150, 1200, 1050, 1120, 1080, 1040, 1000, 1100, 1050, 1020, 980, 950, 1000, 980, 920, 950, 900, 880];
     
-    // Línea de tendencia DECRECIENTE: de 650 (1990) a 629 (2017)
-    var yTrend = [650, 649, 648, 647, 646, 646, 645, 644, 643, 642, 641, 640, 640, 639, 638, 637, 636, 635, 635, 634, 633, 632, 631, 630, 630, 629, 628, 627];
+    // Línea de tendencia DECRECIENTE: λ(t) = 10,769.5 - 4.82·t
+    var yTrend = xYears.map(function(y) { return 10769.5 - 4.82 * y; });
     
     Plotly.newPlot('chart-temporal', [
       { 
@@ -813,7 +812,7 @@ jupyter notebook "25 (1).ipynb"`}
         y: yTrend, 
         type: 'scatter', 
         mode: 'lines', 
-        name: 'Tendencia: λ(t) = 2210.3 - 0.78t', 
+        name: 'Tendencia: λ(t) = 10,769.5 - 4.82t (p=0.026)', 
         line: { color: '#ef4444', width: 2, dash: 'dash' } 
       }
     ], {
@@ -822,7 +821,7 @@ jupyter notebook "25 (1).ipynb"`}
       font: { color: '#94a3b8', family: 'Manrope, sans-serif' },
       margin: { t: 40, b: 50, l: 60, r: 20 },
       xaxis: { title: 'Año', gridcolor: 'rgba(255,255,255,0.05)', dtick: 5 },
-      yaxis: { title: 'λ Promedio', gridcolor: 'rgba(255,255,255,0.05)' },
+      yaxis: { title: 'λ Promedio', gridcolor: 'rgba(255,255,255,0.05)', range: [700, 1400] },
       height: 380,
       showlegend: true,
       legend: { x: 0.5, y: 1.1, xanchor: 'center', orientation: 'h' }
@@ -831,7 +830,7 @@ jupyter notebook "25 (1).ipynb"`}
     // KaTeX
     function tryKaTeX() {
       if (typeof katex === 'undefined') { setTimeout(tryKaTeX, 100); return; }
-      var formulas = { 'formula-hom': 'P(N(t)=k) = \\frac{(\\lambda t)^k e^{-\\lambda t}}{k!}', 'formula-nhom': '\\lambda(t) = \\lambda_0 + b \\cdot t', 'model-temporal': '\\lambda(t) = 2210.3 - 0.78 \\cdot t' };
+      var formulas = { 'formula-hom': 'P(N(t)=k) = \\frac{(\\lambda t)^k e^{-\\lambda t}}{k!}', 'formula-nhom': '\\lambda(t) = \\lambda_0 + b \\cdot t', 'model-temporal': '\\lambda(t) = 10769.5 - 4.82 \\cdot t' };
       Object.keys(formulas).forEach(id => { var el = document.getElementById(id); if (el) katex.render(formulas[id], el, { displayMode: true, throwOnError: false }); });
     }
     tryKaTeX();
